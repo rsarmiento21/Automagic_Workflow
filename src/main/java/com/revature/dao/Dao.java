@@ -2,14 +2,17 @@ package com.revature.dao;
 
 import com.revature.domain.Board;
 import com.revature.domain.BoardUser;
+import com.revature.domain.SwimLane;
 
 public interface Dao {
 	//CREATE
 	public void createBoard(Board b);
 	public void createNewBoardUser(BoardUser bu);
+	public void createSwimLane(SwimLane sl);
 	
 	//READ
 	public BoardUser getBoardUserById(BoardUser bu);
+	public Board getBoardById(Board b);
 	public void updateBoardUser(BoardUser bu);
 	
 	
@@ -18,12 +21,11 @@ public interface Dao {
 	
 	
 	//DELETE
-	
 	public void deleteBoard(Board b);
 	
 	/*
 	 * CREATE
-	 * createNewBoardUser(BoardUser)
+	 * createNewBoardUser(BoardUser) - not really necessary
 	 * createNewRole(BoardUser, Board, Role)? - e.g. giving another user a different role, to a certain table?
 	 * createBoard(Board)
 	 * createSwimLane(SwimLane)
@@ -31,8 +33,9 @@ public interface Dao {
 	 * createTask(Task)
 	 * 
 	 * 
-	 * READ (Mostly done by Hibernate anyway? So unnecessary)
-	 * getBoardsById(BoardUser)
+	 * READ (Mostly done by Hibernate anyway? So unnecessary?)
+	 * getUserByUsername(BoardUser)
+	 * getBoardById(Board)
 	 * getSwimLanesByBoardId(Board)
 	 * getStoriesBySwimLaneId(SwimLane)
 	 * getTasksByStoryId(Story)
@@ -50,7 +53,5 @@ public interface Dao {
 	 * deleteSwimLane(SwimLane)
 	 * deleteStory(Story)
 	 * deleteTask(Task)
-	 * 
-	 * 
 	 */
 }

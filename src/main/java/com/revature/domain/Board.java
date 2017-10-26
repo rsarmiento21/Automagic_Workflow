@@ -12,7 +12,6 @@ import javax.persistence.Table;
 @Entity
 @Table(name="BOARD")
 public class Board {
-	
 	@Id
 	@Column(name="BD_ID")
 	private int id;

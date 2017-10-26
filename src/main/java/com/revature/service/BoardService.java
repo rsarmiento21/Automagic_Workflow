@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.revature.dao.Dao;
 import com.revature.domain.Board;
 import com.revature.domain.BoardUser;
+import com.revature.domain.SwimLane;
 
 @Component("boardService")
 @Transactional
@@ -34,5 +35,11 @@ public class BoardService {
 	public void updateBoardUserService(BoardUser bu) {
 		dao.updateBoardUser(bu);
 	}
+	
+	public void createSwimLane(SwimLane sl) {
+		dao.createSwimLane(sl);
+	}
+	
+	
   
 }

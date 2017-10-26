@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.revature.domain.Board;
 import com.revature.domain.BoardUser;
+import com.revature.domain.SwimLane;
 
 @Repository
 public class BoardDaoImpl implements Dao {
@@ -27,11 +28,24 @@ public class BoardDaoImpl implements Dao {
 		session.save(bu);
 	}
 	
+	@Override
+	public void createSwimLane(SwimLane sl) {
+		Session session = sessionFactory.getCurrentSession();
+		session.save(sl);
+	}
+	
+	
 	//READ
 	@Override
 	public BoardUser getBoardUserById(BoardUser bu) {
 		Session session = sessionFactory.getCurrentSession();
 		return (BoardUser) session.get(BoardUser.class, bu.getId());
+	}
+	
+	@Override
+	public Board getBoardById(Board b) {
+		Session session = sessionFactory.getCurrentSession();
+		return (Board) session.get(Board.class, b.getId());
 	}
 	
 	//UPDATE
@@ -46,12 +60,24 @@ public class BoardDaoImpl implements Dao {
 		session.saveOrUpdate(bu);
 	}
 	
+	public void updateSwimLane(SwimLane sl) {
+		Session session = sessionFactory.getCurrentSession();
+		session.merge(sl);
+	}
+	
 	//DELETE
 	@Override
 	public void deleteBoard(Board b) {
 		Session session = sessionFactory.getCurrentSession();
 		session.delete(b);
 	}
+	
+	public void deleteSwimLane(SwimLane sl) {
+		Session session = sessionFactory.getCurrentSession();
+		session.delete(sl);
+	}
+	
+
   
 	
 }
