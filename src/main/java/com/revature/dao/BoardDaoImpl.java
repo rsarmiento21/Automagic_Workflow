@@ -41,6 +41,11 @@ public class BoardDaoImpl implements Dao {
 		session.merge(b);
 	}
 	
+	public void updateBoardUser(BoardUser bu) {
+		Session session = sessionFactory.getCurrentSession();
+		session.saveOrUpdate(bu);
+	}
+	
 	//DELETE
 	@Override
 	public void deleteBoard(Board b) {
@@ -48,9 +53,5 @@ public class BoardDaoImpl implements Dao {
 		session.delete(b);
 	}
   
-	public void updateBoardUser(BoardUser bu)
-	{
-		Session session = sessionFactory.getCurrentSession();
-		session.saveOrUpdate(bu);
-	}
+	
 }
