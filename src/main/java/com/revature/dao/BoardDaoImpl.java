@@ -18,10 +18,10 @@ public class BoardDaoImpl implements Dao {
 		Session session = sessionFactory.getCurrentSession();
 		return (BoardUser) session.get(BoardUser.class, bu.getId());
 	}
+  
 	public void updateBoardUser(BoardUser bu)
 	{
 		Session session = sessionFactory.getCurrentSession();
 		session.saveOrUpdate(bu);
 	}
-
 }

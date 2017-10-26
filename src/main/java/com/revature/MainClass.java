@@ -1,29 +1,21 @@
-package com.revature;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-
-import com.revature.domain.Board;
 import com.revature.domain.BoardUser;
 import com.revature.service.BoardService;
 
+@Controller
 public class MainClass {
 	
-	public static void main(String[] args) {
-		
-		ApplicationContext ac = new ClassPathXmlApplicationContext("beans.xml");
-		BoardService app = (BoardService) ac.getBean("boardService");
+	@RequestMapping(value="/main")
+	public void main(BoardService boardService) {
 		
 		BoardUser bu = new BoardUser();
-		bu.setId(21);
-		bu = app.getBoardUserById(bu);
-		bu.setPassword("sark");
-		app.updateBoardUserService(bu);
-		for(Board bd : bu.getBoards())
-		{
-			bd.setName("sticks");
-		}
-		app.updateBoardUserService(bu);
+		bu.setId(1);
+		System.out.println(boardService);
+		System.out.println(bu);
+		bu = boardService.getBoardUserById(bu);
 		
+		System.out.println(bu);
 	}	
 }
