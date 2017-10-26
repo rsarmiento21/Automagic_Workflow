@@ -10,6 +10,7 @@ public interface Dao {
 	
 	//READ
 	public BoardUser getBoardUserById(BoardUser bu);
+	public void updateBoardUser(BoardUser bu);
 	
 	
 	//UPDATE

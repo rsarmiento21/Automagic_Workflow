@@ -47,4 +47,10 @@ public class BoardDaoImpl implements Dao {
 		Session session = sessionFactory.getCurrentSession();
 		session.delete(b);
 	}
+  
+	public void updateBoardUser(BoardUser bu)
+	{
+		Session session = sessionFactory.getCurrentSession();
+		session.saveOrUpdate(bu);
+	}
 }

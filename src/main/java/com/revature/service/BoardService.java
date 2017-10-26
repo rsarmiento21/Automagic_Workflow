@@ -15,7 +15,7 @@ public class BoardService {
 	@Autowired
 	private Dao dao;
 	
-	public BoardUser getBoardUserById(BoardUser bu){
+	public BoardUser getBoardUserById(BoardUser bu) {
 		return dao.getBoardUserById(bu);
 	}
 	
@@ -30,4 +30,9 @@ public class BoardService {
 	public void deleteBoard(Board b) {
 		dao.deleteBoard(b);
 	}
+  
+	public void updateBoardUserService(BoardUser bu) {
+		dao.updateBoardUser(bu);
+	}
+  
 }
