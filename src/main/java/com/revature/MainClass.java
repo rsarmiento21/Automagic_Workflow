@@ -1,5 +1,6 @@
 package com.revature;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -10,19 +11,13 @@ import com.revature.service.BoardService;
 @Controller
 public class MainClass {
 	
+	@Autowired
+	private BoardService boardService;
+	
 	@RequestMapping(value="/main")
-	public void main(BoardService boardService) {
-		
+	public String main() {
 
-		BoardUser bu = new BoardUser();
-		bu.setId(1);
-		System.out.println(boardService);
-		System.out.println(bu);
-		bu = boardService.getBoardUserById(bu);
 		
-		Board b = new Board();
-		b.setId(25);
-		
-//		System.out.println(bu);
+		return "/resources/dummy.txt";
 	}	
 }
