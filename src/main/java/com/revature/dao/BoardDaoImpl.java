@@ -15,9 +15,13 @@ public class BoardDaoImpl implements Dao {
 	
 	@Override
 	public BoardUser getBoardUserById(BoardUser bu) {
-		System.out.println("pulling BoardUser from DB...");
 		Session session = sessionFactory.getCurrentSession();
 		return (BoardUser) session.get(BoardUser.class, bu.getId());
 	}
-
+  
+	public void updateBoardUser(BoardUser bu)
+	{
+		Session session = sessionFactory.getCurrentSession();
+		session.saveOrUpdate(bu);
+	}
 }
