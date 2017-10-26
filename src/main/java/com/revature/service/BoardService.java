@@ -17,4 +17,8 @@ public class BoardService {
 	public BoardUser getBoardUserById(BoardUser bu){
 		return dao.getBoardUserById(bu);
 	}
+	public void updateBoardUserService(BoardUser bu)
+	{
+		dao.updateBoardUser(bu);
+	}
 }
