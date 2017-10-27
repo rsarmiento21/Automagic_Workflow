@@ -12,6 +12,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import java.util.Set;
+
 @Entity
 @Table(name="BOARD")
 public class Board {

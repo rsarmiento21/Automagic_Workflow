@@ -73,13 +73,14 @@ public class Task {
 		this.id = id;
 	}
 
-//	public Story getStory() {
-//		return story;
-//	}
-//
-//	public void setStory(Story story) {
-//		this.story = story;
-//	}
+	public Story getStory() {
+		return story;
+	}
+
+	public void setStory(Story story) {
+		this.story = story;
+	}
+
 
 	public String getName() {
 		return name;
@@ -100,7 +101,6 @@ public class Task {
 	public void setDateTaskCompleted(Timestamp dateTaskCompleted) {
 		this.dateTaskCompleted = this.dateTaskCompleted.toString();
 	}
-
 
 
 	@Override

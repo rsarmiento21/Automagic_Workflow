@@ -3,6 +3,7 @@ package com.revature.dao;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import com.revature.domain.Board;
@@ -11,6 +12,7 @@ import com.revature.domain.Story;
 import com.revature.domain.SwimLane;
 import com.revature.domain.Task;
 
+@Component
 @Repository
 public class BoardDaoImpl implements Dao {
 
@@ -140,8 +142,5 @@ public class BoardDaoImpl implements Dao {
 		Session session = sessionFactory.getCurrentSession();
 		session.delete(t);
 	}
-	
-	
-  
 	
 }
