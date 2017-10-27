@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.revature.domain.BoardUser;
 import com.revature.service.AuthService;
 
-@Controller("/login")
+@Controller
 public class LoginCtrl 
 {
 	@Autowired
@@ -17,17 +17,14 @@ public class LoginCtrl
 	
 	@RequestMapping(value = "/login")
 	public String loginVisit() {
-		BoardUser bu = new BoardUser();
-		bu.setUsername("steve");
-		bu.setPassword("123");
-//		AuthService app = (AuthService) ac.getBean("authService");
-		System.out.println(authService);
-		System.out.println(authService.login(bu));
-		return "/resources/dummy.txt";
+		return "html/login.html";
 	}
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String loginUser(BoardUser usr, ApplicationContext ac) {
+	public String loginUser(BoardUser bu) {
+		System.out.println(bu);
+		System.out.println(authService);
+		System.out.println(authService.login(bu));
 		return "/resources/dummy.txt";
 	}
 	
