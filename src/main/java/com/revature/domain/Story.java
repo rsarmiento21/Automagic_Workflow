@@ -127,13 +127,15 @@ public class Story {
 		this.dateStoryCompleted = dateStoryCompleted.toString();
 	}
 
-	
 	@Override
 	public String toString() {
-		return "Story [id=" + id + ", swimLane=" + swimLane + ", title=" + title + ", description=" + description
-				+ ", points=" + points + ", dateStoryCompleted=" + dateStoryCompleted + "]";
+		return "Story [id=" + id + ", swimLane=" + swimLane.getId() + ", title=" + title + ", description=" + description
+				+ ", points=" + points + ", dateStoryCompleted=" + dateStoryCompleted + ", tasks=" + tasks + "]";
 	}
-		
+
+
+
+	
 	
 
 }

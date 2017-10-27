@@ -81,6 +81,7 @@ public class Task {
 		this.story = story;
 	}
 
+
 	public String getName() {
 		return name;
 	}
@@ -101,13 +102,10 @@ public class Task {
 		this.dateTaskCompleted = this.dateTaskCompleted.toString();
 	}
 
+
 	@Override
 	public String toString() {
-		return "Task [id=" + id + ", story=" + story + ", name=" + name + ", dateTaskCompleted=" + dateTaskCompleted
+		return "Task [id=" + id + ", story=" + story.getId() + ", name=" + name + ", dateTaskCompleted=" + dateTaskCompleted
 				+ "]";
 	}
-	
-	
-		
-	
 }

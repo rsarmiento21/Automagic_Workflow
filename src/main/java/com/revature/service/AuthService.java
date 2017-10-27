@@ -13,6 +13,7 @@ public class AuthService {
 	private Dao dao;
 
 	public BoardUser login(BoardUser usr) {
+//		dao.test();
 		return usr;
 //		BoardUser out = dao.getBoardUserByUsername(usr);
 //
