@@ -45,7 +45,6 @@ function login(user){
 		
 	}
 	xhr.open("POST","../login",true);
-//	xhr.setRequestHeader('key',json);
 	xhr.setRequestHeader("Content-type", "application/json; charset=utf-8");
 	xhr.send(json);
 }
