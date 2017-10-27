@@ -39,13 +39,13 @@ function login(user){
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState == 4 && xhr.status == 200){
 				var loggedIn = xhr.responseText;
-				document.getElementById("boardPlaceHolder").innerHTML = loggedIn;
+				document.getElementById("boardPlaceholder").innerHTML = loggedIn;
 				loadLogoutFragment();	//load the logout button
 			}
 		
 	}
 	xhr.open("POST","../login",true);
-//	xhr.setRequestHeader('key',json);
+	xhr.setRequestHeader('key',json);
 	xhr.setRequestHeader('Content-type','application/x-www-form-urlencoded')
 	xhr.send(json);
 }
