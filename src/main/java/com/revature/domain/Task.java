@@ -35,7 +35,7 @@ public class Task {
 	private String name;
 	
 	@Column(name="TSK_COMPLETED")
-	private String dateTaskCompleted;
+	private int taskCompleted;
 	
 	
 	
@@ -43,23 +43,16 @@ public class Task {
 	public Task() {
 		super();
 	}
-	
 
 
-	public Task(int id, Story story, String name, String dateTaskCompleted) {
+
+
+	public Task(int id, Story story, String name, int taskCompleted) {
 		super();
 		this.id = id;
 		this.story = story;
 		this.name = name;
-		this.dateTaskCompleted = dateTaskCompleted;
-	}
-
-	public Task(int id, Story story, String name, Timestamp dateTaskCompleted) {
-		super();
-		this.id = id;
-		this.story = story;
-		this.name = name;
-		this.dateTaskCompleted = dateTaskCompleted.toString();
+		this.taskCompleted = taskCompleted;
 	}
 
 
@@ -69,42 +62,61 @@ public class Task {
 		return id;
 	}
 
+
+
+
 	public void setId(int id) {
 		this.id = id;
 	}
+
+
+
 
 	public Story getStory() {
 		return story;
 	}
 
+
+
+
 	public void setStory(Story story) {
 		this.story = story;
 	}
+
+
+
 
 	public String getName() {
 		return name;
 	}
 
+
+
+
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	public String getDateTaskCompleted() {
-		return dateTaskCompleted;
+
+
+
+	public int getTaskCompleted() {
+		return taskCompleted;
 	}
 
-	public void setDateTaskCompleted(String dateTaskCompleted) {
-		this.dateTaskCompleted = dateTaskCompleted;
+
+
+
+	public void setTaskCompleted(int taskCompleted) {
+		this.taskCompleted = taskCompleted;
 	}
-	
-	public void setDateTaskCompleted(Timestamp dateTaskCompleted) {
-		this.dateTaskCompleted = this.dateTaskCompleted.toString();
-	}
+
+
+
 
 	@Override
 	public String toString() {
-		return "Task [id=" + id + ", story=" + story + ", name=" + name + ", dateTaskCompleted=" + dateTaskCompleted
-				+ "]";
+		return "Task [id=" + id + ", story=" + story + ", name=" + name + ", taskCompleted=" + taskCompleted + "]";
 	}
 	
 	
