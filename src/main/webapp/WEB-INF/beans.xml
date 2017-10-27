@@ -14,7 +14,7 @@
 
 	<!-- MVC setup: annotations and location of static content -->
 	<mvc:annotation-driven />
-	<mvc:resources location="/resources/" mapping="/resources/**"></mvc:resources>
+	<mvc:resources location="/resources/" mapping="/resources/**" />
 
 	<!-- Set up AOP 
 	<aop:aspectj-autoproxy />-->

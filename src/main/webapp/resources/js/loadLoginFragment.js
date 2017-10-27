@@ -44,8 +44,8 @@ function login(user){
 			}
 		
 	}
-	xhr.open("POST","login",true);
-	xhr.setRequestHeader('key',json);
+	xhr.open("POST","../login",true);
+//	xhr.setRequestHeader('key',json);
 	xhr.setRequestHeader('Content-type','application/x-www-form-urlencoded')
 	xhr.send(json);
 }
