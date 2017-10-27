@@ -39,7 +39,7 @@ function login(user){
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState == 4 && xhr.status == 200){
 				var loggedIn = xhr.responseText;
-				document.getElementById("boardPlaceHolder").innerHTML = loggedIn;
+				document.getElementById("boardPlaceholder").innerHTML = loggedIn;
 				loadLogoutFragment();	//load the logout button
 			}
 		
@@ -63,6 +63,6 @@ function loadLogoutFragment(){
 		}
 		
 	}
-	xhr.open("GET","resources/html/logout.html",true);
+	xhr.open("GET","html/logout.html",true);
 	xhr.send();
 }

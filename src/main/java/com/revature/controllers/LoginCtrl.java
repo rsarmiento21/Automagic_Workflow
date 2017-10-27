@@ -1,11 +1,10 @@
 package com.revature.controllers;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.revature.domain.BoardUser;
 import com.revature.service.AuthService;
@@ -26,7 +25,7 @@ public class LoginCtrl
 		System.out.println(bu);
 		System.out.println(authService);
 		System.out.println(authService.login(bu));
-		return "resources/dummy.txt";
+		return "redirect:resources/dummy.txt";
 	}
 	
 }
