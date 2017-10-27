@@ -6,5 +6,6 @@ public interface Dao {
 	
 	public BoardUser getBoardUserById(BoardUser bu);
 	public void updateBoardUser(BoardUser bu);
+	public void test();
 	
 }
