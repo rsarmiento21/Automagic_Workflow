@@ -1,5 +1,8 @@
 package com.revature.controllers;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -24,10 +27,12 @@ public class LoginCtrl
 	@RequestMapping(value = "login", method = RequestMethod.POST,
 			consumes=MediaType.APPLICATION_JSON_VALUE/*,
 			produces=MediaType.APPLICATION_JSON_VALUE*/)
-	public String loginUser(@RequestBody BoardUser bu) {
-		System.out.println(bu);
-		System.out.println(authService);
-		System.out.println(authService.login(bu));
+	public String loginUser(@RequestBody BoardUser bu, HttpServletRequest req) {
+		bu = authService.login(bu);
+		if (bu != null) {
+			HttpSession session = req.getSession(true);
+			session.setAttribute("user", bu);
+		}
 		return "redirect:resources/dummy.txt";
 	}
 	
