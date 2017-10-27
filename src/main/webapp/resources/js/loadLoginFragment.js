@@ -63,6 +63,6 @@ function loadLogoutFragment(){
 		}
 		
 	}
-	xhr.open("GET","resources/html/logout.html",true);
+	xhr.open("GET","html/logout.html",true);
 	xhr.send();
 }
