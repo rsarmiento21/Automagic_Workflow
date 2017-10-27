@@ -13,15 +13,13 @@ public class AuthService {
 	private Dao dao;
 
 	public BoardUser login(BoardUser usr) {
-//		dao.test();
-		return usr;
-//		BoardUser out = dao.getBoardUserByUsername(usr);
-//
-//		if (out != null && out.getUsername().equals(usr.getUsername()) &&
-//				out.getPassword().equals(usr.getPassword())) {
-//			return out;
-//		} else {
-//			return null;
-//		}
+		BoardUser out = dao.getBoardUserByUsername(usr);
+
+		if (out != null && out.getUsername().equals(usr.getUsername()) &&
+				out.getPassword().equals(usr.getPassword())) {
+			return out;
+		} else {
+			return null;
+		}
 	}
 }

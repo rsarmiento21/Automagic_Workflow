@@ -30,6 +30,7 @@ public class LoginCtrl
 	public String loginUser(@RequestBody BoardUser bu, HttpServletRequest req) {
 		bu = authService.login(bu);
 		if (bu != null) {
+			System.out.println(bu);
 			HttpSession session = req.getSession(true);
 			session.setAttribute("user", bu);
 		}
