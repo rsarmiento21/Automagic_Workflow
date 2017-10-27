@@ -36,6 +36,9 @@ public class BoardService {
 	public BoardUser getBoardUserById(BoardUser bu) {
 		return dao.getBoardUserById(bu);
 	}
+	public BoardUser getBoardUserByUsername(BoardUser bu) {
+		return dao.getBoardUserByUsername(bu);
+	}
 	public Board getBoardById(Board b) {
 		return dao.getBoardById(b);
 	}

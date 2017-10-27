@@ -16,6 +16,7 @@ public interface Dao {
 	
 	//READ
 	public BoardUser getBoardUserById(BoardUser bu);
+	public BoardUser getBoardUserByUsername(BoardUser bu);
 	public Board getBoardById(Board b);
 	public SwimLane getSwimLaneById(SwimLane sl);
 	public Story getStoryById(Story s);

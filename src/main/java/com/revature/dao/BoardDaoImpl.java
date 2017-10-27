@@ -1,7 +1,9 @@
 package com.revature.dao;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
@@ -59,6 +61,13 @@ public class BoardDaoImpl implements Dao {
 	public BoardUser getBoardUserById(BoardUser bu) {
 		Session session = sessionFactory.getCurrentSession();
 		return (BoardUser) session.get(BoardUser.class, bu.getId());
+	}
+	@Override
+	public BoardUser getBoardUserByUsername(BoardUser bu) {
+		Session session = sessionFactory.getCurrentSession();
+		Criteria criteria = session.createCriteria(BoardUser.class);
+		
+		return (BoardUser) criteria.add(Restrictions.eq("username", bu.getUsername())).uniqueResult();
 	}
 	
 	@Override
