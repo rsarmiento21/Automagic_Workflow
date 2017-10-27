@@ -7,7 +7,10 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import java.util.Set;
 
 @Entity
 @Table(name="BOARD")
@@ -24,8 +27,8 @@ public class Board {
 	@Column(name="BD_NAME")
 	private String name;
 	
-//	@OneToMany(mappedBy="ownerId", fetch=FetchType.EAGER)
-//	private Set<SwimLane> swimLanes;
+	@OneToMany(mappedBy="board", fetch=FetchType.EAGER)
+	private Set<SwimLane> swimLanes;
 	
 	public Board() {}
 
