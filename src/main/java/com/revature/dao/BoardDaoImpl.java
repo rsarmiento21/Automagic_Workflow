@@ -7,7 +7,9 @@ import org.springframework.stereotype.Repository;
 
 import com.revature.domain.Board;
 import com.revature.domain.BoardUser;
+import com.revature.domain.Story;
 import com.revature.domain.SwimLane;
+import com.revature.domain.Task;
 
 @Repository
 public class BoardDaoImpl implements Dao {
@@ -34,6 +36,21 @@ public class BoardDaoImpl implements Dao {
 		session.save(sl);
 	}
 	
+	@Override
+	public void createStory(Story s) {
+		Session session = sessionFactory.getCurrentSession();
+		session.save(s);
+		
+	}
+
+	@Override
+	public void createTask(Task t) {
+		// TODO Auto-generated method stub
+		Session session = sessionFactory.getCurrentSession();
+		session.save(t);
+	}
+	
+	
 	
 	//READ
 	@Override
@@ -48,6 +65,25 @@ public class BoardDaoImpl implements Dao {
 		return (Board) session.get(Board.class, b.getId());
 	}
 	
+	@Override
+	public SwimLane getSwimLaneById(SwimLane sl) {
+		Session session = sessionFactory.getCurrentSession();
+		return (SwimLane) session.get(SwimLane.class, sl.getId());
+	}
+	
+	@Override
+	public Story getStoryById(Story s) {
+		Session session = sessionFactory.getCurrentSession();
+		return (Story) session.get(Story.class, s.getId());
+	}
+	
+	@Override
+	public Task getTaskById(Task t) {
+		Session session = sessionFactory.getCurrentSession();
+		return (Task) session.get(Task.class, t.getId());
+	}
+	
+	
 	//UPDATE
 	@Override
 	public void updateBoard(Board b) {
@@ -60,10 +96,25 @@ public class BoardDaoImpl implements Dao {
 		session.saveOrUpdate(bu);
 	}
 	
+	@Override
 	public void updateSwimLane(SwimLane sl) {
 		Session session = sessionFactory.getCurrentSession();
 		session.merge(sl);
 	}
+	
+	@Override
+	public void updateStory(Story s) {
+		Session session = sessionFactory.getCurrentSession();
+		session.merge(s);
+	}
+
+	@Override
+	public void updateTask(Task t) {
+		Session session = sessionFactory.getCurrentSession();
+		session.merge(t);
+	}
+	
+	
 	
 	//DELETE
 	@Override
@@ -72,12 +123,25 @@ public class BoardDaoImpl implements Dao {
 		session.delete(b);
 	}
 	
+	@Override
 	public void deleteSwimLane(SwimLane sl) {
 		Session session = sessionFactory.getCurrentSession();
 		session.delete(sl);
 	}
-	
 
+	@Override
+	public void deleteStory(Story s) {
+		Session session = sessionFactory.getCurrentSession();
+		session.delete(s);
+	}
+
+	@Override
+	public void deleteTask(Task t) {
+		Session session = sessionFactory.getCurrentSession();
+		session.delete(t);
+	}
+	
+	
   
 	
 }

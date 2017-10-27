@@ -1,5 +1,7 @@
 package com.revature.domain;
 
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -7,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -23,8 +26,9 @@ public class Board {
 	@Column(name="BD_NAME")
 	private String name;
 	
-//	@OneToMany(mappedBy="ownerId", fetch=FetchType.EAGER)
-//	private Set<SwimLane> swimLanes;
+	@OneToMany(fetch=FetchType.EAGER)
+	@JoinColumn(name="BD_ID")
+	private Set<SwimLane> swimLanes;
 	
 	public Board() {}
 
@@ -54,7 +58,9 @@ public class Board {
 
 	@Override
 	public String toString() {
-		return "Board [id=" + id + ", name=" + name + "]";
+		return "Board [id=" + id + ", owner=" + owner.getId() + ", name=" + name + ", swimLanes=" + swimLanes + "]";
 	}
+
+	
 
 }
