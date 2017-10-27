@@ -13,13 +13,13 @@ function loadLoginFragment(){
 	
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState == 4 && xhr.status == 200){
-				loginForm = xhr.responseText;
+				var loginForm = xhr.responseText;
 				document.getElementById("loginPlaceholder").innerHTML = loginForm;
 				document.getElementById('loginButton').addEventListener("click",login,false);
 			}
 		
 	}
-	xhr.open("GET","resources/html/login.html",true);
+	xhr.open("GET","html/login.html",true);
 	xhr.send();
 
 }
@@ -30,8 +30,8 @@ function loadLoginFragment(){
 function login(user){
 	var xhr = new XMLHttpRequest();
 	
-	var username = document.getElementById("username").value;
-	var password = document.getElementById("password").value;
+	var username = document.getElementById("u_name").value;
+	var password = document.getElementById("u_pass").value;
 	
 	var user = {username: username, password: password};
 	var json = JSON.stringify(user);
