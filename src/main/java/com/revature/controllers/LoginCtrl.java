@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.revature.domain.BoardUser;
 import com.revature.service.AuthService;
@@ -19,15 +21,15 @@ public class LoginCtrl
 	@Autowired
 	private AuthService authService;
 	
-	@RequestMapping(value = "login")
-	public String loginVisit() {
-		return "html/login.html";
+	@RequestMapping("/login")
+	public ModelAndView login() {
+		return new ModelAndView("/resources/portal.html");
 	}
 	
-	@RequestMapping(value = "login", method = RequestMethod.POST,
+	@RequestMapping(value="/login", method=RequestMethod.POST,
 			consumes=MediaType.APPLICATION_JSON_VALUE/*,
 			produces=MediaType.APPLICATION_JSON_VALUE*/)
-	public String loginUser(@RequestBody BoardUser bu, HttpServletRequest req) {
+	public String loginBoardUser(@RequestBody BoardUser bu, HttpServletRequest req) {
 		bu = authService.login(bu);
 		if (bu != null) {
 			System.out.println(bu);
