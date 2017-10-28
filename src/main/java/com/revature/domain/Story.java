@@ -53,6 +53,19 @@ public class Story {
 		super();
 	}
 
+	
+
+	public Story(int id, SwimLane swimLane, String title, String description, int points,
+			Timestamp dateStoryCompleted) {
+		super();
+		this.id = id;
+		this.swimLane = swimLane;
+		this.title = title;
+		this.description = description;
+		this.points = points;
+		this.dateStoryCompleted = dateStoryCompleted;
+	}
+
 
 
 	public Story(int id, SwimLane swimLane, String title, String description, int points, Timestamp dateStoryCompleted,

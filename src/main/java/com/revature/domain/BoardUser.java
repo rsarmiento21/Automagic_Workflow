@@ -41,6 +41,15 @@ public class BoardUser {
 
 
 
+	public BoardUser(int id, String username, String password) {
+		super();
+		this.id = id;
+		this.username = username;
+		this.password = password;
+	}
+
+
+
 	public int getId() {
 		return id;
 	}

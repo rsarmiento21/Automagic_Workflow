@@ -37,6 +37,15 @@ public class Board {
 	
 	
 
+	public Board(int id, BoardUser owner, String name) {
+		super();
+		this.id = id;
+		this.owner = owner;
+		this.name = name;
+	}
+
+
+
 	public Board(int id, BoardUser owner, String name, List<SwimLane> swimLanes) {
 		super();
 		this.id = id;

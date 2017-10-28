@@ -49,6 +49,16 @@ public class SwimLane {
 
 
 
+	public SwimLane(int id, Board board, String name) {
+		super();
+		this.id = id;
+		this.board = board;
+		this.name = name;
+	}
+
+
+
+
 	public SwimLane(int id, Board board, String name, List<Story> stories) {
 		super();
 		this.id = id;
