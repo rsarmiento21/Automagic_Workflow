@@ -1,5 +1,6 @@
 package com.revature.domain;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -30,9 +31,30 @@ public class Board {
 	
 	@OneToMany(fetch=FetchType.EAGER)
 	@JoinColumn(name="BD_ID")
-	private Set<SwimLane> swimLanes;
+	private List<SwimLane> swimLanes;
 	
 	public Board() {}
+	
+	
+
+	public Board(int id, BoardUser owner, String name) {
+		super();
+		this.id = id;
+		this.owner = owner;
+		this.name = name;
+	}
+
+
+
+	public Board(int id, BoardUser owner, String name, List<SwimLane> swimLanes) {
+		super();
+		this.id = id;
+		this.owner = owner;
+		this.name = name;
+		this.swimLanes = swimLanes;
+	}
+
+
 
 	public int getId() {
 		return id;
@@ -58,9 +80,23 @@ public class Board {
 		this.name = name;
 	}
 
+	
+	
+	public List<SwimLane> getSwimLanes() {
+		return swimLanes;
+	}
+
+
+
+	public void setSwimLanes(List<SwimLane> swimLanes) {
+		this.swimLanes = swimLanes;
+	}
+
+
+
 	@Override
 	public String toString() {
-		return "Board [id=" + id + ", owner=" + owner.getId() + ", name=" + name + ", swimLanes=" + swimLanes + "]";
+		return "Board [id=" + id + ", owner=" + owner.getId() + ", name=" + name +"]";
 	}
 
 	
