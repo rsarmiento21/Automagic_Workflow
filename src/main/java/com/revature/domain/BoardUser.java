@@ -1,5 +1,6 @@
 package com.revature.domain;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -24,9 +25,30 @@ public class BoardUser {
 	private String password;
 	
 	@OneToMany(mappedBy="owner", fetch=FetchType.EAGER)
-	private Set<Board> boards;
+	private List<Board> boards;
 	
 	public BoardUser() {}
+	
+	 
+
+	public BoardUser(int id, String username, String password, List<Board> boards) {
+		super();
+		this.id = id;
+		this.username = username;
+		this.password = password;
+		this.boards = boards;
+	}
+
+
+
+	public BoardUser(int id, String username, String password) {
+		super();
+		this.id = id;
+		this.username = username;
+		this.password = password;
+	}
+
+
 
 	public int getId() {
 		return id;
@@ -52,16 +74,16 @@ public class BoardUser {
 		this.password = password;
 	}
 
-	public Set<Board> getBoards() {
+	public List<Board> getBoards() {
 		return boards;
 	}
 
-	public void setBoards(Set<Board> boards) {
+	public void setBoards(List<Board> boards) {
 		this.boards = boards;
 	}
 
 	@Override
 	public String toString() {
-		return "BoardUser [id=" + id + ", username=" + username + ", password=" + password + ", boards=" + boards + "]";
+		return "BoardUser [id=" + id + ", username=" + username + ", password=" + password + "]";
 	}
 }
