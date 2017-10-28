@@ -12,8 +12,8 @@ angular.module("scrumApp", [])
 
 .controller("loginCtrl", function($scope, dataService) {
 	$scope.bu = {
-		username: "steve",
-		password: "123"
+		username: "",
+		password: ""
 	};
 	
 	$scope.login = function(bu) {

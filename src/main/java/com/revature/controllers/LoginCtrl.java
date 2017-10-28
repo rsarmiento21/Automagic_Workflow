@@ -29,14 +29,14 @@ public class LoginCtrl
 	@RequestMapping(value="/login", method=RequestMethod.POST,
 			consumes=MediaType.APPLICATION_JSON_VALUE/*,
 			produces=MediaType.APPLICATION_JSON_VALUE*/)
-	public String loginBoardUser(@RequestBody BoardUser bu, HttpServletRequest req) {
+	public ModelAndView loginBoardUser(@RequestBody BoardUser bu, HttpServletRequest req) {
 		bu = authService.login(bu);
 		if (bu != null) {
 			System.out.println(bu);
 			HttpSession session = req.getSession(true);
 			session.setAttribute("user", bu);
 		}
-		return "redirect:resources/dummy.txt";
+		return new ModelAndView("/resources/dummy.html");
 	}
 	
 }

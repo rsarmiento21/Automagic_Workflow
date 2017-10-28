@@ -6,7 +6,7 @@ angular.module("scrumApp")
 
 .directive("scrumNavbar", function() {
 	return {
-		templateUrl: "resources/html/navbarDummy.html",
+		templateUrl: "resources/html/navbar.html",
 	};
 })
 
