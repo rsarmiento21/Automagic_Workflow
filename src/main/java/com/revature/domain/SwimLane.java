@@ -1,5 +1,6 @@
 package com.revature.domain;
 
+import java.util.List;
 import java.util.Set;
 
 
@@ -37,7 +38,7 @@ public class SwimLane {
 	
 	@OneToMany(fetch=FetchType.EAGER)
 	@JoinColumn(name="SL_ID")
-	private Set<Story> stories;
+	private List<Story> stories;
 	
 	
 
@@ -48,7 +49,7 @@ public class SwimLane {
 
 
 
-	public SwimLane(int id, Board board, String name, Set<Story> stories) {
+	public SwimLane(int id, Board board, String name, List<Story> stories) {
 		super();
 		this.id = id;
 		this.board = board;
@@ -101,14 +102,14 @@ public class SwimLane {
 
 
 
-	public Set<Story> getStories() {
+	public List<Story> getStories() {
 		return stories;
 	}
 
 
 
 
-	public void setStories(Set<Story> stories) {
+	public void setStories(List<Story> stories) {
 		this.stories = stories;
 	}
 
@@ -117,7 +118,7 @@ public class SwimLane {
 
 	@Override
 	public String toString() {
-		return "SwimLane [id=" + id + ", board=" + board + ", name=" + name + ", stories=" + stories + "]";
+		return "SwimLane [id=" + id + ", board=" + board.getId() + ", name=" + name +  "]";
 	}
 	
 	

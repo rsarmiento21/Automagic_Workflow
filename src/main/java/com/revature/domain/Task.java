@@ -113,7 +113,7 @@ public class Task {
 
 	@Override
 	public String toString() {
-		return "Task [id=" + id + ", story=" + story + ", name=" + name + ", taskCompleted=" + taskCompleted + "]";
+		return "Task [id=" + id + ", story=" + story.getId() + ", name=" + name + "]";
 
 	}
 }
