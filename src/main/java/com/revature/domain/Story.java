@@ -146,6 +146,7 @@ public class Story {
 
 
 
+
 	public void setTasks(Set<Task> tasks) {
 		this.tasks = tasks;
 	}
@@ -157,6 +158,7 @@ public class Story {
 		return "Story [id=" + id + ", swimLane=" + swimLane + ", title=" + title + ", description=" + description
 				+ ", points=" + points + ", dateStoryCompleted=" + dateStoryCompleted + ", tasks=" + tasks + "]";
 	}
+
 	
 	
 	

@@ -30,23 +30,22 @@ function loadLoginFragment(){
 function login(user){
 	var xhr = new XMLHttpRequest();
 	
-	var username = document.getElementById("u_name").value;
-	var password = document.getElementById("u_pass").value;
+	var usrn = document.getElementById("u_name").value;
+	var pwd = document.getElementById("u_pass").value;
 	
-	var user = {username: username, password: password};
+	var user = {username: usrn, password: pwd};
 	var json = JSON.stringify(user);
 	
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState == 4 && xhr.status == 200){
 				var loggedIn = xhr.responseText;
-				document.getElementById("boardPlaceHolder").innerHTML = loggedIn;
+				document.getElementById("boardPlaceholder").innerHTML = loggedIn;
 				loadLogoutFragment();	//load the logout button
 			}
 		
 	}
-	xhr.open("POST","login",true);
-	xhr.setRequestHeader('key',json);
-	xhr.setRequestHeader('Content-type','application/x-www-form-urlencoded')
+	xhr.open("POST","../login",true);
+	xhr.setRequestHeader("Content-type", "application/json; charset=utf-8");
 	xhr.send(json);
 }
 
@@ -63,6 +62,6 @@ function loadLogoutFragment(){
 		}
 		
 	}
-	xhr.open("GET","resources/html/logout.html",true);
+	xhr.open("GET","html/logout.html",true);
 	xhr.send();
 }

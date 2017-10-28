@@ -85,7 +85,6 @@ public class Task {
 
 
 
-
 	public String getName() {
 		return name;
 	}
@@ -112,14 +111,9 @@ public class Task {
 	}
 
 
-
-
 	@Override
 	public String toString() {
 		return "Task [id=" + id + ", story=" + story + ", name=" + name + ", taskCompleted=" + taskCompleted + "]";
+
 	}
-	
-	
-		
-	
 }
