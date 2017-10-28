@@ -41,6 +41,7 @@ function login(user){
 				var loggedIn = xhr.responseText;
 				document.getElementById("boardPlaceholder").innerHTML = loggedIn;
 				loadLogoutFragment();	//load the logout button
+				loadUserAcknowledgement();
 			}
 		
 	}
@@ -63,5 +64,37 @@ function loadLogoutFragment(){
 		
 	}
 	xhr.open("GET","html/logout.html",true);
+	xhr.send();
+}
+function loadUserAcknowledgement(){
+	var xhr = new XMLHttpRequest();
+	
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState == 4 && xhr.status == 200){
+				var userName = xhr.responseText;
+				if(userName != null){
+					document.getElementById("navbarPlaceholder").innerHTML = userName;
+					getUsername();
+				}
+		}
+		
+	}
+	xhr.open("GET","html/userAcknowledgement.html",true);
+	xhr.send();
+}
+function getUsername(){
+var xhr = new XMLHttpRequest();
+	
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState == 4 && xhr.status == 200){
+				var userName = xhr.responseText;
+				if(userName != null){
+					document.getElementById("navbarPlaceholder").innerHTML = userName;
+					
+				}
+		}
+		
+	}
+	xhr.open("GET","",true);
 	xhr.send();
 }
