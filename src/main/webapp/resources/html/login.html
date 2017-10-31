@@ -1,7 +1,11 @@
 <!DOCTYPE html>
-<div id="loginForm">
-	<h1>Please enter your credentials in the form below</h1>
-	Username:<input type="text" id = "u_name" placeholder ="username" required/><br>
-	Password:<input type="password" id = "u_pass" placeholder="password" required/><br>
-	<button id = "loginButton" class="btn btn-success">Log in</button>
+<div class="container">
+<form id="loginCtrl" data-ng-controller="loginCtrl">
+	<h4>{{errorMessage}}</h4>
+	<h4>Enter your information below:</h4>
+	Username: <input id="u_name" type="text" placeholder ="Enter username" data-ng-model="bu.username" required/><br>
+	Password: <input id="u_pass" type="password" placeholder="Enter password" data-ng-model="bu.password" required/><br>
+	<button id="loginBtn" class="btn btn-primary" data-ng-click="login(bu)">Log in</button>
+	<h4 data-ng-hide="!submitted">Submitting information, please wait...</h4>
+</form>
 </div>

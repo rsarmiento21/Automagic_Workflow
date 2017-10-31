@@ -36,8 +36,10 @@
 
 <!-- Main body for the Automagic Workflow page -->
 <body data-ng-app="scrumApp">
-	<scrum-navbar></scrum-navbar>
-	<scrum-body></scrum-body>
+	<div data-ng-controller="mainCtrl">
+		<scrum-navbar></scrum-navbar>
+		<scrum-body fragment="fragment"></scrum-body>
+	</div>
 
 	<script type="text/javascript" src="resources/js/portal.js"></script>
 	<script type="text/javascript" src="resources/js/navbarCtrl.js"></script>

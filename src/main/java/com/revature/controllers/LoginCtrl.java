@@ -1,18 +1,24 @@
 package com.revature.controllers;
 
+import java.util.Collections;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.revature.domain.BoardUser;
 import com.revature.service.AuthService;
 
-@Controller
+@RestController
 public class LoginCtrl 
 {
 	@Autowired
@@ -23,20 +29,32 @@ public class LoginCtrl
 		return new ModelAndView("/resources/portal.html");
 	}
 	
-	@RequestMapping(value="/login", method=RequestMethod.POST,
-			consumes=MediaType.APPLICATION_JSON_VALUE/*,
-			produces=MediaType.APPLICATION_JSON_VALUE*/)
-	public String loginBoardUser(@RequestBody BoardUser bu, ModelMap modelMap) {
+	@RequestMapping(value="/login", method=RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity<Object> loginBoardUser(@RequestBody BoardUser bu, HttpServletRequest req) {
 		bu = authService.login(bu);
 		if (bu != null) {
-			System.out.println(bu);
-//			HttpSession session = req.getSession(true);
-//			session.setAttribute("user", bu);
-			modelMap.addAttribute("user", bu);
+			HttpSession session = req.getSession(true);
+			session.setAttribute("user", bu);
+			return new ResponseEntity<>(HttpStatus.OK);
 		}else {
-			modelMap.addAttribute("errorMessage","Username/Password incorrect");
+			return new ResponseEntity<>(Collections.singletonList("Username/password incorrect."), HttpStatus.CONFLICT);
 		}
-		return "redirect:dummy";
+		
+	}
+	
+	@RequestMapping(value="/logout")
+	@ResponseBody
+	public ResponseEntity<Object> logoutBoardUser(HttpServletRequest req) {
+		HttpSession session = req.getSession(false);
+		if (session != null) {
+			session.removeAttribute("user");
+			session.invalidate();
+			return new ResponseEntity<>(HttpStatus.OK);
+		}else {
+			return new ResponseEntity<>(Collections.singletonList("Non-existant session."), HttpStatus.CONFLICT);
+		}
+		
 	}
 	
 }
