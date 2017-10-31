@@ -51,7 +51,6 @@ angular.module("scrumApp", [])
 })
 
 .service("dataService", function($http, $window, $rootScope) {
-	this.toggleLogin = 
 	this.login = function(bu, $scope) {
 		var promise = $http.post("login", bu).then(
 				function success(response) {
@@ -65,6 +64,29 @@ angular.module("scrumApp", [])
 						$scope.errorMessage = "Error adding user.";
 					}
 					$scope.submitted = false;
+				}
+		)
+	}
+	
+	this.isLoggedIn = function() {
+		var promise = $http.post("ajaxIsLoggedIn").then(
+				function success(response) {
+					return true;
+				},
+				function error(response) {
+					return false;
+				}
+		)
+	}
+	
+	this.logout = function() {
+		var promise = $http.post("logout").then(
+				function success(response) {
+					$rootScope.$emit("toggleLogin", {});
+					$rootScope.$emit("updateFragment", "login");
+				},
+				function error(response) {
+					console.log(response.data[0]);
 				}
 		)
 	}

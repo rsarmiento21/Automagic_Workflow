@@ -10,8 +10,12 @@ angular.module("scrumApp")
 	};
 })
 
-.controller("navbarCtrl", function($scope, $rootScope) {
-	$scope.loggedIn = false;
+.controller("navbarCtrl", function($scope, $rootScope, dataService) {
+	$scope.loggedIn = dataService.isLoggedIn();
+	
+	$scope.logout = function() {
+		dataService.logout();
+	}
 	
 	$rootScope.$on("toggleLogin", function() {
         $scope.toggleLogin();
