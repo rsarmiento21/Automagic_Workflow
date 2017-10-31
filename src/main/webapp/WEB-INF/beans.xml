@@ -16,8 +16,8 @@
 	<mvc:annotation-driven />
 	<mvc:resources location="/resources/" mapping="/resources/**" />
 
-	<!-- Set up AOP 
-	<aop:aspectj-autoproxy />-->
+	<!-- Set up AOP -->
+	<aop:aspectj-autoproxy />
 
 	<!-- Set up Transactions -->
 	<tx:annotation-driven />

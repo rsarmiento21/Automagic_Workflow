@@ -7,7 +7,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-//import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,7 +29,7 @@ public class AutomagicTests {
 	@Autowired
 	private Dao dao;
 	
-	//Use id=9999 for testing id, naturally if project gets big enough, will have to use a bigger number
+	//Use id=9999 for testing id, naturally if project gets big enough(i.e. ids go all the way up to 9999, will have to use a bigger number
 	//can keep reusing it since @Transactional makes it so that any commits are rollbacked to before the test started.
 	private int testId = 9999;
 	
@@ -39,7 +38,7 @@ public class AutomagicTests {
 		//anything else? login?
 	
 	// CREATE AND READ TESTS
-	// read included, technically with all the CRUD tests, because it NEEDS to read from the database, to make sure things actually persisted
+	// read included with create, technically with all the CRUD tests, because it NEEDS to read from the database, to make sure things actually persisted
 	@Test
 	@Transactional
 	public void createBoardUserTest() {
@@ -116,9 +115,9 @@ public class AutomagicTests {
 	
 	
 	//UPDATE TESTS
+	//creates a board, updates it, and reads it to check if update persisted
 	@Test
 	public void updateBoardTest() {
-		
 		Board b = new Board();
 		b.setId(testId);
 		b.setName("assert this");
@@ -179,6 +178,7 @@ public class AutomagicTests {
 	}
 	
 	//DELETE TESTS
+	//creates a board, deletes it, and tries to read it. Checks for null
 	@Test
 	public void deleteBoardTest() {
 		Board b = new Board();
