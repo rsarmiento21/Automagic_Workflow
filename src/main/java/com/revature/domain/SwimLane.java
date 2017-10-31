@@ -1,8 +1,6 @@
 package com.revature.domain;
 
-import java.util.List;
 import java.util.Set;
-
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -36,9 +34,8 @@ public class SwimLane {
 	@Column(name="SL_NAME")
 	private String name;
 	
-	@OneToMany(fetch=FetchType.EAGER)
-	@JoinColumn(name="SL_ID")
-	private List<Story> stories;
+	@OneToMany(mappedBy="swimLane", fetch=FetchType.EAGER)
+	private Set<Story> stories;
 	
 	
 
@@ -59,7 +56,7 @@ public class SwimLane {
 
 
 
-	public SwimLane(int id, Board board, String name, List<Story> stories) {
+	public SwimLane(int id, Board board, String name, Set<Story> stories) {
 		super();
 		this.id = id;
 		this.board = board;
@@ -112,14 +109,14 @@ public class SwimLane {
 
 
 
-	public List<Story> getStories() {
+	public Set<Story> getStories() {
 		return stories;
 	}
 
 
 
 
-	public void setStories(List<Story> stories) {
+	public void setStories(Set<Story> stories) {
 		this.stories = stories;
 	}
 
