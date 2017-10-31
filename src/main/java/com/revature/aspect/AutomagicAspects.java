@@ -6,6 +6,7 @@ import java.util.Date;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.stereotype.Component;
@@ -26,11 +27,13 @@ public class AutomagicAspects {
 	}
 	
 	@Before("execution(* login(..))")
-	public void highjackPlays(JoinPoint jp) {
+	public void login(JoinPoint jp) {
 		//log something
 		String message = "hello world";
 		LOGGER.warn(message);
 		
 		System.out.println(jp.getSignature());
 	}
+	
+	
 }
