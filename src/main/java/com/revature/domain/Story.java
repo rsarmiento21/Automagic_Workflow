@@ -1,7 +1,6 @@
 package com.revature.domain;
 
 import java.sql.Timestamp;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -45,7 +44,7 @@ public class Story {
 	private Timestamp dateStoryCompleted;
 	
 	@OneToMany(mappedBy="story", fetch=FetchType.EAGER)
-	private List<Task> tasks;
+	private Set<Task> tasks;
 	
 	
 	
@@ -69,7 +68,7 @@ public class Story {
 
 
 	public Story(int id, SwimLane swimLane, String title, String description, int points, Timestamp dateStoryCompleted,
-			List<Task> tasks) {
+			Set<Task> tasks) {
 		super();
 		this.id = id;
 		this.swimLane = swimLane;
@@ -154,14 +153,14 @@ public class Story {
 
 
 
-	public List<Task> getTasks() {
+	public Set<Task> getTasks() {
 		return tasks;
 	}
 
 
 
 
-	public void setTasks(List<Task> tasks) {
+	public void setTasks(Set<Task> tasks) {
 		this.tasks = tasks;
 	}
 

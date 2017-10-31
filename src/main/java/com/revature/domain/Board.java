@@ -1,6 +1,5 @@
 package com.revature.domain;
 
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -12,8 +11,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import java.util.Set;
 
 @Entity
 @Table(name="BOARD")
@@ -31,7 +28,7 @@ public class Board {
 	
 	@OneToMany(fetch=FetchType.EAGER)
 	@JoinColumn(name="BD_ID")
-	private List<SwimLane> swimLanes;
+	private Set<SwimLane> swimLanes;
 	
 	public Board() {}
 	
@@ -46,7 +43,7 @@ public class Board {
 
 
 
-	public Board(int id, BoardUser owner, String name, List<SwimLane> swimLanes) {
+	public Board(int id, BoardUser owner, String name, Set<SwimLane> swimLanes) {
 		super();
 		this.id = id;
 		this.owner = owner;
@@ -82,13 +79,13 @@ public class Board {
 
 	
 	
-	public List<SwimLane> getSwimLanes() {
+	public Set<SwimLane> getSwimLanes() {
 		return swimLanes;
 	}
 
 
 
-	public void setSwimLanes(List<SwimLane> swimLanes) {
+	public void setSwimLanes(Set<SwimLane> swimLanes) {
 		this.swimLanes = swimLanes;
 	}
 
