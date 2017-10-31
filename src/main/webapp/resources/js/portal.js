@@ -34,6 +34,7 @@ angular.module("scrumApp", [])
 })
 
 .controller("loginCtrl", function($scope, dataService) {
+	$scope.error = false;
 	$scope.errorMessage = "";
 	$scope.submitted = false;
 	$scope.bu = {
@@ -63,6 +64,7 @@ angular.module("scrumApp", [])
 					} else {
 						$scope.errorMessage = "Error adding user.";
 					}
+					$scope.error = true;
 					$scope.submitted = false;
 				}
 		)
