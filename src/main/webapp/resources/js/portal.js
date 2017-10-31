@@ -11,25 +11,35 @@ angular.module("scrumApp", [])
 })
 
 .controller("loginCtrl", function($scope, dataService) {
+	$scope.errorMessage = "";
+	$scope.submitted = false;
 	$scope.bu = {
 		username: "",
 		password: ""
 	};
 	
 	$scope.login = function(bu) {
-		console.log("Preparing to login");
-		$scope.updateTask = dataService.login(bu);
+		if (!$scope.submitted) {
+			console.log("Preparing to login");
+			$scope.submitted = true;
+			setTimeout(dataService.login(bu, $scope), 3000);
+		}
 	}
 })
 
-.service("dataService", function($http, $q) {
-	this.login = function(bu) {
+.service("dataService", function($http, $q, $window) {
+	this.login = function(bu, $scope) {
 		var promise = $http.post("login", bu).then(
-				function(response) {
-					console.log(response.data);
+				function success(response) {
+					$window.location.href = "dummy";
 				},
-				function(error) {
-					console.log( $q.reject(error) );
+				function error(response) {
+					if (response.status == 409) {
+						$scope.errorMessage = response.data[0];
+					} else {
+						$scope.errorMessage = "Error adding user.";
+					}
+					$scope.submitted = false;
 				}
 		)
 	}
