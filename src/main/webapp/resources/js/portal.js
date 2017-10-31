@@ -4,9 +4,32 @@
 
 angular.module("scrumApp", [])
 
+.controller("mainCtrl", function($scope, $rootScope){
+	$scope.fragment = "login";
+	
+	$rootScope.$on("updateFragment", function(event, fragment) {
+        $scope.updateFragment(fragment);
+     });
+	
+	$scope.updateFragment = function(fragment) {
+		$scope.fragment = fragment;
+	}
+})
+
 .directive("scrumBody", function() {
+	
 	return {
-		templateUrl: "resources/html/loginAngular.html",
+		restrict: 'E',
+		scope: { fragment: "=" },
+	    link: function($scope) {
+	      $scope.$watch("fragment", function(fragment) {
+	        if (fragment && fragment.length) {
+	            $scope.dynamicTemplateUrl = 'resources/html/' + fragment + '.html';
+	        }
+	      });
+	    },
+		 
+	    template: '<ng-include src="dynamicTemplateUrl"></ng-include>'
 	};
 })
 
@@ -22,16 +45,18 @@ angular.module("scrumApp", [])
 		if (!$scope.submitted) {
 			console.log("Preparing to login");
 			$scope.submitted = true;
-			setTimeout(dataService.login(bu, $scope), 3000);
+			dataService.login(bu, $scope);
 		}
 	}
 })
 
-.service("dataService", function($http, $q, $window) {
+.service("dataService", function($http, $window, $rootScope) {
+	this.toggleLogin = 
 	this.login = function(bu, $scope) {
 		var promise = $http.post("login", bu).then(
 				function success(response) {
-					$window.location.href = "dummy";
+					$rootScope.$emit("toggleLogin", {});
+					$rootScope.$emit("updateFragment", "dummy");
 				},
 				function error(response) {
 					if (response.status == 409) {

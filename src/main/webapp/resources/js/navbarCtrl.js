@@ -10,6 +10,14 @@ angular.module("scrumApp")
 	};
 })
 
-.controller("navbarCtrl", function($scope) {
+.controller("navbarCtrl", function($scope, $rootScope) {
 	$scope.loggedIn = false;
+	
+	$rootScope.$on("toggleLogin", function() {
+        $scope.toggleLogin();
+     });
+	
+	$scope.toggleLogin = function() {
+		$scope.loggedIn = !$scope.loggedIn;
+	}
 })
