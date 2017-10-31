@@ -4,8 +4,8 @@
 
 angular.module("scrumApp", [])
 
-.controller("mainCtrl", function($scope, $rootScope){
-	$scope.fragment = "login";
+.controller("mainCtrl", function($scope, $rootScope, dataService){
+	$scope.fragment = dataService.isLoggedIn() ? "dummy" : "login";
 	
 	$rootScope.$on("updateFragment", function(event, fragment) {
         $scope.updateFragment(fragment);
