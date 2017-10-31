@@ -30,10 +30,10 @@ function loadLoginFragment(){
 function login(user){
 	var xhr = new XMLHttpRequest();
 	
-	var username = document.getElementById("u_name").value;
-	var password = document.getElementById("u_pass").value;
+	var usrn = document.getElementById("u_name").value;
+	var pwd = document.getElementById("u_pass").value;
 	
-	var user = {username: username, password: password};
+	var user = {username: usrn, password: pwd};
 	var json = JSON.stringify(user);
 	
 	xhr.onreadystatechange = function(){
@@ -41,12 +41,12 @@ function login(user){
 				var loggedIn = xhr.responseText;
 				document.getElementById("boardPlaceholder").innerHTML = loggedIn;
 				loadLogoutFragment();	//load the logout button
+				loadUserAcknowledgement();
 			}
 		
 	}
 	xhr.open("POST","../login",true);
-//	xhr.setRequestHeader('key',json);
-	xhr.setRequestHeader('Content-type','application/x-www-form-urlencoded')
+	xhr.setRequestHeader("Content-type", "application/json; charset=utf-8");
 	xhr.send(json);
 }
 
@@ -64,5 +64,37 @@ function loadLogoutFragment(){
 		
 	}
 	xhr.open("GET","html/logout.html",true);
+	xhr.send();
+}
+function loadUserAcknowledgement(){
+	var xhr = new XMLHttpRequest();
+	
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState == 4 && xhr.status == 200){
+				var userName = xhr.responseText;
+				if(userName != null){
+					document.getElementById("navbarPlaceholder").innerHTML = userName;
+					getUsername();
+				}
+		}
+		
+	}
+	xhr.open("GET","html/userAcknowledgement.html",true);
+	xhr.send();
+}
+function getUsername(){
+var xhr = new XMLHttpRequest();
+	
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState == 4 && xhr.status == 200){
+				var userName = xhr.responseText;
+				if(userName != null){
+					document.getElementById("navbarPlaceholder").innerHTML = userName;
+					
+				}
+		}
+		
+	}
+	xhr.open("GET","",true);
 	xhr.send();
 }

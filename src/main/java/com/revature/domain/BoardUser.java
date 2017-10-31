@@ -27,6 +27,27 @@ public class BoardUser {
 	private Set<Board> boards;
 	
 	public BoardUser() {}
+	
+	 
+
+	public BoardUser(int id, String username, String password, Set<Board> boards) {
+		super();
+		this.id = id;
+		this.username = username;
+		this.password = password;
+		this.boards = boards;
+	}
+
+
+
+	public BoardUser(int id, String username, String password) {
+		super();
+		this.id = id;
+		this.username = username;
+		this.password = password;
+	}
+
+
 
 	public int getId() {
 		return id;
@@ -62,6 +83,6 @@ public class BoardUser {
 
 	@Override
 	public String toString() {
-		return "BoardUser [id=" + id + ", username=" + username + ", password=" + password + ", boards=" + boards + "]";
+		return "BoardUser [id=" + id + ", username=" + username + ", password=" + password + "]";
 	}
 }

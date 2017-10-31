@@ -12,8 +12,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import java.util.Set;
-
 @Entity
 @Table(name="BOARD")
 public class Board {
@@ -33,6 +31,27 @@ public class Board {
 	private Set<SwimLane> swimLanes;
 	
 	public Board() {}
+	
+	
+
+	public Board(int id, BoardUser owner, String name) {
+		super();
+		this.id = id;
+		this.owner = owner;
+		this.name = name;
+	}
+
+
+
+	public Board(int id, BoardUser owner, String name, Set<SwimLane> swimLanes) {
+		super();
+		this.id = id;
+		this.owner = owner;
+		this.name = name;
+		this.swimLanes = swimLanes;
+	}
+
+
 
 	public int getId() {
 		return id;
@@ -58,9 +77,23 @@ public class Board {
 		this.name = name;
 	}
 
+	
+	
+	public Set<SwimLane> getSwimLanes() {
+		return swimLanes;
+	}
+
+
+
+	public void setSwimLanes(Set<SwimLane> swimLanes) {
+		this.swimLanes = swimLanes;
+	}
+
+
+
 	@Override
 	public String toString() {
-		return "Board [id=" + id + ", owner=" + owner.getId() + ", name=" + name + ", swimLanes=" + swimLanes + "]";
+		return "Board [id=" + id + ", owner=" + owner.getId() + ", name=" + name +"]";
 	}
 
 	

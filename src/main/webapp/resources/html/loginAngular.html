@@ -1,0 +1,7 @@
+<!DOCTYPE html>
+<form id="loginCtrl" data-ng-controller="loginCtrl">
+	<h4>Enter your information below:</h4>
+	Username: <input id="u_name" type="text" placeholder ="Enter username" data-ng-model="bu.username" required/><br>
+	Password: <input id="u_pass" type="password" placeholder="Enter password" data-ng-model="bu.password" required/><br>
+	<button id="loginBtn" class="btn btn-primary" data-ng-click="login(bu)">Log in</button>
+</form>

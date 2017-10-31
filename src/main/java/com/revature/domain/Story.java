@@ -41,7 +41,7 @@ public class Story {
 	private int points;
 	
 	@Column(name="ST_COMPLETED")
-	private String dateStoryCompleted;
+	private Timestamp dateStoryCompleted;
 	
 	@OneToMany(mappedBy="story", fetch=FetchType.EAGER)
 	private Set<Task> tasks;
@@ -51,10 +51,11 @@ public class Story {
 	public Story() {
 		super();
 	}
-	
+
 	
 
-	public Story(int id, SwimLane swimLane, String title, String description, int points, String dateStoryCompleted) {
+	public Story(int id, SwimLane swimLane, String title, String description, int points,
+			Timestamp dateStoryCompleted) {
 		super();
 		this.id = id;
 		this.swimLane = swimLane;
@@ -64,78 +65,114 @@ public class Story {
 		this.dateStoryCompleted = dateStoryCompleted;
 	}
 
-	public Story(int id, SwimLane swimLane, String title, String description, int points, Timestamp dateStoryCompleted) {
+
+
+	public Story(int id, SwimLane swimLane, String title, String description, int points, Timestamp dateStoryCompleted,
+			Set<Task> tasks) {
 		super();
 		this.id = id;
 		this.swimLane = swimLane;
 		this.title = title;
 		this.description = description;
 		this.points = points;
-		this.dateStoryCompleted = dateStoryCompleted.toString();
+		this.dateStoryCompleted = dateStoryCompleted;
+		this.tasks = tasks;
 	}
+
 
 
 	public int getId() {
 		return id;
 	}
 
+
+
 	public void setId(int id) {
 		this.id = id;
 	}
+
+
 
 	public SwimLane getSwimLane() {
 		return swimLane;
 	}
 
+
+
 	public void setSwimLane(SwimLane swimLane) {
 		this.swimLane = swimLane;
 	}
+
+
 
 	public String getTitle() {
 		return title;
 	}
 
+
+
 	public void setTitle(String title) {
 		this.title = title;
 	}
+
+
 
 	public String getDescription() {
 		return description;
 	}
 
+
+
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
+
 
 	public int getPoints() {
 		return points;
 	}
 
+
+
 	public void setPoints(int points) {
 		this.points = points;
 	}
 
-	public String getDateStoryCompleted() {
+
+
+	public Timestamp getDateStoryCompleted() {
 		return dateStoryCompleted;
 	}
 
-	public void setDateStoryCompleted(String dateStoryCompleted) {
+
+
+	public void setDateStoryCompleted(Timestamp dateStoryCompleted) {
 		this.dateStoryCompleted = dateStoryCompleted;
 	}
 
-	public void setDateStoryCompleted(Timestamp dateStoryCompleted) {
-		this.dateStoryCompleted = dateStoryCompleted.toString();
+
+
+	public Set<Task> getTasks() {
+		return tasks;
 	}
+
+
+
+
+	public void setTasks(Set<Task> tasks) {
+		this.tasks = tasks;
+	}
+
+
 
 	@Override
 	public String toString() {
 		return "Story [id=" + id + ", swimLane=" + swimLane.getId() + ", title=" + title + ", description=" + description
-				+ ", points=" + points + ", dateStoryCompleted=" + dateStoryCompleted + ", tasks=" + tasks + "]";
+				+ ", points=" + points + ", dateStoryCompleted=" + dateStoryCompleted +  "]";
 	}
 
-
-
 	
 	
-
+	
 }
