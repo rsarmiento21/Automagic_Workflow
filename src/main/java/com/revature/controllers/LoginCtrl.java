@@ -2,6 +2,9 @@ package com.revature.controllers;
 
 import java.util.Collections;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,12 +31,28 @@ public class LoginCtrl
 	
 	@RequestMapping(value="/login", method=RequestMethod.POST)
 	@ResponseBody
-	public ResponseEntity<Object> loginBoardUser(@RequestBody BoardUser bu) {
+	public ResponseEntity<Object> loginBoardUser(@RequestBody BoardUser bu, HttpServletRequest req) {
 		bu = authService.login(bu);
 		if (bu != null) {
+			HttpSession session = req.getSession(true);
+			session.setAttribute("user", bu);
 			return new ResponseEntity<>(HttpStatus.OK);
 		}else {
 			return new ResponseEntity<>(Collections.singletonList("Username/password incorrect."), HttpStatus.CONFLICT);
+		}
+		
+	}
+	
+	@RequestMapping(value="/logout")
+	@ResponseBody
+	public ResponseEntity<Object> logoutBoardUser(HttpServletRequest req) {
+		HttpSession session = req.getSession(false);
+		if (session != null) {
+			session.removeAttribute("user");
+			session.invalidate();
+			return new ResponseEntity<>(HttpStatus.OK);
+		}else {
+			return new ResponseEntity<>(Collections.singletonList("Non-existant session."), HttpStatus.CONFLICT);
 		}
 		
 	}
