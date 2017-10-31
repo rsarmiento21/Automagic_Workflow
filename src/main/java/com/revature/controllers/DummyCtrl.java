@@ -6,8 +6,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class DummyCtrl {
+	
 	@RequestMapping("/dummy")
 	public ModelAndView dummy() {
-		return new ModelAndView("/resources/html/dummy.html");
+		return new ModelAndView("/resources/dummy.txt");
 	}
 }
