@@ -70,6 +70,39 @@
 			<version>1.0.2</version>
 		</dependency>
 		
+		<!-- jUnit test dependencies -->
+		<!-- https://mvnrepository.com/artifact/junit/junit -->
+		<dependency>
+		    <groupId>junit</groupId>
+		    <artifactId>junit</artifactId>
+		    <version>4.12</version>
+		    <scope>test</scope>
+		</dependency>
+		
+		<dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>4.1.7.RELEASE</version>
+        </dependency>
+		
+		<!-- https://mvnrepository.com/artifact/javax.el/el-api -->
+		<dependency>
+		    <groupId>javax.el</groupId>
+		    <artifactId>el-api</artifactId>
+		    <version>2.2</version>
+		</dependency>
+		
+		<!-- AOP & Log4j -->
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-aspects</artifactId>
+	    </dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+		</dependency>
+		
+		<!-- jackson -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-core</artifactId>
@@ -78,5 +111,6 @@
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
 		</dependency>
+
 	</dependencies>
 </project>
