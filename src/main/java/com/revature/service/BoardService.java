@@ -85,10 +85,4 @@ public class BoardService {
 	public void deleteTask(Task t) {
 		dao.deleteTask(t);
 	}
-	
-	
-	
-	
-	
-  
 }
