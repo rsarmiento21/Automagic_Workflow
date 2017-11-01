@@ -56,7 +56,7 @@ angular.module("scrumApp", [])
 		var promise = $http.post("login", bu).then(
 				function success(response) {
 					$rootScope.$emit("toggleLogin", {});
-					$rootScope.$emit("updateFragment", "dummy");
+					$rootScope.$emit("updateFragment", "dropdown");
 				},
 				function error(response) {
 					if (response.status == 409) {
