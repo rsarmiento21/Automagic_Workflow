@@ -21,22 +21,16 @@ public class DropdownCtrl
 	
 	@RequestMapping("/dropdown")
 	@ResponseBody
-	public ResponseEntity<Object> populateBoardDropdown(HttpServletRequest req)
-	{
-		BoardUser bu = new BoardUser();
+	public ResponseEntity<Object> populateBoardDropdown(HttpServletRequest req) {
 		HttpSession session = req.getSession();
-		if(session != null)
-		{
-			if(session.getAttribute("user") != null)
-			{
-				bu = bo.getBoardUserById((BoardUser)session.getAttribute("user"));
-				if(bu != null)
-				{
+		if(session != null) {
+			BoardUser bu = (BoardUser) session.getAttribute("user");
+			if(bu != null) {
+				bu = bo.getBoardUserById(bu);
+				if(bu != null) {
 					return new ResponseEntity<>(bu,HttpStatus.OK);
 				}
-				
 			}
-			
 		}
 		return new ResponseEntity<>(HttpStatus.CONFLICT);
 	}
