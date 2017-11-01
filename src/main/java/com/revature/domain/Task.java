@@ -1,7 +1,5 @@
 package com.revature.domain;
 
-import java.sql.Timestamp;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 /*
  * TSK_ID
@@ -26,10 +26,10 @@ public class Task {
 	@Column(name="TSK_ID")
 	private int id;
 	
+	@JsonBackReference
 	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	@JoinColumn(name="ST_ID")
 	private Story story;
-		
 	
 	@Column(name="TSK_NAME")
 	private String name;
