@@ -1,5 +1,7 @@
 package com.revature.service;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -12,6 +14,7 @@ public class AuthService {
 	@Autowired
 	private Dao dao;
 
+	@Transactional
 	public BoardUser login(BoardUser usr) {
 		BoardUser out = dao.getBoardUserByUsername(usr);
 

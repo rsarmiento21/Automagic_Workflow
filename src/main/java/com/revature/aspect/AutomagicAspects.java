@@ -20,8 +20,8 @@ public class AutomagicAspects {
 	private final Logger LOGGER = Logger.getLogger(AutomagicAspects.class);
 	
 	static {
-		//sets a system property to make a new log each time
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HHmmss z");
+		//sets a system property to make a new log each time, per day
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd z");
 		System.setProperty("current.date", dateFormat.format(new Date()));
 	}
 	
