@@ -12,7 +12,6 @@ import org.aspectj.lang.annotation.Before;
 import org.springframework.stereotype.Component;
 
 
-//implement log4j
 
 @Aspect
 @Component("aspect")
@@ -33,6 +32,11 @@ public class AutomagicAspects {
 		LOGGER.warn(message);
 		
 		System.out.println(jp.getSignature());
+	}
+	
+	@AfterThrowing("execution(* something(..))")
+	public void someException(JoinPoint jp) {
+		
 	}
 	
 	
