@@ -32,7 +32,9 @@ public class DropdownCtrl
 				bu = bo.getBoardUserById((BoardUser)session.getAttribute("user"));
 				if(bu != null)
 				{
+					System.out.println("DropdownCtrl -GET");
 					return new ResponseEntity<>(bu,HttpStatus.OK);
+					
 				}
 				
 			}
