@@ -71,7 +71,7 @@ angular.module("scrumApp", [])
 	}
 	
 	this.isLoggedIn = function() {
-		var promise = $http.post("ajaxIsLoggedIn").then(
+		var promise = $http.get("ajaxIsLoggedIn").then(
 				function success(response) {
 					return true;
 				},
@@ -82,7 +82,19 @@ angular.module("scrumApp", [])
 	}
 	
 	this.logout = function() {
-		var promise = $http.post("logout").then(
+		var promise = $http.get("logout").then(
+				function success(response) {
+					$rootScope.$emit("toggleLogin", {});
+					$rootScope.$emit("updateFragment", "login");
+				},
+				function error(response) {
+					console.log(response.data[0]);
+				}
+		)
+	}
+	
+	this.getBoards = function() {
+		var promise = $http.get("dropdown").then(
 				function success(response) {
 					$rootScope.$emit("toggleLogin", {});
 					$rootScope.$emit("updateFragment", "login");
