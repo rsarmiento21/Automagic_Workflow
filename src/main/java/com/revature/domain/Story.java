@@ -13,6 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 //swimline
 
 //story
@@ -27,6 +29,7 @@ public class Story {
 	@Column(name="ST_ID")
 	private int id;
 	
+	@JsonBackReference
 	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	@JoinColumn(name="SL_ID")
 	private SwimLane swimLane;
