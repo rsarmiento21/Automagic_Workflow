@@ -12,6 +12,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 /*
  * SL_ID
 BD_ID
@@ -26,7 +28,7 @@ public class SwimLane {
 	@Column(name="SL_ID")
 	private int id;
 	
-
+	@JsonBackReference
 	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	@JoinColumn(name="BD_ID")
 	private Board board;

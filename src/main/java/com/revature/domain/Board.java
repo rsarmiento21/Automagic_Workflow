@@ -12,6 +12,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(name="BOARD")
 public class Board {
@@ -19,6 +21,7 @@ public class Board {
 	@Column(name="BD_ID")
 	private int id;
 	
+	@JsonBackReference
 	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	@JoinColumn(name="OWNER_ID")
 	private BoardUser owner;
@@ -93,7 +96,7 @@ public class Board {
 
 	@Override
 	public String toString() {
-		return "Board [id=" + id + ", owner=" + owner.getId() + ", name=" + name +"]";
+		return "Board [id=" + id + ", name=" + name +"]";
 	}
 
 	
