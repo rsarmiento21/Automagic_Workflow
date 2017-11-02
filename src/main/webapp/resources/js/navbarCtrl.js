@@ -10,7 +10,7 @@ angular.module("scrumApp")
 	};
 })
 
-.controller("navbarCtrl", function($scope, $rootScope, dataService) {
+.controller("navbarCtrl", function($scope, $rootScope, dataService,$http) {
 	$scope.loggedIn = dataService.isLoggedIn();
 	
 	$scope.logout = function() {
@@ -23,5 +23,16 @@ angular.module("scrumApp")
 	
 	$scope.toggleLogin = function() {
 		$scope.loggedIn = !$scope.loggedIn;
+	}
+	$scope.getBoards = function($scope) {
+		var promise = $http.get("dropdown").then(
+			function success(response) {
+				console.log(response.data);
+				$rootScope.boards = response.data;
+			},
+			function error(response) {
+				console.log(response.data);
+			}
+		)
 	}
 })

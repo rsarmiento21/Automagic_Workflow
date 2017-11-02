@@ -49,12 +49,15 @@ angular.module("scrumApp")
 		)
 	}
 	
-	ds.getBoards = function() {
+	ds.getBoards = function($scope) {
 		var promise = $http.get("dropdown").then(
 			function success(response) {
 				console.log(response.data);
+				root.$emit(response.data);
 			},
-			function error(response) {}
+			function error(response) {
+				console.log(response.data);
+			}
 		)
 	}
 	
