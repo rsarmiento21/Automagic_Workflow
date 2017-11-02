@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<div data-ng-controller="boardCtrl" class="container">
+	<!-- <table class="table table-bordered table-hover">
+		
+	</table> -->
+	
+	<form>
+		<input data-ng-model="id" type="number"/><br>
+		<button data-ng-click="getBoard(id)">Get Board</button>
+	</form>
+	<br><br>
+	{{board.name}}
+	<table>
+	<tr>
+		<td class="well" ng-repeat="swimLane in board.swimLanes" >
+			{{swimLane.name}}
+			<div ng-repeat="story in swimLane.stories">
+				<button class="button button-primary">({{story.points}}) {{story.title}}</button><br>
+			</div>
+		</td>
+	</tr>
+	</table>
+</div>

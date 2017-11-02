@@ -5,11 +5,15 @@
 angular.module("scrumApp", [])
 
 .controller("mainCtrl", function($scope, $rootScope, dataService){
-	$scope.fragment = dataService.isLoggedIn() ? "dummy" : "login";
+	$scope.fragment = "dummy";
+	
+	$scope.init = function() {
+		dataService.setLoadState();
+	}
 	
 	$rootScope.$on("updateFragment", function(event, fragment) {
         $scope.updateFragment(fragment);
-     });
+    });
 	
 	$scope.updateFragment = function(fragment) {
 		$scope.fragment = fragment;
