@@ -11,17 +11,23 @@ angular.module("scrumApp")
 })
 
 .controller("navbarCtrl", function($scope, $rootScope, dataService) {
-	$scope.loggedIn = dataService.isLoggedIn();
+	$scope.loggedIn = false;
+
+	$scope.init = function() {
+		dataService.isLoggedIn(response => $scope.loggedIn = response.data);
+	}
 	
 	$scope.logout = function() {
-		dataService.logout();
+		dataService.logout(
+				response => {
+					$scope.loggedIn = !$scope.loggedIn;
+					$rootScope.$emit("updateFragment", "login");
+				},
+				response => console.log(response.data[0])
+		);
 	}
 	
 	$rootScope.$on("toggleLogin", function() {
-        $scope.toggleLogin();
-     });
-	
-	$scope.toggleLogin = function() {
 		$scope.loggedIn = !$scope.loggedIn;
-	}
+    });
 })

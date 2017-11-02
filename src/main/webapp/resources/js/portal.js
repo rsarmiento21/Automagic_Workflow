@@ -8,7 +8,8 @@ angular.module("scrumApp", [])
 	$scope.fragment = "dummy";
 	
 	$scope.init = function() {
-		dataService.setLoadState();
+		dataService.isLoggedIn(response =>
+			$scope.fragment = response.data ? "board" : "login");
 	}
 	
 	$rootScope.$on("updateFragment", function(event, fragment) {
