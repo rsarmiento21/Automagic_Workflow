@@ -1,59 +1,81 @@
 /**
- * 
+ *  Angular JS for DataService service
  */
 
 angular.module("scrumApp")
 
 .service("dataService", function($http, $window, $rootScope) {
-	this.login = function(bu, $scope) {
+	var ds = this;
+	var root = $rootScope;
+	
+	ds.login = function(bu, $scope) {
 		var promise = $http.post("login", bu).then(
-				function success(response) {
-					$rootScope.$emit("toggleLogin", {});
-					$rootScope.$emit("updateFragment", "dummy");
-				},
-				function error(response) {
-					if (response.status == 409) {
-						$scope.errorMessage = response.data[0];
-					} else {
-						$scope.errorMessage = "Error adding user.";
-					}
-					$scope.error = true;
-					$scope.submitted = false;
+			function success(response) {
+				root.$emit("toggleLogin", {});
+				root.$emit("updateFragment", "board");
+			},
+			function error(response) {
+				if (response.status == 409) {
+					$scope.errorMessage = response.data[0];
+				} else {
+					$scope.errorMessage = "Error adding user.";
 				}
+				$scope.error = true;
+				$scope.submitted = false;
+			}
 		)
 	}
 	
-	this.isLoggedIn = function() {
+	ds.isLoggedIn = function() {
 		var promise = $http.get("ajaxIsLoggedIn").then(
-				function success(response) {
-					return true;
-				},
-				function error(response) {
-					return false;
-				}
+			function success(response) {
+				return response.data;
+			},
+			function error(response) {
+				return false;
+			}
 		)
 	}
 	
-	this.logout = function() {
+	ds.logout = function() {
 		var promise = $http.get("logout").then(
-				function success(response) {
-					$rootScope.$emit("toggleLogin", {});
-					$rootScope.$emit("updateFragment", "login");
-				},
-				function error(response) {
-					console.log(response.data[0]);
-				}
+			function success(response) {
+				root.$emit("toggleLogin", {});
+				root.$emit("updateFragment", "login");
+			},
+			function error(response) {
+				console.log(response.data[0]);
+			}
 		)
 	}
 	
-	this.getBoards = function() {
+	ds.getBoards = function() {
 		var promise = $http.get("dropdown").then(
-				function success(response) {
-					console.log(response.data);
-				},
-				function error(response) {
-					
-				}
+			function success(response) {
+				console.log(response.data);
+			},
+			function error(response) {}
 		)
+	}
+	
+	ds.getBoard = function(id) {
+		var promise = $http.get("ajax/board/" + id).then(
+			function success(response) {
+				root.$emit("loadBoard", response.data);
+			},
+			function error(response) {
+				console.log("Error! Board " + id + " not found!");
+				return null;
+			}
+		)
+	}
+	
+	ds.setLoadState = function() {
+		if (ds.isLoggedIn()) {
+			root.$emit("toggleLogin", {});
+			root.$emit("updateFragment", "board");
+		} else {
+			root.$emit("updateFragment", "login");
+		}
 	}
 })
