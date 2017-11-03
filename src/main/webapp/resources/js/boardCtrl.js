@@ -6,7 +6,7 @@ angular.module("scrumApp")
 
 .controller("boardCtrl", function($scope, $rootScope, dataService) {
 	$scope.id = 26;
-	$scope.board = {};
+	$scope.board = null;
 	
 	$scope.getBoard = function(id) {
 		dataService.getBoard(id,

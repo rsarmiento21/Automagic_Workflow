@@ -4,46 +4,55 @@
 		
 	</table> -->
 	
-	<form>
-		<input data-ng-model="id" type="number"/><br>
-		<button data-ng-click="getBoard(id)">Get Board</button>
-	</form>
-	<br><br>
-	{{board.name}}
-	<table>
-	<tr>
-		<td class="well" ng-repeat="swimLane in board.swimLanes" >
-			{{swimLane.name}}
-			<div ng-repeat="story in swimLane.stories">
-				<!-- Story button, with modal attachment -->
-				<button class="button button-primary" data-toggle="modal"
-					data-ng-attr-data-target="{{ '#modal' + story.id }}">({{story.points}}) {{story.title}}</button><br>
-				
-				<!-- Modal -->
-				<div class="modal fade" data-ng-attr-id="{{ 'modal' + story.id }}"
-					tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-				  <div class="modal-dialog" role="document">
-				    <div class="modal-content">
-				      <div class="modal-header">
-				        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				        <h4 class="modal-title" id="myModalLabel">{{story.title}}</h4>
-				      </div>
-				      <div class="modal-body">
-				        {{story.description}}
-				      </div>
-				      <ul>
-				      	<li data-ng-repeat="task in story.tasks">
-				      		<input type="checkbox" data-ng-checked="task.taskCompleted"/> {{task.name}}
-				      	</li>
-				      </ul>
-				      <div class="modal-footer">
-				        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				      </div>
-				    </div>
-				  </div>
-				</div>
-			</div>
-		</td>
-	</tr>
-	</table>
+	<div data-ng-hide="1">
+		<form>
+			<input data-ng-model="id" type="number"/><br>
+			<button data-ng-click="getBoard(id)">Get Board</button>
+		</form>
+		<br><br>
+	</div>
+	
+	<div data-ng-hide="board">
+		<h4>Select a board from the dropdown menu to view it</h4>
+	</div>
+	
+	<div data-ng-hide="!board">
+		<h4>{{board.name}}</h4>
+		<table><tr>
+			<td class="well" ng-repeat="swimLane in board.swimLanes" >
+				{{swimLane.name}}
+				<div ng-repeat="story in swimLane.stories">
+					<!-- Story button, with modal attachment -->
+					<button class="button button-primary" data-toggle="modal"
+						data-ng-attr-data-target="{{ '#modal' + story.id }}">({{story.points}}) {{story.title}}</button><br>
+					
+					<!-- Modal -->
+					<div class="modal fade" data-ng-attr-id="{{ 'modal' + story.id }}"
+						tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal"
+										aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+									<h4 class="modal-title" id="myModalLabel">{{story.title}}</h4>
+								</div>
+								<div class="modal-body">{{story.description}}</div>
+								<ul>
+									<li data-ng-repeat="task in story.tasks"><input
+										type="checkbox" data-ng-checked="task.taskCompleted" />
+										{{task.name}}</li>
+								</ul>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-default"
+										data-dismiss="modal">Close</button>
+								</div>
+							</div>
+						</div>
+					</div> <!-- modal -->
+				</div> <!-- stories -->
+			</td> <!-- swimLanes -->
+		</tr></table>
+	</div>
 </div>

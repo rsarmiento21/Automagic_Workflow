@@ -32,7 +32,6 @@ public class AjaxBoardCtrl {
 	@RequestMapping(value="/ajax/board/{id}")
 	@ResponseBody
 	public ResponseEntity<Object> getBoardById(@PathVariable("id") String s, HttpServletRequest req) {
-		System.out.println(s);
 		int id = Integer.parseInt(s);
 		HttpSession session = req.getSession(false);
 		if (session != null) {
