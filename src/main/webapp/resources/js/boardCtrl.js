@@ -18,6 +18,10 @@ angular.module("scrumApp")
         $scope.getBoard(id);
 	});
 	
+	$rootScope.$on("setBoard", function(event, json) {
+        $scope.board = json;
+	});
+	
 //	$scope.loadBoard = function(json) {
 //		console.log(json);
 //		$scope.board = json;

@@ -28,7 +28,9 @@ public class DropdownCtrl
 			if(bu != null) {
 				bu = bo.getBoardUserById(bu);
 				if(bu != null) {
-					return new ResponseEntity<>(bu,HttpStatus.OK);
+					System.out.println("DropdownCtrl -GET");
+					return new ResponseEntity<>(bu.getBoards(),HttpStatus.OK);
+					
 				}
 			}
 		}

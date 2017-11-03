@@ -15,7 +15,33 @@
 		<td class="well" ng-repeat="swimLane in board.swimLanes" >
 			{{swimLane.name}}
 			<div ng-repeat="story in swimLane.stories">
-				<button class="button button-primary">({{story.points}}) {{story.title}}</button><br>
+				<!-- Story button, with modal attachment -->
+				<button class="button button-primary" data-toggle="modal"
+					data-ng-attr-data-target="{{ '#modal' + story.id }}">({{story.points}}) {{story.title}}</button><br>
+				
+				<!-- Modal -->
+				<div class="modal fade" data-ng-attr-id="{{ 'modal' + story.id }}"
+					tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+				  <div class="modal-dialog" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				        <h4 class="modal-title" id="myModalLabel">{{story.title}}</h4>
+				      </div>
+				      <div class="modal-body">
+				        {{story.description}}
+				      </div>
+				      <ul>
+				      	<li data-ng-repeat="task in story.tasks">
+				      		<input type="checkbox" data-ng-checked="task.taskCompleted"/> {{task.name}}
+				      	</li>
+				      </ul>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				      </div>
+				    </div>
+				  </div>
+				</div>
 			</div>
 		</td>
 	</tr>

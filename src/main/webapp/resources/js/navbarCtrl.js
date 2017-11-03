@@ -11,10 +11,16 @@ angular.module("scrumApp")
 })
 
 .controller("navbarCtrl", function($scope, $rootScope, dataService) {
+	$scope.boards = {};
 	$scope.loggedIn = false;
-
+	
 	$scope.init = function() {
-		dataService.isLoggedIn(response => $scope.loggedIn = response.data);
+		dataService.isLoggedIn(response => {
+			if (response.data) {
+				$rootScope.$emit("toggleLogin", {});
+				$rootScope.$emit("loadDropdown", {});
+			}
+		});
 	}
 	
 	$scope.logout = function() {
@@ -30,4 +36,19 @@ angular.module("scrumApp")
 	$rootScope.$on("toggleLogin", function() {
 		$scope.loggedIn = !$scope.loggedIn;
     });
+	
+	$rootScope.$on("loadDropdown", function() {
+		$scope.getBoards();
+    });
+	
+	$scope.getBoards = function() {
+		dataService.getBoards(
+			response => $scope.boards = response.data,
+			response => console.log(response.data)
+		);
+	}
+	
+	$scope.loadBoard = function(board) {
+		$rootScope.$emit("setBoard", board);
+	}
 })

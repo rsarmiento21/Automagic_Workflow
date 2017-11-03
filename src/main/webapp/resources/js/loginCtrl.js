@@ -21,6 +21,7 @@ angular.module("scrumApp")
 			dataService.login(bu,
 				response => {
 					$rootScope.$emit("toggleLogin", {});
+					$rootScope.$emit("loadDropdown", {});
 					$rootScope.$emit("updateFragment", "board");
 				},
 				response => {
