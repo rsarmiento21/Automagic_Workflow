@@ -4,95 +4,43 @@
 
 angular.module("scrumApp")
 
-.service("dataService", function($http, $window, $rootScope) {
-	var ds = this;
-	var root = $rootScope;
-	
-	ds.login = function(bu, $scope) {
-		var promise = $http.post("login", bu).then(
-			function success(response) {
-				root.$emit("toggleLogin", {});
-				root.$emit("updateFragment", "board");
-			},
-			function error(response) {
-				if (response.status == 409) {
-					$scope.errorMessage = response.data[0];
-				} else {
-					$scope.errorMessage = "Error adding user.";
-				}
-				$scope.error = true;
-				$scope.submitted = false;
-			}
-		)
+.service("dataService", function($http, $q) {
+	this.login = function(bu, success, failure) {
+		$http.post("login", bu).then(success, failure);
+	}
+
+	this.isLoggedIn = function(callback) {
+		$http.get("ajax/isLoggedIn").then(callback);
 	}
 	
-	ds.isLoggedIn = function() {
-		var promise = $http.get("ajaxIsLoggedIn").then(
-			function success(response) {
-				return response.data;
-			},
-			function error(response) {
-				return false;
-			}
-		)
+	this.logout = function(success, failure) {
+		$http.get("logout").then(success, failure);
 	}
 	
-	ds.logout = function() {
-		var promise = $http.get("logout").then(
-			function success(response) {
-				root.$emit("toggleLogin", {});
-				root.$emit("updateFragment", "login");
-			},
-			function error(response) {
-				console.log(response.data[0]);
-			}
-		)
+	this.getBoards = function(success, failure) {
+		var promise = $http.get("ajax/boards").then(success, failure);
 	}
 	
-	ds.getBoards = function($scope) {
-		var promise = $http.get("dropdown").then(
-			function success(response) {
-				console.log(response.data);
-				root.$emit(response.data);
-			},
-			function error(response) {
-				console.log(response.data);
-			}
-		)
+	this.getBoard = function(id, success, failure) {
+		$http.get("ajax/board/" + id).then(success, failure);
 	}
 	
-	ds.getBoard = function(id) {
-		var promise = $http.get("ajax/board/" + id).then(
-			function success(response) {
-				root.$emit("loadBoard", response.data);
-			},
-			function error(response) {
-				console.log("Error! Board " + id + " not found!");
-				return null;
-			}
-		)
+	
+	this.createSwimLane = function(name, boardId, success, failure) {
+		$http.get("ajax/swimlane/create/"+name+"/"+boardId).then(success, failure);
 	}
 	
-	ds.setLoadState = function() {
-		if (ds.isLoggedIn()) {
-			root.$emit("toggleLogin", {});
-			root.$emit("updateFragment", "board");
-		} else {
-			root.$emit("updateFragment", "login");
-		}
+	this.deleteSwimLane = function(swimLaneId, success, failure) {
+		$http.get("ajax/swimlane/delete/"+swimLaneId).then(success,failure);
 	}
+
+//	ds.setLoadState = function() {
+//		if (ds.isLoggedIn()) {
+//			root.$emit("toggleLogin", {});
+//			root.$emit("updateFragment", "board");
+//		} else {
+//			root.$emit("updateFragment", "login");
+//		}
+//	}
 	
-	ds.createSwimLane = function(name, boardId) {
-		console.log("BEFORE PROMISE");
-		var promise = $http.get("ajax/swimlane/create/" + name).then(
-			function success(response) {
-//				root.$emit("")
-				//just log for now, testing
-				console.log("success:test create swimlane");
-			},
-			function error(response) {
-				console.log("fail:test create swimlane");
-			}
-		)
-	}
 })
