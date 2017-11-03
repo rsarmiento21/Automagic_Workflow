@@ -4,7 +4,8 @@
 
 angular.module("scrumApp")
 
-.controller("loginCtrl", function($scope, dataService) {
+.controller("loginCtrl", function($scope, $rootScope, dataService) {
+	
 	$scope.error = false;
 	$scope.errorMessage = "";
 	$scope.submitted = false;
@@ -15,9 +16,21 @@ angular.module("scrumApp")
 	
 	$scope.login = function(bu) {
 		if (!$scope.submitted) {
-			console.log("Preparing to login");
 			$scope.submitted = true;
-			dataService.login(bu, $scope);
+			
+			dataService.login(bu,
+				response => {
+					$rootScope.$emit("toggleLogin", {});
+					$rootScope.$emit("loadDropdown", {});
+					$rootScope.$emit("updateFragment", "board");
+				},
+				response => {
+					$scope.errorMessage = (response.status == 409) ?
+							response.data[0] : "Error fetching user. Please try again.";
+					$scope.error = true;
+					$scope.submitted = false;
+				}
+			);
 		}
 	}
 })

@@ -14,8 +14,8 @@ import com.revature.domain.Board;
 import com.revature.domain.BoardUser;
 
 @RestController
-public class AjaxBoardUserCtrl {
-	@RequestMapping(value="/ajaxIsLoggedIn")
+public class AjaxUserCtrl {
+	@RequestMapping(value="/ajax/isLoggedIn")
 	@ResponseBody
 	public ResponseEntity<Object> isLoggedIn(HttpServletRequest req) {
 		HttpSession session = req.getSession(false);
@@ -26,25 +26,6 @@ public class AjaxBoardUserCtrl {
 			}
 		}
 		return new ResponseEntity<>(new Boolean(false), HttpStatus.OK);
-	}
-	
-	@RequestMapping(value="/ajax/board/{id}")
-	@ResponseBody
-	public ResponseEntity<Object> getBoardById(@PathVariable("id") String s, HttpServletRequest req) {
-		System.out.println(s);
-		int id = Integer.parseInt(s);
-		HttpSession session = req.getSession(false);
-		if (session != null) {
-			BoardUser bu = (BoardUser) session.getAttribute("user");
-			if (bu != null) {
-				for (Board bd : bu.getBoards()) {
-					if (id == bd.getId()) {
-						return new ResponseEntity<>(bd, HttpStatus.OK);
-					}
-				}
-			}
-		}
-		return new ResponseEntity<>(HttpStatus.CONFLICT);
 	}
 	
 }
