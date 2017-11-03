@@ -81,4 +81,18 @@ angular.module("scrumApp")
 			root.$emit("updateFragment", "login");
 		}
 	}
+	
+	ds.createSwimLane = function(name, boardId) {
+		console.log("BEFORE PROMISE");
+		var promise = $http.get("ajax/swimlane/create/" + name).then(
+			function success(response) {
+//				root.$emit("")
+				//just log for now, testing
+				console.log("success:test create swimlane");
+			},
+			function error(response) {
+				console.log("fail:test create swimlane");
+			}
+		)
+	}
 })

@@ -31,7 +31,7 @@ public class AutomagicAspects {
 		String message = "hello world";
 		LOGGER.warn(message);
 		
-		System.out.println(jp.getSignature());
+//		System.out.println(jp.getSignature());
 	}
 	
 	@AfterThrowing("execution(* something(..))")

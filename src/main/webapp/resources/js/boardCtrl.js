@@ -20,4 +20,9 @@ angular.module("scrumApp")
 		console.log(json);
 		$scope.board = json;
 	}
+	
+	$scope.createSwimLane = function(name, boardId) {
+		console.log("TRYING TO CREATE SWIM LANE");
+		dataService.createSwimLane(name, boardId);
+	}
 })
