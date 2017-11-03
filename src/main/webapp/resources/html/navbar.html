@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<div data-ng-controller="navbarCtrl">
+<div data-ng-controller="navbarCtrl" data-ng-init="init()">
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul data-ng-hide="!loggedIn" class="nav navbar-nav">
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" data-ng-click="getBoards()">Boards <span class="caret"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Boards <span class="caret"></span></a>
           <ul id="boardDropdown" class="dropdown-menu">
             <li><a href="#">Create New Board</a></li>
-            <li data-ng-repeat = "board in boards"><a href="#">{{board.name}}</a></li>
+            <li data-ng-repeat = "board in boards"><a data-ng-click="loadBoard(board)">{{board.name}}</a></li>
           </ul>
         </li>
       </ul>
