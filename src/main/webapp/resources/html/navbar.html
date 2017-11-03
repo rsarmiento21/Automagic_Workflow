@@ -9,7 +9,7 @@
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" data-ng-click="getBoards()">Boards <span class="caret"></span></a>
           <ul id="boardDropdown" class="dropdown-menu">
             <li><a href="#">Create New Board</a></li>
-            <li data-ng-repeat = "board in boards"><a href="#">{{board.name}}</a></li>
+            <li data-ng-repeat = "board in boards"data-ng-click="loadBoard({{board.id}})">{{board.name}}</li>
           </ul>
         </li>
       </ul>

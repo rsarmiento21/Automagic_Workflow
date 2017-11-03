@@ -35,4 +35,8 @@ angular.module("scrumApp")
 			}
 		)
 	}
+	$scope.loadBoard = function(id){
+		console.log(id);
+		$rootScope.$emit("loadBoard", id);
+	}
 })
