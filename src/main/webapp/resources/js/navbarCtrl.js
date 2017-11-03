@@ -51,4 +51,8 @@ angular.module("scrumApp")
 	$scope.loadBoard = function(board) {
 		$rootScope.$emit("setBoard", board);
 	}
+	$scope.loadBoard = function(id){
+		console.log(id);
+		$rootScope.$emit("loadBoard", id);
+	}
 })
