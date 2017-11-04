@@ -25,6 +25,7 @@ angular.module("scrumApp")
 		$http.get("ajax/board/" + id).then(success, failure);
 	}
 	
+
 	
 	this.createSwimLane = function(name, boardId, success, failure) {
 		$http.get("ajax/swimlane/create/"+name+"/"+boardId).then(success, failure);
@@ -42,5 +43,10 @@ angular.module("scrumApp")
 //			root.$emit("updateFragment", "login");
 //		}
 //	}
+
+	this.addNewTask = function(newTask, success, failure) {
+		$http.post("ajax/task/new", newTask).then(success, failure);
+	}
+
 	
 })
