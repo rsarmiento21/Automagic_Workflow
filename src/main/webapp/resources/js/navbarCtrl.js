@@ -13,6 +13,10 @@ angular.module("scrumApp")
 .controller("navbarCtrl", function($scope, $rootScope, dataService) {
 	$scope.boards = {};
 	$scope.loggedIn = false;
+	//set board to create
+	$scope.b = {
+			name: ""
+	};
 	
 	$scope.init = function() {
 		dataService.isLoggedIn(response => {
@@ -54,5 +58,13 @@ angular.module("scrumApp")
 	$scope.loadBoard = function(id){
 		console.log(id);
 		$rootScope.$emit("loadBoard", id);
+	}
+	//create board
+	$scope.createBoard = function(b) {
+		if (!$scope.submitted) {
+			//console.log("creating board");
+			$scope.submitted = true;
+			dataService.createBoard(b, $scope);
+		}
 	}
 })

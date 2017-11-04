@@ -25,6 +25,19 @@ angular.module("scrumApp")
 		$http.get("ajax/board/" + id).then(success, failure);
 	}
 	
+	//create board methods
+	
+	this.createBoard = function(b, $scope){
+		console.log("Creating stuff")
+		var promise = $http.post("createBoard", b).then(
+			function success (response){
+				root.$emit("updateFragment", "board");
+			}	
+		)			
+	}
+	
+	
+	
 //	ds.setLoadState = function() {
 //		if (ds.isLoggedIn()) {
 //			root.$emit("toggleLogin", {});
