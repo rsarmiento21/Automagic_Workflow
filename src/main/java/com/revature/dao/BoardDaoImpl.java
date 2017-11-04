@@ -48,10 +48,11 @@ public class BoardDaoImpl implements Dao {
 	}
 
 	@Override
-	public void createTask(Task t) {
+	public Task createTask(Task t) {
 		// TODO Auto-generated method stub
 		Session session = sessionFactory.getCurrentSession();
-		session.save(t);
+		System.out.println(session.save(t));
+		return t;
 	}
 	
 	

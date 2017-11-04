@@ -25,13 +25,8 @@ angular.module("scrumApp")
 		$http.get("ajax/board/" + id).then(success, failure);
 	}
 	
-//	ds.setLoadState = function() {
-//		if (ds.isLoggedIn()) {
-//			root.$emit("toggleLogin", {});
-//			root.$emit("updateFragment", "board");
-//		} else {
-//			root.$emit("updateFragment", "login");
-//		}
-//	}
+	this.addNewTask = function(newTask, success, failure) {
+		$http.post("ajax/task/new", newTask).then(success, failure);
+	}
 	
 })

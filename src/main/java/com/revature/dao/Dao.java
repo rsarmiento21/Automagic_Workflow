@@ -12,7 +12,7 @@ public interface Dao {
 	public void createNewBoardUser(BoardUser bu);
 	public void createSwimLane(SwimLane sl);
 	public void createStory(Story s);
-	public void createTask(Task t);
+	public Task createTask(Task t);
 	
 	//READ
 	public BoardUser getBoardUserById(BoardUser bu);

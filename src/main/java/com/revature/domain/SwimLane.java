@@ -29,14 +29,14 @@ public class SwimLane {
 	private int id;
 	
 	@JsonBackReference
-	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="BD_ID")
 	private Board board;
 	
 	@Column(name="SL_NAME")
 	private String name;
 	
-	@OneToMany(mappedBy="swimLane", fetch=FetchType.EAGER)
+	@OneToMany(mappedBy="swimLane", cascade=CascadeType.REMOVE, fetch=FetchType.EAGER)
 	private Set<Story> stories;
 	
 	

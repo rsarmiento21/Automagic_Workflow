@@ -2,6 +2,7 @@ package com.revature.domain;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -23,7 +24,7 @@ public class BoardUser {
 	@Column(name="BU_PASSWORD")
 	private String password;
 	
-	@OneToMany(mappedBy="owner", fetch=FetchType.EAGER)
+	@OneToMany(mappedBy="owner", cascade=CascadeType.REMOVE, fetch=FetchType.EAGER)
 	private Set<Board> boards;
 	
 	public BoardUser() {}

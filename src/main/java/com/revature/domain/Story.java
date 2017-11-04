@@ -30,7 +30,7 @@ public class Story {
 	private int id;
 	
 	@JsonBackReference
-	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="SL_ID")
 	private SwimLane swimLane;
 	
@@ -46,7 +46,7 @@ public class Story {
 	@Column(name="ST_COMPLETED")
 	private Timestamp dateStoryCompleted;
 	
-	@OneToMany(mappedBy="story", fetch=FetchType.EAGER)
+	@OneToMany(mappedBy="story", cascade=CascadeType.REMOVE, fetch=FetchType.EAGER)
 	private Set<Task> tasks;
 	
 	

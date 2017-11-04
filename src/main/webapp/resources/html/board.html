@@ -4,14 +4,6 @@
 		
 	</table> -->
 	
-	<div data-ng-hide="1">
-		<form>
-			<input data-ng-model="id" type="number"/><br>
-			<button data-ng-click="getBoard(id)">Get Board</button>
-		</form>
-		<br><br>
-	</div>
-	
 	<div data-ng-hide="board">
 		<h4>Select a board from the dropdown menu to view it</h4>
 	</div>
@@ -23,7 +15,7 @@
 				{{swimLane.name}}
 				<div ng-repeat="story in swimLane.stories">
 					<!-- Story button, with modal attachment -->
-					<button class="button button-primary" data-toggle="modal"
+					<button class="button button-primary" data-toggle="modal" data-ng-click="setNewTaskStory(story)"
 						data-ng-attr-data-target="{{ '#modal' + story.id }}">({{story.points}}) {{story.title}}</button><br>
 					
 					<!-- Modal -->
@@ -38,15 +30,24 @@
 									</button>
 									<h4 class="modal-title" id="myModalLabel">{{story.title}}</h4>
 								</div>
-								<div class="modal-body">{{story.description}}</div>
-								<ul>
-									<li data-ng-repeat="task in story.tasks"><input
-										type="checkbox" data-ng-checked="task.taskCompleted" />
-										{{task.name}}</li>
-								</ul>
+								<div class="modal-body">
+									<h5>Description</h5>
+										&emsp;{{story.description}}<br><br>
+									<h5>Tasks</h5>
+										<div data-ng-if="story.tasks.length == 0">&emsp;No tasks yet</div>
+										<div data-ng-repeat="task in story.tasks">&emsp;<input
+											type="checkbox" data-ng-checked="task.taskCompleted" />
+											{{task.name}}</div>
+										<br>
+										<form>
+											&emsp;
+											<input type="text" data-ng-model="newTask.name" required/>
+											<button class="btn btn-default" data-ng-click="addNewTask(newTask)">Add Task</button>
+										</form>
+								</div>
 								<div class="modal-footer">
 									<button type="button" class="btn btn-default"
-										data-dismiss="modal">Close</button>
+										data-dismiss="modal" data-ng-click="resetNewTask()">Close</button>
 								</div>
 							</div>
 						</div>

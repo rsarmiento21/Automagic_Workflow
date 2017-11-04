@@ -1,6 +1,5 @@
 package com.revature.domain;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -27,7 +26,7 @@ public class Task {
 	private int id;
 	
 	@JsonBackReference
-	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="ST_ID")
 	private Story story;
 	
@@ -111,9 +110,12 @@ public class Task {
 	}
 
 
+
+
 	@Override
 	public String toString() {
-		return "Task [id=" + id + ", story=" + story.getId() + ", name=" + name + "]";
-
+		return "Task [id=" + id + ", story=" + story.getId() + ", name=" + name + ", taskCompleted=" + taskCompleted + "]";
 	}
+	
+	
 }

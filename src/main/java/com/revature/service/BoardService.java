@@ -28,8 +28,8 @@ public class BoardService {
 	public void createStory(Story s) {
 		dao.createStory(s);
 	}
-	public void createTask(Task t) {
-		dao.createTask(t);
+	public Task createTask(Task t) {
+		return dao.createTask(t);
 	}
 	
 	//READ
