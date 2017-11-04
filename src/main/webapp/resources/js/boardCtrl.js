@@ -25,24 +25,4 @@ angular.module("scrumApp")
 	$rootScope.$on("setBoard", function(event, json) {
         $scope.board = json;
 	});
-	
-	$scope.addNewTask = function(newTask, story) {
-		dataService.addNewTask(newTask,
-				response => {
-					console.log("success!");
-					console.log(response.data);
-					story.tasks.push(response.data);
-					$scope.resetNewTask();
-				},
-				response => console.log("oh nooo!"));
-	}
-	
-	$scope.setNewTaskStory = function(story) {
-		$scope.newTask.story = story;
-	}
-	
-	$scope.resetNewTask = function() {
-		$scope.newTask.name = "";
-		$scope.newTask.story = null;
-	}
 })
