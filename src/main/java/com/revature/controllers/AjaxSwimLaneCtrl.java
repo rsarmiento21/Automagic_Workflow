@@ -41,6 +41,8 @@ public class AjaxSwimLaneCtrl {
 				sl.setName(name);
 				
 				boardService.createSwimLane(sl);
+				bu = boardService.getBoardUserById(bu);
+				session.setAttribute("user", bu);
 			}
 		}
 		
@@ -59,6 +61,29 @@ public class AjaxSwimLaneCtrl {
 				sl.setId(swimLaneId);
 				sl = boardService.getSwimLaneById(sl);
 				boardService.deleteSwimLane(sl);
+				
+				bu = boardService.getBoardUserById(bu);
+				session.setAttribute("user", bu);
+			}
+		}
+	}
+	
+	@RequestMapping(value="ajax/swimlane/edit/{swimLaneId}/{updatedName}")
+	@ResponseBody
+	public void editSwimLane(@PathVariable("updatedName") String updatedName, @PathVariable("swimLaneId") String swimLaneIdString, HttpServletRequest req) {
+		int swimLaneId = Integer.parseInt(swimLaneIdString);
+		
+		HttpSession session = req.getSession(false);
+		if(session != null) {
+			BoardUser bu = (BoardUser) session.getAttribute("user");
+			if(bu != null) {
+				SwimLane sl = new SwimLane();
+				sl.setId(swimLaneId);
+				sl = boardService.getSwimLaneById(sl);
+				sl.setName(updatedName);
+				boardService.updateSwimLane(sl);
+				bu = boardService.getBoardUserById(bu);
+				session.setAttribute("user", bu);
 			}
 		}
 	}

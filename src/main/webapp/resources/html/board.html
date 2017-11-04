@@ -18,7 +18,23 @@
 		<h4>{{board.name}}</h4>
 		<table><tr>
 			<td class="well" ng-repeat="swimLane in board.swimLanes" >
-				<button data-ng-click="deleteSwimLane(swimLane.id)">Delete</button>
+				<button data-ng-click="deleteSwimLane(swimLane.id)">Delete</button><br>
+				
+				<button class="button button-primary" data-toggle="modal" data-ng-attr-data-target=" {{ '#modal' + 'swimLane' + swimLane.id }}">Edit</button>
+				
+				<div class="modal fade" data-ng-attr-id="{{ 'modal' + 'swimLane' + swimLane.id }}"
+					tabindex="-1" role="dialog" aria-labeledby="myModallabel">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-body">
+								{{swimLane.name}}
+								<input data-ng-model="updatedName" type="text"/><br>
+								<button class="button button-primary" data-ng-click="editSwimLane(swimLane.id,updatedName)">Save</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				
 				{{swimLane.name}}
 				<div ng-repeat="story in swimLane.stories">
 					<!-- Story button, with modal attachment -->

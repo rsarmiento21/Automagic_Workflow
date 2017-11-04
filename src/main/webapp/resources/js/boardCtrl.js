@@ -42,6 +42,10 @@ angular.module("scrumApp")
 	$scope.deleteSwimLane = function(swimLaneId) {
 		dataService.deleteSwimLane(swimLaneId);
 	}
+	
+	$scope.editSwimLane = function(swimLaneId, updatedName) {
+		dataService.editSwimLane(swimLaneId, updatedName);
+	}
 
 	$scope.addNewTask = function(newTask, story) {
 		dataService.addNewTask(newTask,

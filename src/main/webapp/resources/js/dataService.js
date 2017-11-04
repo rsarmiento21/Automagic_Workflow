@@ -28,11 +28,15 @@ angular.module("scrumApp")
 
 	
 	this.createSwimLane = function(name, boardId, success, failure) {
-		$http.get("ajax/swimlane/create/"+name+"/"+boardId).then(success, failure);
+		$http.post("ajax/swimlane/create/"+name+"/"+boardId).then(success, failure);
 	}
 	
 	this.deleteSwimLane = function(swimLaneId, success, failure) {
-		$http.get("ajax/swimlane/delete/"+swimLaneId).then(success,failure);
+		$http.post("ajax/swimlane/delete/"+swimLaneId).then(success,failure);
+	}
+	
+	this.editSwimLane = function(swimLaneId, updatedName, success, failure) {
+		$http.post("ajax/swimlane/edit/"+swimLaneId+"/"+updatedName).then(success,failure);
 	}
 
 //	ds.setLoadState = function() {
