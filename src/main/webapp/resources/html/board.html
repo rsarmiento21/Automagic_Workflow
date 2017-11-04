@@ -3,68 +3,89 @@
 	<!-- <table class="table table-bordered table-hover">
 		
 	</table> -->
-	
+
 	<div data-ng-hide="board">
 		<h4>Select a board from the dropdown menu to view it</h4>
 	</div>
-	
+
 	<div data-ng-hide="!board">
 		<h4>{{board.name}}</h4>
 		<button data-ng-click="loadRenameBoard()">Edit</button>
-		<div id="renameBoard"></div>
-		<table><tr>
-			<td class="well" ng-repeat="swimLane in board.swimLanes" >
-				{{swimLane.name}}
-				<div ng-repeat="story in swimLane.stories">
-					<!-- Story button, with modal attachment -->
-					<button class="button button-primary" data-toggle="modal" data-ng-click="setNewTaskStory(story)"
-						data-ng-attr-data-target="{{ '#modal' + story.id }}">({{story.points}}) {{story.title}}</button><br>
-					
-					<!-- Modal -->
-					<div class="modal fade" data-ng-attr-id="{{ 'modal' + story.id }}"
-						tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-						<div class="modal-dialog" role="document">
-							<div class="modal-content">
-								<div class="modal-header">
-									<button type="button" class="close" data-dismiss="modal"
-										aria-label="Close">
-										<span aria-hidden="true">&times;</span>
-									</button>
-									<h4 class="modal-title" id="myModalLabel">{{story.title}}</h4>
-								</div>
-								<div class="modal-body">
-									<h5>Description</h5>
-										&emsp;{{story.description}}<br><br>
-									<h5>Tasks</h5>
-										<div data-ng-if="story.tasks.length == 0">&emsp;No tasks yet</div>
-										<div data-ng-repeat="task in story.tasks" data-ng-controller="taskCtrl" data-ng-init="taskInit(task)">
-											&emsp;
-											<input type="checkbox" data-ng-model="thisTask.taskCompleted" data-ng-click="check()" />
-											<span data-ng-hide="editing" data-ng-click="edit(thisTask)">
-												{{thisTask.name}}
-											</span>
-											<form class="form-inline" data-ng-if="editing">
+		<div id="renameBoard" data-ng-hide = "">
+			<p>Enter new name here:</p>
+			<input type="text" id="renameBoardField" placeholder="{{board.name}}"
+				required />
+			<button id="renameButton" data-ng-click="editBoard(board.id)">Submit</button>
+		</div>
+		<table>
+			<tr>
+				<td class="well" ng-repeat="swimLane in board.swimLanes">
+					{{swimLane.name}}
+					<div ng-repeat="story in swimLane.stories">
+						<!-- Story button, with modal attachment -->
+						<button class="button button-primary" data-toggle="modal"
+							data-ng-click="setNewTaskStory(story)"
+							data-ng-attr-data-target="{{ '#modal' + story.id }}">({{story.points}})
+							{{story.title}}</button>
+						<br>
+
+						<!-- Modal -->
+						<div class="modal fade" data-ng-attr-id="{{ 'modal' + story.id }}"
+							tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal"
+											aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+										<h4 class="modal-title" id="myModalLabel">{{story.title}}</h4>
+									</div>
+									<div class="modal-body">
+										<h5>Description</h5>
+										&emsp;{{story.description}}<br>
+										<br>
+										<h5>Tasks</h5>
+										<div data-ng-if="story.tasks.length == 0">&emsp;No tasks
+											yet</div>
+										<div data-ng-repeat="task in story.tasks"
+											data-ng-controller="taskCtrl" data-ng-init="taskInit(task)">
+											&emsp; <input type="checkbox"
+												data-ng-model="thisTask.taskCompleted"
+												data-ng-click="check()" /> <span data-ng-hide="editing"
+												data-ng-click="edit(thisTask)"> {{thisTask.name}} </span>
+											<form class="form-inline" data-ng-if="editing" action="">
 												<input type="text" data-ng-model="thisTask.name" />
-												<button type="button" class="btn btn-success" data-ng-click="save()"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></button>
-												<button type="button" class="btn btn-danger" data-ng-click="reset()"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+												<button type="button" class="btn btn-success"
+													data-ng-click="save()">
+													<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+												</button>
+												<button type="button" class="btn btn-danger"
+													data-ng-click="reset()">
+													<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+												</button>
 											</form>
 										</div>
 										<br>
-										<form>
-											&emsp;
-											<input type="text" data-ng-model="newTask.name" required/>
-											<button class="btn btn-default" data-ng-click="addNewTask(newTask, story)">Add Task</button>
+										<form action="">
+											&emsp; <input type="text" data-ng-model="newTask.name"
+												required />
+											<button class="btn btn-default"
+												data-ng-click="addNewTask(newTask, story)">Add Task</button>
 										</form>
-								</div>
-								<div class="modal-footer">
-									<button type="button" class="btn btn-default"
-										data-dismiss="modal" data-ng-click="resetNewTask()">Close</button>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-default"
+											data-dismiss="modal" data-ng-click="resetNewTask()">Close</button>
+									</div>
 								</div>
 							</div>
 						</div>
-					</div> <!-- modal -->
-				</div> <!-- stories -->
-			</td> <!-- swimLanes -->
-		</tr></table>
+						<!-- modal -->
+					</div> <!-- stories -->
+				</td>
+				<!-- swimLanes -->
+			</tr>
+		</table>
 	</div>
 </div>
