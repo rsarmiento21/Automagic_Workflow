@@ -5,8 +5,12 @@
 angular.module("scrumApp")
 
 .controller("boardCtrl", function($scope, $rootScope, dataService) {
-	$scope.id = 26;
 	$scope.board = null;
+	$scope.newTask = {
+				name: "",
+				taskCompleted: 0,
+				story: null
+			};
 	
 	$scope.getBoard = function(id) {
 		dataService.getBoard(id,
@@ -26,8 +30,23 @@ angular.module("scrumApp")
 		
 	}
 	
-//	$scope.loadBoard = function(json) {
-//		console.log(json);
-//		$scope.board = json;
-//	}
+	$scope.addNewTask = function(newTask, story) {
+		dataService.addNewTask(newTask,
+				response => {
+					console.log("success!");
+					console.log(response.data);
+					story.tasks.push(response.data);
+					$scope.resetNewTask();
+				},
+				response => console.log("oh nooo!"));
+	}
+	
+	$scope.setNewTaskStory = function(story) {
+		$scope.newTask.story = story;
+	}
+	
+	$scope.resetNewTask = function() {
+		$scope.newTask.name = "";
+		$scope.newTask.story = null;
+	}
 })
