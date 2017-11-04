@@ -28,13 +28,8 @@ angular.module("scrumApp")
         $scope.board = json;
 	});
 	
-
-//	$scope.loadBoard = function(json) {
-//		console.log(json);
-//		$scope.board = json;
-//	}
 	
-	//still need to set success/failure variables for createswimlane?
+	
 	$scope.createSwimLane = function(name, boardId) {
 		dataService.createSwimLane(name, boardId);
 	}
@@ -47,24 +42,4 @@ angular.module("scrumApp")
 		dataService.editSwimLane(swimLaneId, updatedName);
 	}
 
-	$scope.addNewTask = function(newTask, story) {
-		dataService.addNewTask(newTask,
-				response => {
-					console.log("success!");
-					console.log(response.data);
-					story.tasks.push(response.data);
-					$scope.resetNewTask();
-				},
-				response => console.log("oh nooo!"));
-	}
-	
-	$scope.setNewTaskStory = function(story) {
-		$scope.newTask.story = story;
-	}
-	
-	$scope.resetNewTask = function() {
-		$scope.newTask.name = "";
-		$scope.newTask.story = null;
-
-	}
 })
