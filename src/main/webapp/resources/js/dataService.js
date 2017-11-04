@@ -27,13 +27,10 @@ angular.module("scrumApp")
 	
 	//create board methods
 	
-	this.createBoard = function(b, $scope){
+	this.createBoard = function(b, success){
 		console.log("Creating stuff")
-		var promise = $http.post("createBoard", b).then(
-			function success (response){
-				root.$emit("updateFragment", "board");
-			}	
-		)			
+		var promise = $http.post("createBoard", b).then(success);
+		
 	}
 	
 	

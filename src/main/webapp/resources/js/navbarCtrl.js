@@ -61,10 +61,11 @@ angular.module("scrumApp")
 	}
 	//create board
 	$scope.createBoard = function(b) {
-		if (!$scope.submitted) {
-			//console.log("creating board");
-			$scope.submitted = true;
-			dataService.createBoard(b, $scope);
-		}
+			dataService.createBoard(b, response => {
+				
+				$rootScope.$emit("loadDropdown", {});
+				$rootScope.$emit("updateFragment", "board");
+			});
+		
 	}
 })
