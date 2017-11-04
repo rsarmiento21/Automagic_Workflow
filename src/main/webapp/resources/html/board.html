@@ -18,6 +18,8 @@
 	
 	<div data-ng-hide="!board">
 		<h4>{{board.name}}</h4>
+		<button data-ng-click="loadRenameBoard()">Edit</button>
+		<div id="renameBoard"></div>
 		<table><tr>
 			<td class="well" ng-repeat="swimLane in board.swimLanes" >
 				{{swimLane.name}}

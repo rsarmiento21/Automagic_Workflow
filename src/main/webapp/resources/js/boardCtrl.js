@@ -21,6 +21,10 @@ angular.module("scrumApp")
 	$rootScope.$on("setBoard", function(event, json) {
         $scope.board = json;
 	});
+	$scope.editBoard = function(event,id){
+		$scope.board.name = $scope.renameBoardField.value;
+		
+	}
 	
 //	$scope.loadBoard = function(json) {
 //		console.log(json);
