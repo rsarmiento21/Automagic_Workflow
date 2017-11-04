@@ -2,11 +2,15 @@ package com.revature.domain;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
@@ -14,6 +18,8 @@ import javax.persistence.Table;
 public class BoardUser {
 	
 	@Id
+	@SequenceGenerator(name="buSeq", sequenceName="board_user_seq", allocationSize=1)
+	@GeneratedValue(generator="buSeq",strategy=GenerationType.SEQUENCE)
 	@Column(name="BU_ID")
 	private int id;
 	
@@ -23,7 +29,7 @@ public class BoardUser {
 	@Column(name="BU_PASSWORD")
 	private String password;
 	
-	@OneToMany(mappedBy="owner", fetch=FetchType.EAGER)
+	@OneToMany(mappedBy="owner", cascade=CascadeType.REMOVE, fetch=FetchType.EAGER)
 	private Set<Board> boards;
 	
 	public BoardUser() {}

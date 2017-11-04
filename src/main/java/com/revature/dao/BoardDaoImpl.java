@@ -23,35 +23,39 @@ public class BoardDaoImpl implements Dao {
 	
 	//CREATE
 	@Override
-	public void createBoard(Board b) {
+	public Board createBoard(Board b) {
 		Session session = sessionFactory.getCurrentSession();
 		session.save(b);
+		return b;
 	}
 	
 	@Override
-	public void createNewBoardUser(BoardUser bu) {
+	public BoardUser createNewBoardUser(BoardUser bu) {
 		Session session = sessionFactory.getCurrentSession();
 		session.save(bu);
+		return bu;
 	}
 	
 	@Override
-	public void createSwimLane(SwimLane sl) {
+	public SwimLane createSwimLane(SwimLane sl) {
 		Session session = sessionFactory.getCurrentSession();
 		session.save(sl);
+		return sl;
 	}
 	
 	@Override
-	public void createStory(Story s) {
+	public Story createStory(Story s) {
 		Session session = sessionFactory.getCurrentSession();
 		session.save(s);
-		
+		return s;
 	}
 
 	@Override
-	public void createTask(Task t) {
+	public Task createTask(Task t) {
 		// TODO Auto-generated method stub
 		Session session = sessionFactory.getCurrentSession();
 		session.save(t);
+		return t;
 	}
 	
 	
