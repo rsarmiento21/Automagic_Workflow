@@ -26,12 +26,13 @@ angular.module("scrumApp")
         $scope.board = json;
 	});
 	
-	$scope.addNewTask = function(newTask) {
+	$scope.addNewTask = function(newTask, story) {
 		dataService.addNewTask(newTask,
 				response => {
 					console.log("success!");
 					console.log(response.data);
-//					story.tasks.push()
+					story.tasks.push(response.data);
+					$scope.resetNewTask();
 				},
 				response => console.log("oh nooo!"));
 	}
