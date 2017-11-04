@@ -19,14 +19,14 @@ public class BoardService {
 	private Dao dao;
 	
 	//CREATE
-	public void createBoard(Board b) {
-		dao.createBoard(b);
+	public Board createBoard(Board b) {
+		return dao.createBoard(b);
 	}
-	public void createSwimLane(SwimLane sl) {
-		dao.createSwimLane(sl);
+	public SwimLane createSwimLane(SwimLane sl) {
+		return dao.createSwimLane(sl);
 	}
-	public void createStory(Story s) {
-		dao.createStory(s);
+	public Story createStory(Story s) {
+		return dao.createStory(s);
 	}
 	public Task createTask(Task t) {
 		return dao.createTask(t);

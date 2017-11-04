@@ -8,10 +8,10 @@ import com.revature.domain.Task;
 
 public interface Dao {
 	//CREATE
-	public void createBoard(Board b);
-	public void createNewBoardUser(BoardUser bu);
-	public void createSwimLane(SwimLane sl);
-	public void createStory(Story s);
+	public Board createBoard(Board b);
+	public BoardUser createNewBoardUser(BoardUser bu);
+	public SwimLane createSwimLane(SwimLane sl);
+	public Story createStory(Story s);
 	public Task createTask(Task t);
 	
 	//READ

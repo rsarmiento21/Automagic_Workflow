@@ -35,9 +35,18 @@
 										&emsp;{{story.description}}<br><br>
 									<h5>Tasks</h5>
 										<div data-ng-if="story.tasks.length == 0">&emsp;No tasks yet</div>
-										<div data-ng-repeat="task in story.tasks">&emsp;<input
-											type="checkbox" data-ng-checked="task.taskCompleted" />
-											{{task.name}}</div>
+										<div data-ng-repeat="task in story.tasks" data-ng-controller="taskCtrl" data-ng-init="taskInit(task)">
+											&emsp;
+											<input type="checkbox" data-ng-model="thisTask.taskCompleted" data-ng-click="check()" />
+											<span data-ng-hide="editing" data-ng-click="edit(thisTask)">
+												{{thisTask.name}}
+											</span>
+											<form class="form-inline" data-ng-if="editing">
+												<input type="text" data-ng-model="thisTask.name" />
+												<button type="button" class="btn btn-success" data-ng-click="save()"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></button>
+												<button type="button" class="btn btn-danger" data-ng-click="reset()"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+											</form>
+										</div>
 										<br>
 										<form>
 											&emsp;
