@@ -6,6 +6,7 @@ angular.module("scrumApp")
 
 .controller("boardCtrl", function($scope, $rootScope, dataService) {
 	$scope.board = null;
+	$scope.rename = false;
 	$scope.newTask = {
 				name: "",
 				taskCompleted: 0,
@@ -25,8 +26,12 @@ angular.module("scrumApp")
 	$rootScope.$on("setBoard", function(event, json) {
         $scope.board = json;
 	});
+	$scope.renameBoard = function(event){
+		$scope.rename = true;
+	}
 	$scope.editBoard = function(event,id){
-		$scope.board.name = $scope.renameBoardField.value;
+		$scope.board.name = id;
+		$scope.rename = false;
 		
 	}
 	

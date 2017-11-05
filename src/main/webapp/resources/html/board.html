@@ -10,12 +10,12 @@
 
 	<div data-ng-hide="!board">
 		<h4>{{board.name}}</h4>
-		<button data-ng-click="loadRenameBoard()">Edit</button>
-		<div id="renameBoard" data-ng-hide = "">
+		<button data-ng-click="renameBoard()" class="btn btn-default">Edit</button>
+		<div id="renameBoard" data-ng-hide = "!rename">
 			<p>Enter new name here:</p>
 			<input type="text" id="renameBoardField" placeholder="{{board.name}}"
 				required />
-			<button id="renameButton" data-ng-click="editBoard(board.id)">Submit</button>
+			<button id="renameButton" data-ng-click="editBoard(renameBoardField)" class="btn btn-default">Submit</button>
 		</div>
 		<table>
 			<tr>

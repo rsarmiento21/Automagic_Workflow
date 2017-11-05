@@ -12,10 +12,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.revature.domain.Board;
 import com.revature.domain.BoardUser;
+import com.revature.service.BoardService;
 
 @RestController
 public class AjaxBoardCtrl {
 
+	private BoardService serve = new BoardService();
+	
 	@RequestMapping("/ajax/boards")
 	@ResponseBody
 	public ResponseEntity<Object> getBoards(HttpServletRequest req) {
@@ -45,6 +48,14 @@ public class AjaxBoardCtrl {
 			}
 		}
 		return new ResponseEntity<>(HttpStatus.CONFLICT);
+	}
+	@RequestMapping(value="/ajax/board/save")
+	public void saveBoard(@PathVariable("board") Board b, HttpServletRequest req)
+	{
+		if(b != null)
+		{
+			serve.updateBoard(b);
+		}
 	}
 	
 }
