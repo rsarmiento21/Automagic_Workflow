@@ -45,6 +45,10 @@ angular.module("scrumApp")
 		$scope.getBoards();
     });
 	
+	$rootScope.$on("setBoards", function(event, boards) {
+		$scope.boards = boards;
+    });
+	
 	$scope.getBoards = function() {
 		dataService.getBoards(
 			response => $scope.boards = response.data,
@@ -55,6 +59,7 @@ angular.module("scrumApp")
 	$scope.loadBoard = function(board) {
 		$rootScope.$emit("setBoard", board);
 	}
+
 	$scope.loadBoard = function(id){
 		console.log(id);
 		$rootScope.$emit("loadBoard", id);
@@ -68,4 +73,14 @@ angular.module("scrumApp")
 			});
 		
 	}
+
+	
+	$rootScope.$on("getBoardById", function(event, id) {
+		return $scope.boards.find(function(board) {
+			return board.id == id;
+		});
+    });
+	
+	
+
 })

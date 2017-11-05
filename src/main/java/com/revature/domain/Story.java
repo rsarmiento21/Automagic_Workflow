@@ -7,10 +7,13 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -26,11 +29,13 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 public class Story {
 	
 	@Id
+	@SequenceGenerator(name="storySeq", sequenceName="story_seq", allocationSize=1)
+	@GeneratedValue(generator="storySeq",strategy=GenerationType.SEQUENCE)
 	@Column(name="ST_ID")
 	private int id;
 	
 	@JsonBackReference
-	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="SL_ID")
 	private SwimLane swimLane;
 	
@@ -46,7 +51,7 @@ public class Story {
 	@Column(name="ST_COMPLETED")
 	private Timestamp dateStoryCompleted;
 	
-	@OneToMany(mappedBy="story", fetch=FetchType.EAGER)
+	@OneToMany(mappedBy="story", cascade=CascadeType.REMOVE, fetch=FetchType.EAGER)
 	private Set<Task> tasks;
 	
 	

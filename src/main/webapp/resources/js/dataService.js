@@ -25,6 +25,7 @@ angular.module("scrumApp")
 		$http.get("ajax/board/" + id).then(success, failure);
 	}
 	
+
 	//create board methods
 	
 	this.createBoard = function(b, success){
@@ -33,6 +34,15 @@ angular.module("scrumApp")
 		
 	}
 	
+	//deleteboard methods
+	
+	
+	
+	this.deleteBoard = function(b, success){
+		console.log("Deleting stuff")
+		var promise = $http.post("deleteBoard", b).then(success);
+		
+	}
 	
 	
 //	ds.setLoadState = function() {
@@ -43,5 +53,10 @@ angular.module("scrumApp")
 //			root.$emit("updateFragment", "login");
 //		}
 //	}
+
+	this.addNewTask = function(newTask, success, failure) {
+		$http.post("ajax/task/new", newTask).then(success, failure);
+	}
+
 	
 })
