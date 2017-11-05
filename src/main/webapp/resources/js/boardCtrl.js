@@ -6,10 +6,11 @@ angular.module("scrumApp")
 
 .controller("boardCtrl", function($scope, $rootScope, dataService) {
 	$scope.board = null;
-	$scope.newTask = {
-				name: "",
-				taskCompleted: 0,
-				story: null
+	$scope.newStory = {
+				title: "",
+				description: "",
+				points: 1,
+				swimLane: null
 			};
 	
 	$scope.getBoard = function(id) {
@@ -40,6 +41,35 @@ angular.module("scrumApp")
 	
 	$scope.editSwimLane = function(swimLaneId, updatedName) {
 		dataService.editSwimLane(swimLaneId, updatedName);
+	}
+	
+	
+	
+	$scope.setNewStorySwimLane = function(swimLane) {
+		$scope.newStory.swimLane = swimLane;
+	}
+	
+	$scope.$watch("newStory.points", function(newValue, oldValue) {
+		var points = Math.max(1, Math.min(newValue, 10));
+		$scope.newStory.points = isNaN(points) ? 1 : points;
+	})
+	
+	$scope.createStory = function() {
+		if ($scope.newStory.title && $scope.newStory.description) {
+			dataService.createStory($scope.newStory,
+				response => {
+					console.log("success add!");
+					$scope.newStory.swimLane.stories.push(response.data);
+					$scope.resetNewStory();
+				},
+				response => console.log("could not add!"));
+		}
+	}
+	
+	$scope.resetNewStory = function() {
+		$scope.newStory.title = "";
+		$scope.newStory.desc = "";
+		$scope.newStory.points = 1;
 	}
 
 })
