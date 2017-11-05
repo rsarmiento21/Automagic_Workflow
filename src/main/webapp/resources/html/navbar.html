@@ -9,7 +9,8 @@
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Boards <span class="caret"></span></a>
           <ul id="boardDropdown" class="dropdown-menu">
             <li><button type = "button" class = "btn btn-info btn-lg" data-toggle = "modal" data-target = "#createBoardModal">+</button></li>
-            <li data-ng-repeat = "board in boards"data-ng-click="loadBoard(board)">{{board.name}}</li>
+            <li role="separator" class="divider"></li>
+            <li data-ng-repeat = "board in boards"data-ng-click="loadBoard(board)">{{board.name}}</li>         
           </ul>
         </li>
       </ul>

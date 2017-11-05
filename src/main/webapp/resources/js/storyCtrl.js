@@ -21,11 +21,15 @@ angular.module("scrumApp")
 			};
 
 	$scope.createTask = function() {
-		if ($scope.newTask.name !== "") {
+		if ($scope.newTask.name) {
 			dataService.createTask($scope.newTask,
 				response => {
 					console.log("success add!");
-					$scope.story.tasks.push(response.data);
+					if ($scope.story.tasks) {
+						$scope.story.tasks.push(response.data);
+					} else {
+						$scope.story.tasks = [response.data];
+					}
 					$scope.resetNewTask();
 				},
 				response => console.log("could not add!"));
@@ -60,6 +64,13 @@ angular.module("scrumApp")
 		$scope.story = {};
 		Object.assign($scope.story, $scope.oldStory);
 		$scope.editing = false;
+	}
+	
+	$scope.closeModal = function() {
+		$scope.resetNewTask();
+		if ($scope.editing) {
+			$scope.reset();
+		}
 	}
 	
 	$scope.save = function() {

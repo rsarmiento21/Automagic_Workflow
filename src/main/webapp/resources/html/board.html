@@ -47,9 +47,59 @@
 				
 				{{swimLane.name}}
 				<div ng-repeat="story in swimLane.stories">
-					<scrum-story story="story" swimLane="swimLane"></scrum-story>
-					
+					<scrum-story story="story" swim-lane="swimLane"></scrum-story>
 				</div> <!-- stories -->
+				
+				<!-- New Story button, with modal attachment -->
+				<button class="btn btn-default" data-toggle="modal"
+					data-ng-click="setNewStorySwimLane(swimLane)"
+					data-ng-attr-data-target="{{ '#newstory' + swimLane.id }}"> Create New Story</button>
+				<br>
+				
+				<!-- Modal -->
+				<div class="modal fade" data-ng-attr-id="{{ 'newstory' + swimLane.id }}"
+					tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal"
+									data-ng-click="resetNewStory()" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+								<h4 class="modal-title" id="myModalLabel">Create New Story</h4>
+							</div>
+							<div class="modal-body">
+							<form>
+								<div class="form-group">
+									<label for="title" class="col-sm-2 control-label">Title</label>
+									<div class="col-sm-10">
+										<input id="title" type="text" class="form-control"
+											data-ng-model="newStory.title">
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="u_name" class="col-sm-2 control-label">Points</label>
+									<div class="col-sm-10">
+										<input id="points" type="number" class="form-control"
+											min=1 max=10 data-ng-model="newStory.points">
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="desc" class="col-sm-2 control-label">Description</label>
+									<div class="col-sm-10">
+										<textarea id="desc" class="form-control"
+											data-ng-model="newStory.description"></textarea>
+									</div>
+								</div>
+								</form>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default"
+									data-ng-click="createStory()" data-dismiss="modal">Create Story</button>
+							</div>
+						</div> <!-- modal-content -->
+					</div> <!-- modal-dialog -->
+				</div> <!-- modal -->
 			</td> <!-- swimLanes -->
 		</tr></table>
 	</div>
