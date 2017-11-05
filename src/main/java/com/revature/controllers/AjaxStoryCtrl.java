@@ -7,46 +7,45 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.revature.domain.BoardUser;
-import com.revature.domain.Task;
+import com.revature.domain.Story;
 import com.revature.service.BoardService;
 
 @RestController
-public class AjaxTaskCtrl {
+public class AjaxStoryCtrl {
 	
 	@Autowired
 	private BoardService bs;
 
-	@RequestMapping("/ajax/task/new")
+	@RequestMapping("/ajax/story/new")
 	@ResponseBody
-	public ResponseEntity<Object> createTask(@RequestBody Task task, HttpServletRequest req) {
+	public ResponseEntity<Object> createStory(@RequestBody Story story, HttpServletRequest req) {
 		HttpSession session = req.getSession();
 		if (session != null) {
 			BoardUser bu = (BoardUser) session.getAttribute("user");
 			if (bu != null) {
-				task = bs.createTask(task);
+				story = bs.createStory(story);
 				bu = bs.getBoardUserById(bu);
 				session.setAttribute("user", bu);
-				return new ResponseEntity<>(task, HttpStatus.OK);
+				return new ResponseEntity<>(story, HttpStatus.OK);
 			}
 		}
 		return new ResponseEntity<>(HttpStatus.CONFLICT);
 	}
 	
-	@RequestMapping("/ajax/task/edit")
+	@RequestMapping("/ajax/story/edit")
 	@ResponseBody
-	public ResponseEntity<Object> editTask(@RequestBody Task task, HttpServletRequest req) {
+	public ResponseEntity<Object> editStory(@RequestBody Story story, HttpServletRequest req) {
 		HttpSession session = req.getSession();
 		if (session != null) {
 			BoardUser bu = (BoardUser) session.getAttribute("user");
 			if (bu != null) {
-				bs.updateTask(task);
+				bs.updateStory(story);
 				bu = bs.getBoardUserById(bu);
 				session.setAttribute("user", bu);
 				return new ResponseEntity<>(HttpStatus.OK);
@@ -55,14 +54,14 @@ public class AjaxTaskCtrl {
 		return new ResponseEntity<>(HttpStatus.CONFLICT);
 	}
 	
-	@RequestMapping("/ajax/task/delete")
+	@RequestMapping("/ajax/story/delete")
 	@ResponseBody
-	public ResponseEntity<Object> deleteTask(@RequestBody Task task, HttpServletRequest req) {
+	public ResponseEntity<Object> deleteStory(@RequestBody Story story, HttpServletRequest req) {
 		HttpSession session = req.getSession();
 		if (session != null) {
 			BoardUser bu = (BoardUser) session.getAttribute("user");
 			if (bu != null) {
-				bs.deleteTask(task);
+				bs.deleteStory(story);
 				bu = bs.getBoardUserById(bu);
 				session.setAttribute("user", bu);
 				return new ResponseEntity<>(HttpStatus.OK);
