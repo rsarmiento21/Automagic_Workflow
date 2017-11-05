@@ -4,6 +4,21 @@
 
 angular.module("scrumApp", [])
 
+.directive("scrumBody", function() {
+	return {
+		restrict: 'E',
+		scope: { fragment: "=" },
+	    link: function($scope) {
+	      $scope.$watch("fragment", function(fragment) {
+	        if (fragment && fragment.length) {
+	            $scope.dynamicTemplateUrl = 'resources/html/' + fragment + '.html';
+	        }
+	      });
+	    },
+	    template: '<ng-include src="dynamicTemplateUrl"></ng-include>'
+	};
+})
+
 .controller("mainCtrl", function($scope, $rootScope, dataService){
 	$scope.fragment = "dummy";
 	
@@ -20,19 +35,4 @@ angular.module("scrumApp", [])
 	$scope.updateFragment = function(fragment) {
 		$scope.fragment = fragment;
 	}
-})
-
-.directive("scrumBody", function() {
-	return {
-		restrict: 'E',
-		scope: { fragment: "=" },
-	    link: function($scope) {
-	      $scope.$watch("fragment", function(fragment) {
-	        if (fragment && fragment.length) {
-	            $scope.dynamicTemplateUrl = 'resources/html/' + fragment + '.html';
-	        }
-	      });
-	    },
-	    template: '<ng-include src="dynamicTemplateUrl"></ng-include>'
-	};
 })

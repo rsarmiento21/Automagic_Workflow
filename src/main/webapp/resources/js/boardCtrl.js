@@ -23,6 +23,8 @@ angular.module("scrumApp")
         $scope.getBoard(id);
 	});
 	
+	
+
 	$rootScope.$on("setBoard", function(event, json) {
         $scope.board = json;
 	});
@@ -35,23 +37,18 @@ angular.module("scrumApp")
 		
 	}
 	
-	$scope.addNewTask = function(newTask, story) {
-		dataService.addNewTask(newTask,
-				response => {
-					console.log("success!");
-					console.log(response.data);
-					story.tasks.push(response.data);
-					$scope.resetNewTask();
-				},
-				response => console.log("oh nooo!"));
+	
+	
+	$scope.createSwimLane = function(name, boardId) {
+		dataService.createSwimLane(name, boardId);
 	}
 	
-	$scope.setNewTaskStory = function(story) {
-		$scope.newTask.story = story;
+	$scope.deleteSwimLane = function(swimLaneId) {
+		dataService.deleteSwimLane(swimLaneId);
 	}
 	
-	$scope.resetNewTask = function() {
-		$scope.newTask.name = "";
-		$scope.newTask.story = null;
+	$scope.editSwimLane = function(swimLaneId, updatedName) {
+		dataService.editSwimLane(swimLaneId, updatedName);
 	}
+
 })
