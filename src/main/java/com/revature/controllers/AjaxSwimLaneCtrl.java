@@ -43,14 +43,15 @@ public class AjaxSwimLaneCtrl {
 				boardService.createSwimLane(sl);
 				bu = boardService.getBoardUserById(bu);
 				session.setAttribute("user", bu);
+				return new ResponseEntity<>(sl, HttpStatus.OK);
 			}
 		}
 		
-		return null;
+		return new ResponseEntity<>(HttpStatus.CONFLICT);
 	}
 	@RequestMapping(value="ajax/swimlane/delete/{swimLaneId}")
 	@ResponseBody
-	public void deleteSwimLane(@PathVariable("swimLaneId") String swimLaneIdString, HttpServletRequest req) {
+	public ResponseEntity<Object> deleteSwimLane(@PathVariable("swimLaneId") String swimLaneIdString, HttpServletRequest req) {
 		int swimLaneId = Integer.parseInt(swimLaneIdString);
 		
 		HttpSession session = req.getSession(false);
@@ -64,13 +65,16 @@ public class AjaxSwimLaneCtrl {
 				
 				bu = boardService.getBoardUserById(bu);
 				session.setAttribute("user", bu);
+				return new ResponseEntity<>(HttpStatus.OK);
 			}
 		}
+		
+		return new ResponseEntity<>(HttpStatus.CONFLICT);
 	}
 	
 	@RequestMapping(value="ajax/swimlane/edit/{swimLaneId}/{updatedName}")
 	@ResponseBody
-	public void editSwimLane(@PathVariable("updatedName") String updatedName, @PathVariable("swimLaneId") String swimLaneIdString, HttpServletRequest req) {
+	public ResponseEntity<Object> editSwimLane(@PathVariable("updatedName") String updatedName, @PathVariable("swimLaneId") String swimLaneIdString, HttpServletRequest req) {
 		int swimLaneId = Integer.parseInt(swimLaneIdString);
 		
 		HttpSession session = req.getSession(false);
@@ -84,7 +88,9 @@ public class AjaxSwimLaneCtrl {
 				boardService.updateSwimLane(sl);
 				bu = boardService.getBoardUserById(bu);
 				session.setAttribute("user", bu);
+				return new ResponseEntity<>(HttpStatus.OK);
 			}
 		}
+		return new ResponseEntity<>(HttpStatus.CONFLICT);
 	}
 }
