@@ -24,14 +24,49 @@ angular.module("scrumApp")
 	this.getBoard = function(id, success, failure) {
 		$http.get("ajax/board/" + id).then(success, failure);
 	}
+	this.editBoard = function(board, success, failure){
+		$http.post("ajax/board/edit", board).then(success,failure);
+	}
 	
-//	ds.setLoadState = function() {
-//		if (ds.isLoggedIn()) {
-//			root.$emit("toggleLogin", {});
-//			root.$emit("updateFragment", "board");
-//		} else {
-//			root.$emit("updateFragment", "login");
-//		}
-//	}
+
+	//Swimlane functions
+	this.createSwimLane = function(sl, success, failure) {
+		$http.post("ajax/swimlane/new", sl).then(success, failure);
+	}
+	
+	this.editSwimLane = function(sl, success, failure) {
+		$http.post("ajax/swimlane/edit", sl).then(success, failure);
+	}
+	
+	this.deleteSwimLane = function(sl, success, failure) {
+		$http.post("ajax/swimlane/delete", sl).then(success, failure);
+	}
+
+	
+	this.createTask = function(task, success, failure) {
+		$http.post("ajax/task/new", task).then(success, failure);
+	}
+	
+	this.editTask = function(task, success, failure) {
+		$http.post("ajax/task/edit", task).then(success, failure);
+	}
+	
+	this.deleteTask = function(task, success, failure) {
+		$http.post("ajax/task/delete", task).then(success, failure);
+	}
+	
+	
+	this.createStory = function(story, success, failure) {
+		$http.post("ajax/story/new", story).then(success, failure);
+	}
+	
+	this.editStory = function(story, success, failure) {
+		$http.post("ajax/story/edit", story).then(success, failure);
+	}
+	
+	this.deleteStory = function(story, success, failure) {
+		$http.post("ajax/story/delete", story).then(success, failure);
+	}
+
 	
 })
