@@ -13,6 +13,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name="BOARD_USER")
 public class BoardUser {
@@ -29,6 +31,7 @@ public class BoardUser {
 	@Column(name="BU_PASSWORD")
 	private String password;
 	
+	@JsonManagedReference
 	@OneToMany(mappedBy="owner", cascade=CascadeType.REMOVE, fetch=FetchType.EAGER)
 	private Set<Board> boards;
 	

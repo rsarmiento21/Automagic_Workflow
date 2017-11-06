@@ -27,16 +27,16 @@ angular.module("scrumApp")
 	
 
 	//Swimlane functions
-	this.createSwimLane = function(name, boardId, success, failure) {
-		$http.post("ajax/swimlane/create/"+name+"/"+boardId).then(success, failure);
+	this.createSwimLane = function(sl, success, failure) {
+		$http.post("ajax/swimlane/new", sl).then(success, failure);
 	}
 	
-	this.deleteSwimLane = function(swimLaneId, success, failure) {
-		$http.post("ajax/swimlane/delete/"+swimLaneId).then(success,failure);
+	this.editSwimLane = function(sl, success, failure) {
+		$http.post("ajax/swimlane/edit", sl).then(success, failure);
 	}
 	
-	this.editSwimLane = function(swimLaneId, updatedName, success, failure) {
-		$http.post("ajax/swimlane/edit/"+swimLaneId+"/"+updatedName).then(success,failure);
+	this.deleteSwimLane = function(sl, success, failure) {
+		$http.post("ajax/swimlane/delete", sl).then(success, failure);
 	}
 
 	
@@ -51,6 +51,7 @@ angular.module("scrumApp")
 	this.deleteTask = function(task, success, failure) {
 		$http.post("ajax/task/delete", task).then(success, failure);
 	}
+	
 	
 	this.createStory = function(story, success, failure) {
 		$http.post("ajax/story/new", story).then(success, failure);

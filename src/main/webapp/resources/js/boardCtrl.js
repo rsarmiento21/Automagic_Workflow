@@ -6,16 +6,18 @@ angular.module("scrumApp")
 
 .controller("boardCtrl", function($scope, $rootScope, dataService) {
 	$scope.board = null;
-	$scope.newStory = {
-				title: "",
-				description: "",
-				points: 1,
-				swimLane: null
-			};
+//	$scope.newStory = {
+//				title: "",
+//				description: "",
+//				points: 1,
+//				swimLane: null
+//			};
 	
 	$scope.getBoard = function(id) {
 		dataService.getBoard(id,
-			response => $scope.board = response.data,
+			response => {
+				$scope.board = response.data;
+			},
 			response => alert("Error! Board " + id + " not found!"));
 	}
 	
@@ -27,6 +29,13 @@ angular.module("scrumApp")
 
 	$rootScope.$on("setBoard", function(event, json) {
         $scope.board = json;
+		$scope.board.swimLanes.sort(function compare(a,b) {
+			  if (a.order < b.order)
+				     return -1;
+				  if (a.order > b.order)
+				    return 1;
+				  return 0;
+				});
 	});
 	
 	
@@ -35,41 +44,41 @@ angular.module("scrumApp")
 		dataService.createSwimLane(name, boardId);
 	}
 	
-	$scope.deleteSwimLane = function(swimLaneId) {
-		dataService.deleteSwimLane(swimLaneId);
-	}
-	
-	$scope.editSwimLane = function(swimLaneId, updatedName) {
-		dataService.editSwimLane(swimLaneId, updatedName);
-	}
-	
-	
-	
-	$scope.setNewStorySwimLane = function(swimLane) {
-		$scope.newStory.swimLane = swimLane;
-	}
-	
-	$scope.$watch("newStory.points", function(newValue, oldValue) {
-		var points = Math.max(1, Math.min(newValue, 10));
-		$scope.newStory.points = isNaN(points) ? 1 : points;
-	})
-	
-	$scope.createStory = function() {
-		if ($scope.newStory.title && $scope.newStory.description) {
-			dataService.createStory($scope.newStory,
-				response => {
-					console.log("success add!");
-					$scope.newStory.swimLane.stories.push(response.data);
-					$scope.resetNewStory();
-				},
-				response => console.log("could not add!"));
-		}
-	}
-	
-	$scope.resetNewStory = function() {
-		$scope.newStory.title = "";
-		$scope.newStory.desc = "";
-		$scope.newStory.points = 1;
-	}
+//	$scope.deleteSwimLane = function(swimLaneId) {
+//		dataService.deleteSwimLane(swimLaneId);
+//	}
+//	
+//	$scope.editSwimLane = function(swimLaneId, updatedName) {
+//		dataService.editSwimLane(swimLaneId, updatedName);
+//	}
+//	
+//	
+//	
+//	$scope.setNewStorySwimLane = function(swimLane) {
+//		$scope.newStory.swimLane = swimLane;
+//	}
+//	
+//	$scope.$watch("newStory.points", function(newValue, oldValue) {
+//		var points = Math.max(1, Math.min(newValue, 10));
+//		$scope.newStory.points = isNaN(points) ? 1 : points;
+//	})
+//	
+//	$scope.createStory = function() {
+//		if ($scope.newStory.title && $scope.newStory.description) {
+//			dataService.createStory($scope.newStory,
+//				response => {
+//					console.log("success add!");
+//					$scope.newStory.swimLane.stories.push(response.data);
+//					$scope.resetNewStory();
+//				},
+//				response => console.log("could not add!"));
+//		}
+//	}
+//	
+//	$scope.resetNewStory = function() {
+//		$scope.newStory.title = "";
+//		$scope.newStory.desc = "";
+//		$scope.newStory.points = 1;
+//	}
 
 })
