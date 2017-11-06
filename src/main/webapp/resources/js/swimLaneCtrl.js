@@ -33,7 +33,14 @@ angular.module("scrumApp")
 
 	
 	$scope.deleteSwimLane = function() {
-		dataService.deleteSwimLane($scope.swimLane.id);
+		dataService.deleteSwimLane($scope.swimLane, response => {
+			console.log("success delete!");
+			$scope.board.swimLanes = $scope.board.swimLanes.filter(function(obj) {
+				return obj.id !== $scope.swimLane.id;
+			});
+			$rootScope.$emit("resolveSwimLaneOrdering", $scope.board.id);
+		},
+		response => console.log("could not delete!"));
 	}
 	
 	$scope.editSwimLane = function(updatedName) {
@@ -41,7 +48,6 @@ angular.module("scrumApp")
 			$scope.swimLane.name = updatedName;
 			$scope.save();
 		}
-		$scope.editing = false;
 	}
 	
 	$scope.save = function() {
@@ -137,4 +143,12 @@ angular.module("scrumApp")
 			}
 		}
 	})
+	
+	$scope.moveLeft = function() {
+		$rootScope.$emit("moveLeftSwimLane", [$scope.board.id, $scope.swimLane.order]);
+	}
+	
+	$scope.moveRight = function() {
+		$rootScope.$emit("moveRightSwimLane", [$scope.board.id, $scope.swimLane.order]);
+	}
 })

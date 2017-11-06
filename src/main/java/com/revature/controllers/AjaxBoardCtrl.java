@@ -36,57 +36,40 @@ public class AjaxBoardCtrl {
 		return new ResponseEntity<>(HttpStatus.CONFLICT);
 	}
 	
-	@RequestMapping(value="/ajax/board/{id}")
-	@ResponseBody
-	public ResponseEntity<Object> getBoardById(@PathVariable("id") String s, HttpServletRequest req) {
-		int id = Integer.parseInt(s);
-		HttpSession session = req.getSession(false);
-		if (session != null) {
-			BoardUser bu = (BoardUser) session.getAttribute("user");
-			if (bu != null) {
-				for (Board bd : bu.getBoards()) {
-					if (id == bd.getId()) {
-						return new ResponseEntity<>(bd, HttpStatus.OK);
-					}
-				}
-			}
-		}
-		return new ResponseEntity<>(HttpStatus.CONFLICT);
-	}
+//	@RequestMapping(value="/ajax/board/{id}")
+//	@ResponseBody
+//	public ResponseEntity<Object> getBoardById(@PathVariable("id") String s, HttpServletRequest req) {
+//		int id = Integer.parseInt(s);
+//		HttpSession session = req.getSession(false);
+//		if (session != null) {
+//			BoardUser bu = (BoardUser) session.getAttribute("user");
+//			if (bu != null) {
+//				for (Board bd : bu.getBoards()) {
+//					if (id == bd.getId()) {
+//						return new ResponseEntity<>(bd, HttpStatus.OK);
+//					}
+//				}
+//			}
+//		}
+//		return new ResponseEntity<>(HttpStatus.CONFLICT);
+//	}
+	
 	@RequestMapping(value="ajax/board/edit")
 	@ResponseBody
-	public void editBoard(@RequestBody Board bd, HttpServletRequest req) {
-
+	public ResponseEntity<Object> editBoard(@RequestBody Board bd, HttpServletRequest req) {
 		HttpSession session = req.getSession(false);
 		if(session != null) {
 			BoardUser bu = (BoardUser) session.getAttribute("user");
 			if(bu != null) {
-				String name = bd.getName();
-				Board bd2 = new Board();
-				bd2.setId(bd.getId());
-				bd2 = serve.getBoardById(bd);
-				System.out.println(bd2);
-				if(bd2 != null)
-				{
-					bd2.setName(name);
-					try 
-					{
-						System.out.println(bd2);
-						serve.updateBoard(bd2);
-						bu = serve.getBoardUserById(bu);
-						session.setAttribute("user", bu);
-					}
-					catch(NullPointerException e)
-					{
-						e.printStackTrace();
-					}
-					catch (Exception e) 
-					{
-						e.printStackTrace();
-					}
-				}
+				System.out.println("Start of edit save");
+				bd.setOwner(bu);
+				serve.updateBoard(bd);
+				bu = serve.getBoardUserById(bu);
+				session.setAttribute("user", bu);
+				return new ResponseEntity<>(HttpStatus.OK);
 			}
 		}
+		return new ResponseEntity<>(HttpStatus.CONFLICT);
 	}
 }
 	
