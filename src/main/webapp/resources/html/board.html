@@ -1,30 +1,33 @@
 <!DOCTYPE html>
 
 <div data-ng-controller="boardCtrl" class="container">
-	<!-- <table class="table table-bordered table-hover">
-		
-	</table> -->
-	
-
 	<div data-ng-hide="board">
 		<h4>Select a board from the dropdown menu to view it</h4>
 	</div>
 	
 	<div data-ng-hide="!board">
-	<h4>{{board.name}}</h4>
-				
-		<button data-ng-click="renameBoard()" class="btn btn-default">Edit</button>
-		<div id="renameBoard" data-ng-hide = "!rename">
-			<p>Enter new name here:</p>
-			<input type="text" data-ng-model="updatedBoardName" placeholder="{{board.name}}"
-				required />
-			<button id="renameButton" data-ng-click="editBoard(updatedBoardName)" class="btn btn-primary">Submit</button>
+		<div class="row">
+			<h4>{{board.name}}</h4>
+					
+			<button data-ng-click="renameBoard()" class="btn btn-default">Edit</button>
+			<div id="renameBoard" data-ng-hide = "!rename">
+				<p>Enter new name here:</p>
+				<input type="text" data-ng-model="updatedBoardName" placeholder="{{board.name}}"
+					required />
+				<button id="renameButton" data-ng-click="editBoard(updatedBoardName)" class="btn btn-primary">Submit</button>
+			</div>
 		</div>
-		
-		<form>
-			<input data-ng-model="name" type="text"/><br>
-			<button data-ng-click="createSwimLane(name, board.id)">Create Swimlane</button>
-		</form>
+			
+		<div class="row">
+			<form class="form-inline">
+				<div class="input-group">
+					<input class="form-control" data-ng-model="newSwimLane.name" type="text"/>
+					<span class="input-group-btn">
+						<button class="btn btn-default" type="button" data-ng-click="createSwimLane()">Create Swimlane</button>
+					</span>
+				</div>
+			</form>
+		</div>
 		
 		<table><tr>
 			<td class="well" ng-repeat="swimLane in board.swimLanes" >
@@ -32,8 +35,4 @@
 			</td> <!-- swimLanes -->
 		</tr></table>
 	</div>
-	
-	
-
 </div>		
-

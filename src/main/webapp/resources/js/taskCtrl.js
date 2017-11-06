@@ -7,7 +7,7 @@ angular.module("scrumApp")
 .directive("scrumTask", function() {
 	return {
 		restrict: 'E',
-		scope: { task: "=", story: "=" },
+		scope: { task: "=", story: "=", storyCtrl: "=" },
 		templateUrl: 'resources/html/task.html'
 	};
 })

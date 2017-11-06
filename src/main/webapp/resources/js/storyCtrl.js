@@ -30,6 +30,12 @@ angular.module("scrumApp")
 		})
 	}
 	
+	$rootScope.$emit("getSwimLanes", function(swimLanes) {
+		$scope.otherSwimLanes = swimLanes.filter(function(obj) {
+			return obj.id != $scope.swimLane.id;
+		})
+	})
+	
 
 	$scope.createTask = function() {
 		if ($scope.newTask.name) {
@@ -116,7 +122,7 @@ angular.module("scrumApp")
 					$scope.swimLane.stories = $scope.swimLane.stories.filter(function(obj) {
 						return obj.id !== $scope.story.id;
 					});
-					$rootScope.$emit("resolveStoryOrdering", $scope.swimLane.id);
+					$rootScope.$emit("resolveSwimLaneOrdering", $scope.swimLane.id);
 				},
 				response => console.log("could not delete!"));
 	}
@@ -170,5 +176,23 @@ angular.module("scrumApp")
 	
 	$scope.moveDown = function() {
 		$rootScope.$emit("moveDownStory", [$scope.swimLane.id, $scope.story.order]);
+	}
+	
+	$scope.moveTo = function(otherSwimLane) {
+	    $("#modal" + $scope.story.id).removeClass("in");
+	    $(".modal-backdrop").remove();
+	    $("#modal" + $scope.story.id).hide();
+		$scope.swimLane.stories = $scope.swimLane.stories.filter(function(obj) {
+			return obj.id !== $scope.story.id;
+		});
+		if (otherSwimLane.stories) {
+			$scope.story.order = otherSwimLane.stories.length;
+			otherSwimLane.stories.push($scope.story);
+		} else {
+			$scope.story.order = 0;
+			otherSwimLane.stories = [$scope.story];
+		}
+		$rootScope.$emit("resolveSwimLaneOrdering", $scope.swimLane.id);
+		
 	}
 })
