@@ -16,6 +16,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name="BOARD")
@@ -35,7 +36,8 @@ public class Board {
 	@Column(name="BD_NAME")
 	private String name;
 	
-	@OneToMany(mappedBy="board", cascade=CascadeType.REMOVE, fetch=FetchType.EAGER)
+	@JsonManagedReference
+	@OneToMany(mappedBy="board", cascade={CascadeType.MERGE, CascadeType.REMOVE}, fetch=FetchType.EAGER)
 	private Set<SwimLane> swimLanes;
 	
 	public Board() {}
