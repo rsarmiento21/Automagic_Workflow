@@ -16,7 +16,6 @@ import org.aspectj.lang.annotation.Before;
 import org.springframework.stereotype.Component;
 
 
-
 @Aspect
 @Component("aspect")
 public class AutomagicAspects {
@@ -29,15 +28,11 @@ public class AutomagicAspects {
 		System.setProperty("current.date", dateFormat.format(new Date()));
 	}
 	
-	@Around("execution(* login(..))")
-	public void login(ProceedingJoinPoint pjp) throws Throwable{
+	@Before("execution(* login(..))")
+	public void login(JoinPoint jp) {
 		String message = "Attempting login";
 		LOGGER.info(message);
 		
-		pjp.proceed();
-		
-		message = "After login";
-		LOGGER.info(message);
 	}
 	
 	
@@ -46,50 +41,30 @@ public class AutomagicAspects {
 //		
 //	}
 	//CREATE Logs
-	@Around("execution(* createBoard(..))")
-	public void beforeCreates(ProceedingJoinPoint pjp) throws Throwable{
-		String message = "ATTEMPTING CREATE BOARD: " + pjp.getSignature();
+	@Before("execution(* createBoard(..))")
+	public void beforeCreateBoard(JoinPoint jp) {
+		String message = "ATTEMPTING CREATE BOARD: " + jp.getSignature();
+		LOGGER.info(message);
+	}
+	
+	@Before("execution(* createSwimLane(..))")
+	public void beforeCreateSwimlane(JoinPoint jp) {
+		String message = "ATTEMPTING CREATE SWIMLANE: " + jp.getSignature();
 		LOGGER.info(message);
 		
-		pjp.proceed();
-		
-		message = "AFTER CREATE BOARD: " + pjp.getSignature();
 	}
 	
-	@Around("execution(* createSwimLane(..))")
-	public void beforeSwimlane(ProceedingJoinPoint pjp) throws Throwable{
-		String message = "ATTEMPTING CREATE SWIMLANE: " + pjp.getSignature();
+	@Before("execution(* createStory(..))")
+	public void beforeCreateStory(JoinPoint jp) {
+		String message = "ATTEMPTING CREATE STORY: " + jp.getSignature();
 		LOGGER.info(message);
 		
-		pjp.proceed();
-		
-		message = "AFTER CREATE SWIMLANE: " + pjp.getSignature();
 	}
 	
-	@Around("execution(* createStory(..))")
-	public void beforeStory(ProceedingJoinPoint pjp) throws Throwable{
-		String message = "ATTEMPTING CREATE STORY: " + pjp.getSignature();
+	@Before("execution(* createTask(..))")
+	public void beforeCreateTask(JoinPoint jp) {
+		String message = "ATTEMPTING CREATE TASK: " + jp.getSignature();
 		LOGGER.info(message);
-		
-		pjp.proceed();
-		
-		message = "AFTER CREATE STORY: " + pjp.getSignature();
 	}
 	
-	@Around("execution(* createTask(..))")
-	public void beforeBoard(ProceedingJoinPoint pjp) throws Throwable{
-		String message = "ATTEMPTING CREATE TASK: " + pjp.getSignature();
-		LOGGER.info(message);
-		
-		pjp.proceed();
-		
-		message = "AFTER CREATE TASK: " + pjp.getSignature();
-	}
-	
-	
-	@Before("execution(* deleteSwimLane(..))")
-	public void beforeDelete(JoinPoint pjp) {
-		
-	}
-
 }
