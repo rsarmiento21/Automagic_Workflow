@@ -44,15 +44,12 @@ public class Task {
 	@Column(name="TSK_COMPLETED")
 	private boolean taskCompleted;
 	
+	@Column(name="TSK_POSITION")
+	private int order;
+	
+	
+	
 	public Task() {}
-
-	public Task(int id, Story story, String name, boolean taskCompleted) {
-		super();
-		this.id = id;
-		this.story = story;
-		this.name = name;
-		this.taskCompleted = taskCompleted;
-	}
 
 	public int getId() {
 		return id;
@@ -86,8 +83,16 @@ public class Task {
 		this.taskCompleted = taskCompleted;
 	}
 
+	public int getOrder() {
+		return order;
+	}
+
+	public void setOrder(int order) {
+		this.order = order;
+	}
+
 	@Override
 	public String toString() {
-		return "Task [id=" + id + ", story=" + story.getId() + ", name=" + name + ", taskCompleted=" + taskCompleted + "]";
+		return "Task [id=" + id + ", story=" + story.getId() + ", name=" + name + ", taskCompleted=" + taskCompleted + ", position=" + order + "]";
 	}
 }

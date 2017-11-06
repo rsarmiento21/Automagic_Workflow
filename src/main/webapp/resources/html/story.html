@@ -1,10 +1,20 @@
 <!DOCTYPE html>
 <div data-ng-controller="storyCtrl">
-	<!-- Story button, with modal attachment -->
-	<button class="btn btn-info btn-block" data-toggle="modal"
-		data-ng-attr-data-target="{{ '#modal' + story.id }}">
-			<span class="badge">{{story.points}}</span> {{story.title}}
-	</button>
+		<div class="btn-group-vertical btn-group-xs col-xs-1" role="group" aria-label="move">
+			<button type="button" class="btn btn-default" data-ng-click="moveUp()"
+				data-ng-disabled="story.order == 0">
+				<span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
+			</button>
+			<button type="button" class="btn btn-default" data-ng-click="moveDown()"
+				data-ng-disabled="story.order == swimLane.stories.length-1">
+				<span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
+			</button>
+		</div>
+		<!-- Story button, with modal attachment -->
+		<button class="btn btn-info btn-block" data-toggle="modal"
+			data-ng-attr-data-target="{{ '#modal' + story.id }}">
+				<span class="badge">{{story.points}}</span> {{story.title}}
+		</button>
 	
 	<!-- Modal -->
 	<div class="modal fade" data-ng-attr-id="{{ 'modal' + story.id }}"
@@ -17,7 +27,7 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 					<div data-ng-hide="editing">
-						<h4 class="modal-title" id="myModalLabel">({{story.points}}) {{story.title}}</h4>
+						<h4 class="modal-title" id="myModalLabel"><span class="badge">{{story.points}}</span> {{story.title}}</h4>
 					</div>
 					<div data-ng-if="editing">
 						<input type="number" data-ng-model="story.points" min=1 max=10 required />
