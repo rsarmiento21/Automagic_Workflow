@@ -60,10 +60,7 @@ angular.module("scrumApp")
 		$rootScope.$emit("setBoard", board);
 	}
 
-	$scope.loadBoard = function(id){
-		console.log(id);
-		$rootScope.$emit("loadBoard", id);
-	}
+
 	//create board
 	$scope.createBoard = function(b) {
 			dataService.createBoard(b, response => {
