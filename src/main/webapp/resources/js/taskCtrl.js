@@ -8,7 +8,7 @@ angular.module("scrumApp")
 	return {
 		restrict: 'E',
 		scope: { task: "=", story: "=" },
-		templateUrl: 'resources/html/task.html',
+		templateUrl: 'resources/html/task.html'
 	};
 })
 
@@ -61,7 +61,16 @@ angular.module("scrumApp")
 					$scope.story.tasks = $scope.story.tasks.filter(function(obj) {
 						return obj.id !== $scope.task.id;
 					});
+					$rootScope.$emit("resolveTaskOrdering", $scope.story.id);
 				},
 				response => console.log("could not delete!"));
+	}
+	
+	$scope.moveUp = function() {
+		$rootScope.$emit("moveUpTask", [$scope.story.id, $scope.task.order]);
+	}
+	
+	$scope.moveDown = function() {
+		$rootScope.$emit("moveDownTask", [$scope.story.id, $scope.task.order]);
 	}
 })

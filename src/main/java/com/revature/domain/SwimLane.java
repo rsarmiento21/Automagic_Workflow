@@ -16,6 +16,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 /*
  * SL_ID
@@ -41,102 +42,61 @@ public class SwimLane {
 	@Column(name="SL_NAME")
 	private String name;
 	
-	@OneToMany(mappedBy="swimLane", cascade=CascadeType.REMOVE, fetch=FetchType.EAGER)
+	@Column(name="SL_POSITION")
+	private int order;
+	
+	@JsonManagedReference
+	@OneToMany(mappedBy="swimLane", cascade={CascadeType.MERGE, CascadeType.REMOVE}, fetch=FetchType.EAGER)
 	private Set<Story> stories;
 	
 	
-
-	public SwimLane() {
-		super();
-	}
-
-
-
-
-	public SwimLane(int id, Board board, String name) {
-		super();
-		this.id = id;
-		this.board = board;
-		this.name = name;
-	}
-
-
-
-
-	public SwimLane(int id, Board board, String name, Set<Story> stories) {
-		super();
-		this.id = id;
-		this.board = board;
-		this.name = name;
-		this.stories = stories;
-	}
-
-
-
+	
+	public SwimLane() {}
 
 	public int getId() {
 		return id;
 	}
 
-
-
-
 	public void setId(int id) {
 		this.id = id;
 	}
-
-
-
 
 	public Board getBoard() {
 		return board;
 	}
 
-
-
-
 	public void setBoard(Board board) {
 		this.board = board;
 	}
-
-
-
 
 	public String getName() {
 		return name;
 	}
 
-
-
-
 	public void setName(String name) {
 		this.name = name;
 	}
-
-
-
 
 	public Set<Story> getStories() {
 		return stories;
 	}
 
-
-
-
 	public void setStories(Set<Story> stories) {
 		this.stories = stories;
 	}
 
+	public int getOrder() {
+		return order;
+	}
 
-
+	public void setOrder(int order) {
+		this.order = order;
+	}
 
 	@Override
 	public String toString() {
-		return "SwimLane [id=" + id + ", board=" + board.getId() + ", name=" + name +  "]";
+		return "SwimLane [id=" + id + ", board=" + board.getId() + ", name=" + name + ", position=" + order + ", stories="
+				+ stories + "]";
 	}
-	
-	
-	
-	
-	
+
 }
