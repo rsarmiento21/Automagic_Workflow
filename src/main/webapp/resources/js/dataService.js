@@ -24,6 +24,9 @@ angular.module("scrumApp")
 	this.getBoard = function(id, success, failure) {
 		$http.get("ajax/board/" + id).then(success, failure);
 	}
+	this.editBoard = function(board,success, failure){
+		$http.post("ajax/board/edit", board).then(success,failure);
+	}
 	
 
 	//Swimlane functions

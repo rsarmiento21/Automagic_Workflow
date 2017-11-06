@@ -8,16 +8,41 @@
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Boards <span class="caret"></span></a>
           <ul id="boardDropdown" class="dropdown-menu">
-            <li><a href="#">Create New Board</a></li>
+            <li><button type = "button" class = "btn btn-info btn-lg" data-toggle = "modal" data-target = "#createBoardModal">+</button></li>
             <li role="separator" class="divider"></li>
-            <li data-ng-repeat = "board in boards"><a data-ng-click="loadBoard(board)">{{board.name}}</a></li>
+            <li data-ng-repeat = "board in boards"data-ng-click="loadBoard(board)">{{board.name}}</li>         
           </ul>
         </li>
       </ul>
       <ul data-ng-if="loggedIn" class ="nav navbar-nav navbar-right">
-      		<li class ="active"><button data-ng-click="logout()" class="btn btn-warning">Logout</button></li>
+     		<li class ="active"><button data-ng-click="logout()" class="btn btn-warning">Logout</button></li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
+
+ <!-- Modal to create new board -->
+  <div class="modal fade" id="createBoardModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Create New Boards</h4>
+        </div>
+        <div class="modal-body">
+          <p>Please enter a name for the new board:</p>
+          <input type ="text" placeholder = "board name here" id = "makeBoard" required></input>
+          <button class = "btn btn-warning" value = "submit" >Submit</button>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+<!-- Modal to edit board name -->  
 </div>
