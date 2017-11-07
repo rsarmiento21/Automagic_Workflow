@@ -31,7 +31,8 @@ public class AjaxBoardCtrl {
 	@Autowired
 
 	private BoardService boardService;
-
+	
+	@Autowired
 	private BoardService serve;
 
 	
