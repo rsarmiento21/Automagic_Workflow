@@ -115,6 +115,9 @@ angular.module("scrumApp")
 				response => console.log("could not delete!"));
 	}
 	
+	
+	
+	
 	$scope.moveUp = function() {
 		var stories = $scope.swimLane.stories;
 		var index = stories.findIndex(function(obj) {
@@ -257,4 +260,19 @@ angular.module("scrumApp")
 					response=>{}, response=>console.log("error"));
 		}
 	}
+	
+	//get current time with Date.now() if you want to make the JS to put date into the Story instead of the controller
+	$scope.markAsFinsihed = function() {
+		console.log("This story is finished!");
+		dataService.markStoryAsFinished($scope.story,
+				response => {
+					console.log("marking complete!");
+					$scope.swimLane.stories = $scope.swimLane.stories.filter(function(obj) {
+						return obj.id !== $scope.story.id;
+					});
+					$scope.resolveStoryOrdering();
+				},
+				response => console.log("could not mark as finished!"));
+	}
+	
 })

@@ -30,7 +30,6 @@ import com.revature.service.BoardService;
 public class AjaxBoardCtrl {
 
 	@Autowired
-
 	private BoardService boardService;
 
 	

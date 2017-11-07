@@ -42,6 +42,7 @@ public class AjaxSwimLaneCtrl {
 	
 	@RequestMapping(value="ajax/swimlane/delete")
 	@ResponseBody
+
 	public ResponseEntity<Object> deleteSwimLane(@RequestBody SwimLane sl, HttpServletRequest req) {
 		HttpSession session = req.getSession(false);
 		if(session != null) {
