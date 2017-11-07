@@ -38,8 +38,8 @@ public class CreateBoardCtrl {
 		BoardUser bu = (BoardUser) session.getAttribute("user");
 		b.setOwner(bu);
 		b.setStartDate(new Timestamp(System.currentTimeMillis()));
-		bs.createBoard(b);
-		return new ResponseEntity<>(HttpStatus.OK);	//send back the board user to go back to board page with ID			
+		b = bs.createBoard(b);
+		return new ResponseEntity<>(b, HttpStatus.OK);	//send back the board user to go back to board page with ID			
 	}
 	
 }

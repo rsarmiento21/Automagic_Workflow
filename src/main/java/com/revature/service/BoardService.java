@@ -1,5 +1,7 @@
 package com.revature.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -70,6 +72,16 @@ public class BoardService {
 	}
 	public void updateTask(Task t) {
 		dao.updateTask(t);
+	}
+	
+	public void updateSwimLanes(List<SwimLane> swimlanes) {
+		dao.updateSwimLanes(swimlanes);
+	}
+	public void updateStories(List<Story> stories) {
+		dao.updateStories(stories);
+	}
+	public void updateTasks(List<Task> tasks) {
+		dao.updateTasks(tasks);
 	}
 	
 	//DELETE
