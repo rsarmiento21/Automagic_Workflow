@@ -1,5 +1,5 @@
 /**
- *  Angular JS for Task Controller
+ *  Angular JS for Story Controller
  */
 
 angular.module("scrumApp")
@@ -17,8 +17,25 @@ angular.module("scrumApp")
 	$scope.newTask = {
 				name: "",
 				taskCompleted: false,
-				story: $scope.story
+				story: $scope.story,
+				order: ($scope.story.tasks) ? $scope.story.tasks.length : 0
 			};
+	if ($scope.story.tasks) {
+		$scope.story.tasks.sort(function compare(a,b) {
+		  if (a.order < b.order)
+			     return -1;
+			  if (a.order > b.order)
+			    return 1;
+			  return 0;
+		})
+	}
+	
+	$rootScope.$emit("getSwimLanes", function(swimLanes) {
+		$scope.otherSwimLanes = swimLanes.filter(function(obj) {
+			return obj.id != $scope.swimLane.id;
+		})
+	})
+	
 
 	$scope.createTask = function() {
 		if ($scope.newTask.name) {
@@ -36,8 +53,20 @@ angular.module("scrumApp")
 		}
 	}
 	
+	$rootScope.$on("resolveTaskOrdering", function(event, id) {
+		if (id == $scope.story.id) {
+			$scope.story.tasks.forEach( function(task) {
+				task.order = $scope.story.tasks.findIndex(function(obj) {
+					return obj == task;
+				});
+			});
+			$scope.save();
+		}
+	})
+	
 	$scope.resetNewTask = function() {
 		$scope.newTask.name = "";
+		$scope.newTask.order =  ($scope.story.tasks) ? $scope.story.tasks.length : 0;
 	}
 	
 	$scope.edit = function() {
@@ -93,7 +122,77 @@ angular.module("scrumApp")
 					$scope.swimLane.stories = $scope.swimLane.stories.filter(function(obj) {
 						return obj.id !== $scope.story.id;
 					});
+					$rootScope.$emit("resolveSwimLaneOrdering", $scope.swimLane.id);
 				},
 				response => console.log("could not delete!"));
+	}
+	
+	$rootScope.$on("moveUpTask", function (event, args) {
+		if (args[0] == $scope.story.id) {
+			var tasks = $scope.story.tasks;
+			var index = tasks.findIndex(function(obj) { return obj.order == args[1]; });
+			if (index > 0) {
+				tasks[index].order = tasks[index].order + tasks[index-1].order;
+				tasks[index-1].order = tasks[index].order - tasks[index-1].order;
+				tasks[index].order = tasks[index].order - tasks[index-1].order;
+				tasks.sort(function compare(a,b) {
+					  if (a.order < b.order)
+						     return -1;
+						  if (a.order > b.order)
+						    return 1;
+						  return 0;
+						})
+				$scope.story.tasks = tasks;
+				$scope.save();
+			}
+		}
+	})
+	
+	$rootScope.$on("moveDownTask", function (event, args) {
+		if (args[0] == $scope.story.id) {
+			var tasks = $scope.story.tasks;
+			var index = tasks.findIndex(function(obj) { return obj.order == args[1]; });
+			if (index > -1 && index < tasks.length - 1) {
+				tasks[index].order = tasks[index].order + tasks[index+1].order;
+				tasks[index+1].order = tasks[index].order - tasks[index+1].order;
+				tasks[index].order = tasks[index].order - tasks[index+1].order;
+				
+				tasks.sort(function compare(a,b) {
+					  if (a.order < b.order)
+						     return -1;
+						  if (a.order > b.order)
+						    return 1;
+						  return 0;
+						})
+				$scope.story.tasks = tasks;
+				$scope.save();
+			}
+		}
+	})
+	
+	$scope.moveUp = function() {
+		$rootScope.$emit("moveUpStory", [$scope.swimLane.id, $scope.story.order]);
+	}
+	
+	$scope.moveDown = function() {
+		$rootScope.$emit("moveDownStory", [$scope.swimLane.id, $scope.story.order]);
+	}
+	
+	$scope.moveTo = function(otherSwimLane) {
+	    $("#modal" + $scope.story.id).removeClass("in");
+	    $(".modal-backdrop").remove();
+	    $("#modal" + $scope.story.id).hide();
+		$scope.swimLane.stories = $scope.swimLane.stories.filter(function(obj) {
+			return obj.id !== $scope.story.id;
+		});
+		if (otherSwimLane.stories) {
+			$scope.story.order = otherSwimLane.stories.length;
+			otherSwimLane.stories.push($scope.story);
+		} else {
+			$scope.story.order = 0;
+			otherSwimLane.stories = [$scope.story];
+		}
+		$rootScope.$emit("resolveSwimLaneOrdering", $scope.swimLane.id);
+		
 	}
 })
