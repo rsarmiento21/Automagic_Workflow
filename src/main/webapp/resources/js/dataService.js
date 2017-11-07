@@ -328,6 +328,14 @@ angular.module("scrumApp")
 		array[idx2].order = array[idx1].order - array[idx2].order;
 		array[idx1].order = array[idx1].order - array[idx2].order;
 	}
+	
+	this.markStoryAsFinished = function(story, success, failure){
+		$http.post("ajax/story/markAsFinished", story).then(response => {
+			success(response);
+		}, response => {
+			failure(response);
+		});
+	}
 
 	
 })
