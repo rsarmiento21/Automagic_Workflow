@@ -65,16 +65,14 @@ function domloaded(){
 					  { x: 30, y: 25 },
 					  { x: 40, y: 30 },
 					  { x: 50, y: 28 }*/
-					  { x: 1088620200000, y :71},
-					{ x: 1104517800000, y : 55 },
-					{ x: 1112293800000, y:  50 }
+			
 					
 					  ]
 				  }
 				  ]
 			  });
 				chart.options.data[0].dataPoints.push({ x: 1136053800000, y : 65 });//Must be before the render.
-				chart.options.data[0].dataPoints.push({ x: 1136053900000, y : 9 });
+				chart.options.data[0].dataPoints.push({ x: 1136054800000, y : 9 });
 				chart.render();
 			  
 	}
