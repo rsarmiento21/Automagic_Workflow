@@ -1,17 +1,30 @@
 @charset "ISO-8859-1";
 
+scrum-swim-lane {
+    width: 250px;
+    display: inline-block;
+}
+
 scrum-story .btn-group-vertical {
     width: 32px;
     padding: 0 0.25em;
 }
 
-scrum-story .btn-block {
-    width: 250px;
+scrum-story .btn-info {
+    width: 202px;
     height: 3em;
 }
 
 scrum-story .glyphicon {
     margin-left: -0.1em;
+}
+
+#lanes {
+    vertical-align: top;
+}
+
+scrum-swim-lane .navbar-left {
+	
 }
 
 .wordwrap { 

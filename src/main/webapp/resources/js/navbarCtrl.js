@@ -62,17 +62,18 @@ angular.module("scrumApp")
 	}
 	
 	$scope.loadBoard = function(board) {
-//		$rootScope.$emit("setBoard", board);
 		dataService.setBoard(board);
 	}
 
 
-
-	//create board
-	$scope.createBoard = function(b) {
-			dataService.createBoard(b, response => {
-				
+	$scope.createBoard = function() {
+		console.log("in createBoard")
+		if ($scope.b.name) {
+			dataService.createBoard($scope.b, response => {
+				$scope.b.name = "";
 			});
+		}
+			
 		
 	}
 

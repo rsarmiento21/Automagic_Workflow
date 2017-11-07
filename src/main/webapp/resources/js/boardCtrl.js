@@ -5,17 +5,9 @@
 angular.module("scrumApp")
 
 .controller("boardCtrl", function($scope, dataService) {
-	$scope.oldBoard = null;
+	$scope.oldBoardName = "";
 	$scope.board = null;
-	$scope.rename = false;
-
-	$scope.listOfBoards = null;
 	
-	$scope.b = {
-			id: 0
-		};
-		
-
 	$scope.newSwimLane = {
 			name: "",
 			board: null,
@@ -40,17 +32,18 @@ angular.module("scrumApp")
 	}
 	
 	$scope.renameBoard = function(){
-		$scope.oldBoard = jQuery.extend(true, {}, $scope.board);
-		$scope.rename = true;
+		$scope.oldBoardName = jQuery.extend(true, {}, $scope.board.name);
 	}
 	
-	$scope.editBoard = function(updatedName){
-		$scope.board.name = updatedName;
-		console.log($scope.oldBoard.name + " " + $scope.board.name);
-		if ($scope.board.name !== $scope.oldBoard.name){
+	$scope.editBoard = function() {
+		console.log($scope.oldBoardName + " " + $scope.board.name);
+		if ($scope.board.name !== $scope.oldBoardName){
 			$scope.saveBoard();
-		}
-		$scope.rename = false;		
+		}	
+	}
+	
+	$scope.resetEditBoard = function() {
+		$scope.board.name = jQuery.extend(true, {}, $scope.oldBoardName);
 	}
 	
 	$scope.saveBoard = function(){
@@ -91,7 +84,9 @@ angular.module("scrumApp")
 	
 	$scope.deleteBoard = function(b) {
 		console.log("deleting board");
-		dataService.deleteBoard(b, response => {});
+		dataService.deleteBoard(b, response => {
+		    $(".modal-backdrop").remove();
+		});
 	}
 	
 	
@@ -108,15 +103,6 @@ angular.module("scrumApp")
 		}
 		
 		domloaded(holdStories, bo);
-//		console.log("Creating chart from with " + bo.id);
-//		//var arrayOfBoards = dataService.getAllStories(bo.id);
-//		console.log("TRY AGAIN IDIOT");
-//		//console.log(arrayOfBoards);
-//		dataService.getAllStories(bo.id, response => {
-//			$scope.listOfBoards = response.data;
-//		});
-//		console.log($scope.listOfBoards);
-		//var listOfSwimlanes = 
 		
 		
 	}

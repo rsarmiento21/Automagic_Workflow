@@ -106,6 +106,7 @@ angular.module("scrumApp")
 		console.log("Deleting story");
 		dataService.deleteStory($scope.story,
 				response => {
+				    $(".modal-backdrop").remove();
 					console.log("success delete!");
 					$scope.swimLane.stories = $scope.swimLane.stories.filter(function(obj) {
 						return obj.id !== $scope.story.id;
@@ -229,21 +230,6 @@ angular.module("scrumApp")
 		    $(".modal-backdrop").remove();
 		}, response => console.log("oops"));
 		
-		
-//		$scope.swimLane.stories = $scope.swimLane.stories.filter(function(obj) {
-//			return obj.id !== $scope.story.id;
-//		});
-//		if (otherSwimLane.stories) {
-//			$scope.story.order = otherSwimLane.stories.length;
-//			otherSwimLane.stories.push($scope.story);
-//		} else {
-//			$scope.story.order = 0;
-//			otherSwimLane.stories = [$scope.story];
-//		}
-//		$scope.resolveStoryOrdering();
-//		$scope.swimLane = otherSwimLane;
-//		$scope.save();
-		
 	}
 	
 
@@ -262,17 +248,9 @@ angular.module("scrumApp")
 	}
 	
 	//get current time with Date.now() if you want to make the JS to put date into the Story instead of the controller
-	$scope.markAsFinsihed = function() {
-		console.log("This story is finished!");
-		dataService.markStoryAsFinished($scope.story,
-				response => {
-					console.log("marking complete!");
-					$scope.swimLane.stories = $scope.swimLane.stories.filter(function(obj) {
-						return obj.id !== $scope.story.id;
-					});
-					$scope.resolveStoryOrdering();
-				},
-				response => console.log("could not mark as finished!"));
+	$scope.markAsFinished = function() {
+		$scope.story.dateStoryCompleted = Date.now();
+		$scope.save();
 	}
 	
 })

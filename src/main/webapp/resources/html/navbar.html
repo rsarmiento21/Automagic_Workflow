@@ -1,29 +1,32 @@
 <!DOCTYPE html>
-<div data-ng-controller="navbarCtrl" data-ng-init="init()">
-<nav class="navbar navbar-inverse">
+<nav class="navbar navbar-inverse" data-ng-controller="navbarCtrl" data-ng-init="init()">
   <div class="container-fluid">
+  	<div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand">Automagic SCRUM</a>
+    </div>
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul data-ng-if="loggedIn" class="nav navbar-nav">
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Boards <span class="caret"></span></a>
           <ul id="boardDropdown" class="dropdown-menu">
-
-            <!-- <li><button type = "button" class = "btn btn-info btn-lg" data-toggle = "modal" data-target = "#myModal">+</button></li>
-            <li data-ng-repeat = "board in boards"data-ng-click="loadBoard(board)">{{board.name}}</li> -->
-
-            <li><button type = "button" class = "btn btn-info btn-lg" data-toggle = "modal" data-target = "#createBoardModal">+</button></li>
+            <li><a data-toggle = "modal" data-target = "#createBoardModal">Create New Board</a></li>
             <li role="separator" class="divider"></li>
-            <li data-ng-repeat = "board in boards"data-ng-click="loadBoard(board)">{{board.name}}</li>         
-
-          </ul>
+            <li data-ng-repeat = "board in boards"><a data-ng-click="loadBoard(board)">{{board.name}}</a></li>         
+		  </ul>
         </li>
       </ul>
-      <ul data-ng-if="!loggedIn" class="nav navbar-nav navbar-right">
-      		<li class="active"><button data-ng-click="loadRegisterFragment()" class = "btn btn-warning">Register</button></li>
-      </ul>
-      <ul data-ng-if="loggedIn" class ="nav navbar-nav navbar-right">
-     		<li class ="active"><button data-ng-click="logout()" class="btn btn-warning">Logout</button></li>
+      <ul class="nav navbar-nav navbar-right">
+        <form class="navbar-form navbar-right">
+        	<button data-ng-hide="loggedIn" type="button" data-ng-click="loadRegisterFragment()" class="btn btn-warning">Register</button>
+	     	<button data-ng-if="loggedIn" type="button" data-ng-click="logout()" class="btn btn-warning">Logout</button>
+      	</form>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
@@ -40,9 +43,11 @@
           <h4 class="modal-title">Create New Boards</h4>
         </div>
         <div class="modal-body">
-          <p>Please enter a name for the new board:</p>
-          <input type ="text" placeholder = "board name here" id = "makeBoard" data-ng-model="b.name" required></input>
-          <button class = "btn btn-warning" value = "submit" data-ng-click="createBoard(b)" data-dismiss="modal">Submit</button>
+        	<form>
+		          <p>Please enter a name for the new board:</p>
+		          <input type ="text" data-ng-model="b.name" required/>
+		          <button class="btn btn-warning" data-ng-click="createBoard()" data-dismiss="modal">Submit</button>
+        	</form>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -51,6 +56,3 @@
       
     </div>
   </div>
-  
-<!-- Modal to edit board name -->  
-</div>
