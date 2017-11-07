@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -65,13 +66,17 @@ public class AjaxBoardCtrl {
 		return new ResponseEntity<>(HttpStatus.CONFLICT);
 	}
 
-	
-	@RequestMapping(value="/ajax/board/stories/{id}")
+	//Get the board ID to get the Board object with list of Swimlanes, which will then give list of stories
+	@RequestMapping(value="/ajax/board/getStoriesFromBoard/{id}", method=RequestMethod.POST)
 	@ResponseBody
-	public ResponseEntity<Object> getStoriesFromBoardId(@PathVariable("id") String s, HttpServletRequest req) {
-		int id = Integer.parseInt(s);
+	public ResponseEntity<Object> getStoriesFromBoard(@PathVariable("id") String s, HttpServletRequest req) {
+	
+		int bId = Integer.parseInt(s);
+		System.out.println("grabbing stories with " + bId);
+		
 		Board b = new Board();
-		b.setId(id);
+		b.setId(bId);
+		
 		Board board = boardService.getBoardById(b);
 		
 		Set<SwimLane> setOfSwimLane = board.getSwimLanes();
@@ -81,6 +86,12 @@ public class AjaxBoardCtrl {
 		for(SwimLane sl : setOfSwimLane) {
 			listOfStories.addAll(sl.getStories());
 		}		
+		
+		for(Story testStory : listOfStories) {
+			System.out.println("SL ID: " + testStory.getId());
+		}
+		
+		//Story[] arrayOfStories = listOfStories.toArray(new Story[listOfStories.size()]);
 		
 		return new ResponseEntity<>(listOfStories, HttpStatus.OK);
 	}
