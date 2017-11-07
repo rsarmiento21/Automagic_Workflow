@@ -90,8 +90,9 @@ angular.module("scrumApp")
 	$scope.register = function(uname,pword){
 		$scope.newUser.username = uname;
 		$scope.newUser.password = pword;
-		dataService.register($scope.newUser);
-		$rootScope.$emit("updateFragment","login");
+		dataService.register($scope.newUser,
+				response => $rootScope.$emit("updateFragment","login"),
+				response => alert("Could not register new user"));
 	}
 
 })
