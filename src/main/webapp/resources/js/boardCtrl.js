@@ -181,9 +181,8 @@ angular.module("scrumApp")
 				
 			}
 		}
-		console.log(holdStories);
 		
-		domloaded(holdStories);
+		domloaded(holdStories, bo);
 //		console.log("Creating chart from with " + bo.id);
 //		//var arrayOfBoards = dataService.getAllStories(bo.id);
 //		console.log("TRY AGAIN IDIOT");

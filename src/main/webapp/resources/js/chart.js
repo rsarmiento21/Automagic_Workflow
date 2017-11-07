@@ -37,7 +37,7 @@ dataPoints: [
 
 // One is to make an event listener and call it upon document  creation
 //document.addEventListener('DOMContentLoaded',domloaded,false);	
-function domloaded(listOfStories){
+function domloaded(listOfStories, board){
 	var totalPoint = 0;
   	
 	listOfStories.sort(function(a, b){return a.dateStoryCompleted - b.dateStoryCompleted});
@@ -47,8 +47,7 @@ function domloaded(listOfStories){
   		totalPoint = totalPoint + listOfStories[i].points;			  		
   	}
   	
-  	console.log("Pointto + " + totalPoint);
-  	console.log(listOfStories);
+  	var boardname = "" + board.name;
 		
 			console.log("Can you hear me?");
 			  var chart = new CanvasJS.Chart("chartHere", {//name_of_id is whatever the id you want to put the chart into
@@ -75,14 +74,35 @@ function domloaded(listOfStories){
 				  }
 				  ]
 			  });
-			  var starting_date = listOfStories[0].dateStoryCompleted - 10000000;
-			  chart.options.data[0].dataPoints.push({ x: starting_date, y : totalPoint});			  		
 			  
+//			  var starting_date = listOfStories[0].dateStoryCompleted - 10000000;
+//			  chart.options.data[0].dataPoints.push({ x: starting_date, y : totalPoint});
+			  var foundFirstNotNull = false;
+			  var a = 0;
+//			  while(foundFirstNotNull == false){
+//				  if(listOfStories[a].dateStoryCompleted !== null){
+//					  var starting_date = listOfStories[a].dateStoryCompleted - 100000;
+//					  console.log(starting_date);
+//					  
+//					  foundFirstNotNull = true;
+//				  }
+//				  a++;
+//			  }
+			  chart.options.data[0].dataPoints.push({ x: board.startDate, y : totalPoint});
+//			  
 			  for(i = 0; i < listOfStories.length; i++){
+				  if(listOfStories[i].dateStoryCompleted !== null){
+//					  console.log("Making chart");
+//					  console.log(listOfStories[i].dateStoryCompleted);
+//					  console.log(listOfStories[i].dateStoryCompleted != null);
+					  
 			  		var t = listOfStories[i].dateStoryCompleted;
 			  		totalPoint = totalPoint - listOfStories[i].points;
+			  		
+			  		console.log(totalPoint + " points ");
 			  		var value = totalPoint;
-			  		chart.options.data[0].dataPoints.push({ x: t, y : value });			  		
+			  		chart.options.data[0].dataPoints.push({ x: t, y : value });	
+				  }
 			  	}
 				
 			
