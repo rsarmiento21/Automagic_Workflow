@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!-- This file displays the current Board object selected by the user  -->
 
-<div data-ng-controller="boardCtrl" class="container">
+<div data-ng-controller="boardCtrl" class="container" data-ng-init="init()">
 	<div data-ng-hide="board">
 		<h4>Select a board from the dropdown menu to view it</h4>
 	</div>
@@ -29,11 +29,6 @@
 				</div>
 			</form>
 		</div>
-<!-- This form lets the user create swimlanes-->
-		<!-- <form>
-			<input data-ng-model="name" type="text"/><br>
-			<button data-ng-click="createSwimLane(name, board.id)">Create Swimlane</button>
-		</form> -->
 <!-- This table displays the current swimlanes -->		
 
 		<table><tr>
@@ -45,34 +40,23 @@
 		
 		<button button type = "button" class = "btn btn-info btn-lg" data-ng-click="createChart(board)">Create Chart</button>
 		<div id="chartHere" style="width:100%; height:280px" ></div>
-	</div>
-
 		
-	<form id="deleteBoardCtrl" class="form-horizontal">
-		<div class="form-group">
-			<div class="col-sm-offset-2 col-sm-10">
-				<h4>Enter ID to delete board</h4>
-			</div>
-		</div>
-		<div class="form-group">
-			<label for="b_name" class="col-sm-2 control-label">Board name</label>
-			<div class="col-sm-10">
-				<input id="b_id" type="number" class="form-control"
-					placeholder="Enter board id" data-ng-model="b.id">
-			</div>
-		</div>
+		<form id="deleteBoardCtrl" class="form-horizontal">
+		<h4>Delete Board?</h4>
 		<!-- Button -->
 		<div class="form-group">
 			<div class="col-sm-offset-2 col-sm-10">
-				<button id="createBtn" class="btn btn-primary"
-					data-ng-click="deleteBoard(b)">delete Board</button>
-				<img id="loading-gif" alt="Loading..." data-ng-hide="!submitted"
-					src="resources/img/loading-gif.gif" height="32" width="32" />
+				<button id="deleteBtn" class="btn btn-primary"
+					data-ng-click="deleteBoard(board)">delete Board</button>
 			</div>
 		</div>
 	
 	
 	</form>
+	</div>
+
+		
+	
 
 </div>		
 

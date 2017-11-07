@@ -36,7 +36,7 @@ public class Story {
 	private int id;
 	
 	@JsonBackReference
-	@ManyToOne(fetch=FetchType.EAGER)
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="SL_ID")
 	private SwimLane swimLane;
 	
@@ -54,9 +54,9 @@ public class Story {
 	
 	@Column(name="ST_POSITION")
 	private int order;
-	
+
 	@JsonManagedReference
-	@OneToMany(mappedBy="story", cascade={CascadeType.MERGE, CascadeType.REMOVE}, fetch=FetchType.EAGER)
+	@OneToMany(mappedBy="story", cascade=CascadeType.REMOVE, fetch=FetchType.EAGER)
 	private Set<Task> tasks;
 	
 	

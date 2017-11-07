@@ -1,5 +1,7 @@
 package com.revature.controllers;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -30,8 +32,6 @@ public class AjaxStoryCtrl {
 			BoardUser bu = (BoardUser) session.getAttribute("user");
 			if (bu != null) {
 				story = bs.createStory(story);
-				bu = bs.getBoardUserById(bu);
-				session.setAttribute("user", bu);
 				return new ResponseEntity<>(story, HttpStatus.OK);
 			}
 		}
@@ -46,8 +46,20 @@ public class AjaxStoryCtrl {
 			BoardUser bu = (BoardUser) session.getAttribute("user");
 			if (bu != null) {
 				bs.updateStory(story);
-				bu = bs.getBoardUserById(bu);
-				session.setAttribute("user", bu);
+				return new ResponseEntity<>(HttpStatus.OK);
+			}
+		}
+		return new ResponseEntity<>(HttpStatus.CONFLICT);
+	}
+	
+	@RequestMapping("/ajax/story/editAll")
+	@ResponseBody
+	public ResponseEntity<Object> editStories(@RequestBody List<Story> stories, HttpServletRequest req) {
+		HttpSession session = req.getSession();
+		if (session != null) {
+			BoardUser bu = (BoardUser) session.getAttribute("user");
+			if (bu != null) {
+				bs.updateStories(stories);
 				return new ResponseEntity<>(HttpStatus.OK);
 			}
 		}
@@ -62,8 +74,6 @@ public class AjaxStoryCtrl {
 			BoardUser bu = (BoardUser) session.getAttribute("user");
 			if (bu != null) {
 				bs.deleteStory(story);
-				bu = bs.getBoardUserById(bu);
-				session.setAttribute("user", bu);
 				return new ResponseEntity<>(HttpStatus.OK);
 			}
 		}
