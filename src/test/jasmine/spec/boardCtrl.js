@@ -18,7 +18,7 @@ describe("Board Controller Test Suite",function(){
 		//This is a Spec, essentially a single test case 
 		it("it should be able to toggle the rename boolean value",renameBoard(){
 			expect($scope.rename).toEqual(true);
-		});
+		}); 
 		
 	})
 	
