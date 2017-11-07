@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- This file displays the current Board object selected by the user  -->
 
 <div data-ng-controller="boardCtrl" class="container">
 	<div data-ng-hide="board">
@@ -28,7 +29,13 @@
 				</div>
 			</form>
 		</div>
-		
+<!-- This form lets the user create swimlanes-->
+		<form>
+			<input data-ng-model="name" type="text"/><br>
+			<button data-ng-click="createSwimLane(name, board.id)">Create Swimlane</button>
+		</form>
+<!-- This table displays the current swimlanes -->		
+
 		<table><tr>
 			<td class="well" ng-repeat="swimLane in board.swimLanes" >
 				<scrum-swim-lane swim-lane="swimLane" board="board"></scrum-swim-lane>
