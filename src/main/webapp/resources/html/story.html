@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <div data-ng-controller="storyCtrl">
+	<div class="story-wrapper">
 		<div class="btn-group-vertical btn-group-xs col-xs-1" role="group" aria-label="move">
 			<button type="button" class="btn btn-default" data-ng-click="moveUp()"
 				data-ng-disabled="story.order == 0">
@@ -15,6 +16,7 @@
 			data-ng-attr-data-target="{{ '#modal' + story.id  }}">
 				<span class="badge">{{story.points}}</span> <span class="wordwrap">{{story.title}}</span>
 		</button>
+	</div>
 	
 	<!-- Modal -->
 	<div class="modal fade" data-ng-attr-id="{{ 'modal' + story.id }}"
