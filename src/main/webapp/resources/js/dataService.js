@@ -53,6 +53,9 @@ angular.module("scrumApp")
 	this.editBoard = function(board, success, failure){
 		$http.post("ajax/board/edit", board).then(success,failure);
 	}
+	this.register = function(newUser,success,failure){
+		$http.post("ajax/register",newUser).then(success,failure);
+	}
 	
 
 	//Swimlane functions

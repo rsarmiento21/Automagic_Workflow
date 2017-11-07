@@ -13,7 +13,11 @@ angular.module("scrumApp")
 .controller("navbarCtrl", function($scope, $rootScope, dataService) {
 	$scope.boards = {};
 	$scope.loggedIn = false;
-
+	$scope.newUser = {
+			username: "",
+			password: ""
+	};
+	
 	$scope.init = function() {
 		dataService.registerLoginObserver(isLoggedIn => {
 			$scope.loggedIn = isLoggedIn;
@@ -65,4 +69,13 @@ angular.module("scrumApp")
 			return board.id == id;
 		});
     });
+	$scope.loadRegisterFragment = function(success,failure){
+		$rootScope.$emit("updateFragment","registerUser");
+	}
+	$scope.register = function(uname,pword){
+		$scope.newUser.username = uname;
+		$scope.newUser.password = pword;
+		dataService.register($scope.newUser);
+		$rootScope.$emit("updateFragment","login");
+	}
 })
