@@ -8,9 +8,14 @@
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Boards <span class="caret"></span></a>
           <ul id="boardDropdown" class="dropdown-menu">
+
+            <!-- <li><button type = "button" class = "btn btn-info btn-lg" data-toggle = "modal" data-target = "#myModal">+</button></li>
+            <li data-ng-repeat = "board in boards"data-ng-click="loadBoard(board)">{{board.name}}</li> -->
+
             <li><button type = "button" class = "btn btn-info btn-lg" data-toggle = "modal" data-target = "#createBoardModal">+</button></li>
             <li role="separator" class="divider"></li>
             <li data-ng-repeat = "board in boards"data-ng-click="loadBoard(board)">{{board.name}}</li>         
+
           </ul>
         </li>
       </ul>
@@ -36,8 +41,8 @@
         </div>
         <div class="modal-body">
           <p>Please enter a name for the new board:</p>
-          <input type ="text" placeholder = "board name here" id = "makeBoard" required></input>
-          <button class = "btn btn-warning" value = "submit" >Submit</button>
+          <input type ="text" placeholder = "board name here" id = "makeBoard" data-ng-model="b.name" required></input>
+          <button class = "btn btn-warning" value = "submit" data-ng-click="createBoard(b)" data-dismiss="modal">Submit</button>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

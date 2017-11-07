@@ -118,6 +118,45 @@ angular.module("scrumApp")
 	}
 	
 
+
+	//create board methods
+	
+	this.createBoard = function(b, success){
+		toggleLoading();
+		console.log("Creating stuff");
+		var promise = $http.post("createBoard", b).then(response => {
+			success(response);
+			toggleLoading();
+		});
+	}
+	
+	//deleteboard methods
+	
+	
+	
+	this.deleteBoard = function(b, success){
+		toggleLoading();
+		console.log("Deleting stuff");
+		var promise = $http.post("deleteBoard", b).then(response => {
+			success(response);
+			toggleLoading();
+		});
+	}
+	
+	
+//	ds.setLoadState = function() {
+//		if (ds.isLoggedIn()) {
+//			root.$emit("toggleLogin", {});
+//			root.$emit("updateFragment", "board");
+//		} else {
+//			root.$emit("updateFragment", "login");
+//		}
+//	}
+
+	this.addNewTask = function(newTask, success, failure) {
+		$http.post("ajax/task/new", newTask).then(success, failure);
+	}
+	
 	//Swimlane functions
 	this.createSwimLane = function(sl, success, failure) {
 		toggleLoading();
@@ -200,6 +239,7 @@ angular.module("scrumApp")
 			toggleLoading();
 		});
 	}
+
 	
 	this.deleteTask = function(task, success, failure) {
 		toggleLoading();
