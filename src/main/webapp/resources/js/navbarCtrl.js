@@ -25,35 +25,25 @@ angular.module("scrumApp")
 	};
 	
 	$scope.init = function() {
-		dataService.isLoggedIn(response => {
-			if (response.data) {
-				$rootScope.$emit("toggleLogin", {});
-				$rootScope.$emit("loadDropdown", {});
+		dataService.registerLoginObserver(isLoggedIn => {
+			$scope.loggedIn = isLoggedIn;
+			if (isLoggedIn) {
+				$scope.getBoards();
 			}
-		});
+		})
+		dataService.registerBoardsObserver(boards => {
+			$scope.boards = boards;
+		})
+		dataService.checkLogin();
 	}
+	
+	$scope.$watch(function(){ return dataService.boards; }, function(value) {
+		$scope.boards = value;
+	})
 	
 	$scope.logout = function() {
-		dataService.logout(
-				response => {
-					$scope.loggedIn = !$scope.loggedIn;
-					$rootScope.$emit("updateFragment", "login");
-				},
-				response => console.log(response.data[0])
-		);
+		dataService.logout(response => {}, response => console.log(response.data[0]));
 	}
-	
-	$rootScope.$on("toggleLogin", function() {
-		$scope.loggedIn = !$scope.loggedIn;
-    });
-	
-	$rootScope.$on("loadDropdown", function() {
-		$scope.getBoards();
-    });
-	
-	$rootScope.$on("setBoards", function(event, boards) {
-		$scope.boards = boards;
-    });
 	
 	$scope.getBoards = function() {
 		dataService.getBoards(
@@ -72,7 +62,8 @@ angular.module("scrumApp")
 	}
 	
 	$scope.loadBoard = function(board) {
-		$rootScope.$emit("setBoard", board);
+//		$rootScope.$emit("setBoard", board);
+		dataService.setBoard(board);
 	}
 
 
@@ -81,8 +72,6 @@ angular.module("scrumApp")
 	$scope.createBoard = function(b) {
 			dataService.createBoard(b, response => {
 				
-				$rootScope.$emit("loadDropdown", {});
-				$rootScope.$emit("updateFragment", "board");
 			});
 		
 	}

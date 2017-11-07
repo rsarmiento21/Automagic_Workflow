@@ -35,7 +35,7 @@ public class SwimLane {
 	private int id;
 	
 	@JsonBackReference
-	@ManyToOne(fetch=FetchType.EAGER)
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="BD_ID")
 	private Board board;
 	
@@ -46,7 +46,7 @@ public class SwimLane {
 	private int order;
 	
 	@JsonManagedReference
-	@OneToMany(mappedBy="swimLane", cascade={CascadeType.MERGE, CascadeType.REMOVE}, fetch=FetchType.EAGER)
+	@OneToMany(mappedBy="swimLane", cascade=CascadeType.REMOVE, fetch=FetchType.EAGER)
 	private Set<Story> stories;
 	
 	

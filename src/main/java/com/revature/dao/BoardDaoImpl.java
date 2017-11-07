@@ -1,5 +1,7 @@
 package com.revature.dao;
 
+import java.util.List;
+
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -128,6 +130,30 @@ public class BoardDaoImpl implements Dao {
 	public void updateTask(Task t) {
 		Session session = sessionFactory.getCurrentSession();
 		session.merge(t);
+	}
+	
+	@Override
+	public void updateSwimLanes(List<SwimLane> swimlanes) {
+		Session session = sessionFactory.getCurrentSession();
+		for (SwimLane sl : swimlanes) {
+			session.merge(sl);
+		}
+	}
+	
+	@Override
+	public void updateStories(List<Story> stories) {
+		Session session = sessionFactory.getCurrentSession();
+		for (Story s: stories) {
+			session.merge(s);
+		}
+	}
+	
+	@Override
+	public void updateTasks(List<Task> tasks) {
+		Session session = sessionFactory.getCurrentSession();
+		for (Task t : tasks) {
+			session.merge(t);
+		}
 	}
 	
 	

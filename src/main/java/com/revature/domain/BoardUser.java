@@ -30,7 +30,7 @@ public class BoardUser {
 	
 	@Column(name="BU_PASSWORD")
 	private String password;
-	
+
 	@JsonManagedReference
 	@OneToMany(mappedBy="owner", cascade=CascadeType.REMOVE, fetch=FetchType.EAGER)
 	private Set<Board> boards;
