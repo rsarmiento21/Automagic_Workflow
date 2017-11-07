@@ -25,4 +25,13 @@ public class AuthService {
 			return null;
 		}
 	}
+	
+	@Transactional
+	public void registerBoardUser(BoardUser usr) {
+		if(usr != null)
+		{
+			BoardUser usr2 = new BoardUser();
+			usr2 = dao.createNewBoardUser(usr);
+		}
+	}
 }

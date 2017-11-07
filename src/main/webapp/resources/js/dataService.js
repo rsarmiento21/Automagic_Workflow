@@ -15,8 +15,7 @@ angular.module("scrumApp")
 	
 	this.logout = function(success, failure) {
 		$http.get("logout").then(success, failure);
-	}
-	
+	}	
 	this.getBoards = function(success, failure) {
 		var promise = $http.get("ajax/boards").then(success, failure);
 	}
@@ -26,6 +25,9 @@ angular.module("scrumApp")
 	}
 	this.editBoard = function(board,success, failure){
 		$http.post("ajax/board/edit", board).then(success,failure);
+	}
+	this.register = function(newUser,success,failure){
+		$http.post("ajax/register",newUser).then(success,failure);
 	}
 	
 

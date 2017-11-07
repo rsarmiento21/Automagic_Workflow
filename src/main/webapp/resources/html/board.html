@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- This file displays the current Board object selected by the user  -->
 
 <div data-ng-controller="boardCtrl" class="container">
 	<!-- <table class="table table-bordered table-hover">
@@ -20,12 +21,13 @@
 				required />
 			<button id="renameButton" data-ng-click="editBoard(updatedBoardName)" class="btn btn-primary">Submit</button>
 		</div>
-		
+
+<!-- This form lets the user create swimlanes-->
 		<form>
 			<input data-ng-model="name" type="text"/><br>
 			<button data-ng-click="createSwimLane(name, board.id)">Create Swimlane</button>
 		</form>
-		
+<!-- This table displays the current swimlanes -->		
 		<table><tr>
 			<td class="well" ng-repeat="swimLane in board.swimLanes" >
 				<button data-ng-click="deleteSwimLane(swimLane.id)">Delete</button><br>
