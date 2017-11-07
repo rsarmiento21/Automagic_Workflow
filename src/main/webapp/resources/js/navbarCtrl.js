@@ -13,9 +13,15 @@ angular.module("scrumApp")
 .controller("navbarCtrl", function($scope, $rootScope, dataService) {
 	$scope.boards = {};
 	$scope.loggedIn = false;
+
+	//set board to create
+	$scope.b = {
+			name: ""
+	};
 	$scope.newUser = {
 			username: "",
 			password: ""
+
 	};
 	
 	$scope.init = function() {
@@ -68,12 +74,27 @@ angular.module("scrumApp")
 	$scope.loadBoard = function(board) {
 		$rootScope.$emit("setBoard", board);
 	}
+
+
+
+	//create board
+	$scope.createBoard = function(b) {
+			dataService.createBoard(b, response => {
+				
+				$rootScope.$emit("loadDropdown", {});
+				$rootScope.$emit("updateFragment", "board");
+			});
+		
+	}
+
+
 	
 	$rootScope.$on("getBoardById", function(event, id) {
 		return $scope.boards.find(function(board) {
 			return board.id == id;
 		});
     });
+
 	$scope.loadRegisterFragment = function(success,failure){
 		$rootScope.$emit("updateFragment","registerUser");
 	}
@@ -83,4 +104,5 @@ angular.module("scrumApp")
 		dataService.register($scope.newUser);
 		$rootScope.$emit("updateFragment","login");
 	}
+
 })

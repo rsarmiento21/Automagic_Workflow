@@ -8,11 +8,20 @@ angular.module("scrumApp")
 	$scope.oldBoard = null;
 	$scope.board = null;
 	$scope.rename = false;
+
+	$scope.listOfBoards = null;
+	
+	$scope.b = {
+			id: 0
+		};
+		
+
 	$scope.newSwimLane = {
 			name: "",
 			board: null,
 			order: 0
 		};
+
 	
 //	$scope.getBoard = function(id) {
 //		dataService.getBoard(id,
@@ -141,6 +150,54 @@ angular.module("scrumApp")
 			}
 		}
 	})
+	
+
+	
+//	$scope.goToDeleteBoard=function(){
+//		dataService.goToDeleteBoard();
+//	}
+	
+	$scope.deleteBoard = function(b) {
+		if (!$scope.submitted) {
+			console.log("deleting board");
+			$scope.submitted = true;
+			dataService.deleteBoard(b,  response => {
+				
+				$rootScope.$emit("loadDropdown", {});
+				$rootScope.$emit("updateFragment", "board");
+			});
+		}
+	}
+	
+	
+	$scope.createChart = function(bo){
+		var holdStories = [];
+		console.log(bo.swimLanes.length);
+		for(var i = 0; i < bo.swimLanes.length;i++){
+			var sl = bo.swimLanes[i];//get individual swimlanes
+			console.log(sl);
+			for(var k = 0; k < sl.stories.length; k++){
+				holdStories.push(sl.stories[k]);
+				
+			}
+		}
+		console.log(holdStories);
+		
+		domloaded(holdStories);
+//		console.log("Creating chart from with " + bo.id);
+//		//var arrayOfBoards = dataService.getAllStories(bo.id);
+//		console.log("TRY AGAIN IDIOT");
+//		//console.log(arrayOfBoards);
+//		dataService.getAllStories(bo.id, response => {
+//			$scope.listOfBoards = response.data;
+//		});
+//		console.log($scope.listOfBoards);
+		//var listOfSwimlanes = 
+		
+		
+	}
+	
+	
 	
 
 })
