@@ -1,5 +1,6 @@
 package com.revature.domain;
 
+import java.sql.Timestamp;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -36,6 +37,9 @@ public class Board {
 	@Column(name="BD_NAME")
 	private String name;
 	
+	@Column(name="BD_STARTDATE")
+	private Timestamp startDate;
+	
 	@JsonManagedReference
 	@OneToMany(mappedBy="board", cascade={CascadeType.MERGE, CascadeType.REMOVE}, fetch=FetchType.EAGER)
 	private Set<SwimLane> swimLanes;
@@ -59,6 +63,30 @@ public class Board {
 		this.owner = owner;
 		this.name = name;
 		this.swimLanes = swimLanes;
+	}
+
+
+	  
+	
+	public Board(int id, BoardUser owner, String name, Timestamp startDate, Set<SwimLane> swimLanes) {
+		super();
+		this.id = id;
+		this.owner = owner;
+		this.name = name;
+		this.startDate = startDate;
+		this.swimLanes = swimLanes;
+	}
+
+	
+
+	public Timestamp getStartDate() {
+		return startDate;
+	}
+
+
+
+	public void setStartDate(Timestamp startDate) {
+		this.startDate = startDate;
 	}
 
 
