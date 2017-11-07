@@ -71,7 +71,11 @@ angular.module("scrumApp")
 			dataService.createStory($scope.newStory,
 				response => {
 					console.log("success add!");
-					$scope.newStory.swimLane.stories.push(response.data);
+					if ($scope.newStory.swimLane.stories) {
+						$scope.newStory.swimLane.stories.push(response.data);
+					} else {
+						$scope.newStory.swimLane.stories = [response.data];
+					}
 					$scope.resetNewStory();
 				},
 				response => console.log("could not add!"));
