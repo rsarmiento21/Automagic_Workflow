@@ -1,5 +1,6 @@
 package com.revature.controllers;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -79,6 +80,23 @@ public class AjaxStoryCtrl {
 		}
 		return new ResponseEntity<>(HttpStatus.CONFLICT);
 	}
+	
+	
+	@RequestMapping("/ajax/story/markAsFinished")
+	@ResponseBody
+	public ResponseEntity<Object> markAsFinished(@RequestBody Story story, HttpServletRequest req) {
+		HttpSession session = req.getSession();
+		if (session != null) {
+			BoardUser bu = (BoardUser) session.getAttribute("user");
+			if (bu != null) {
+				story.setDateStoryCompleted(new Timestamp(System.currentTimeMillis()));
+				bs.updateStory(story);
+				return new ResponseEntity<>(HttpStatus.OK);
+			}
+		}
+		return new ResponseEntity<>(HttpStatus.CONFLICT);
+	}
+	
 	
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<Exception> handleException(Exception e){
