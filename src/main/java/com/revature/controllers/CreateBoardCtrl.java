@@ -1,5 +1,6 @@
 package com.revature.controllers;
 
+import java.sql.Timestamp;
 import java.util.Collections;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,6 +37,7 @@ public class CreateBoardCtrl {
 		HttpSession session = req.getSession();
 		BoardUser bu = (BoardUser) session.getAttribute("user");
 		b.setOwner(bu);
+		b.setStartDate(new Timestamp(System.currentTimeMillis()));
 		bs.createBoard(b);
 		return new ResponseEntity<>(HttpStatus.OK);	//send back the board user to go back to board page with ID			
 	}
