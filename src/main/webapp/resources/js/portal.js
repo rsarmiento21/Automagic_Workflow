@@ -20,11 +20,15 @@ angular.module("scrumApp", [])
 })
 
 .controller("mainCtrl", function($scope, $rootScope, dataService){
-	$scope.fragment = "dummy";
+	$scope.fragment = "start";
+	$scope.loading = false;
 	
 	$scope.init = function() {
 		dataService.registerLoginObserver(isLoggedIn =>
 			$scope.fragment = isLoggedIn ? "board" : "login");
+		dataService.registerLoadingObserver(function(loading) {
+			$scope.loading = loading;
+		})
 	}
 	
 	$rootScope.$on("updateFragment", function(event, fragment) {

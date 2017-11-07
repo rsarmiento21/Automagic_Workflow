@@ -13,96 +13,248 @@ angular.module("scrumApp")
 		loginObservers.push(callback);
 	}
 	
-	var notifyObservers = function() {
+	var notifyLoginObservers = function() {
 		loginObservers.forEach(function(callback) {
 			callback(loggedIn);
 		})
 	}
 	
-	var fragment = "dummy";
+	// BoardObserver
+	var board = {};
+	var boardObserver = null;
+	
+	this.registerBoardObserver = function(callback) {
+		boardObserver = callback;
+	}
+	
+	var notifyBoardObserver = function() {
+		boardObserver(board);
+	}
+	
+	// LoadingObserver
+	var loading = false;
+	var loadingObserver = null;
+	
+	this.registerLoadingObserver = function(callback) {
+		loadingObserver = callback;
+	}
+	
+	var toggleLoading = function() {
+		loading = !loading;
+		loadingObserver(loading);
+	}
+	
 	
 	this.login = function(bu, success, failure) {
+		toggleLoading();
 		$http.post("login", bu).then(response => {
 				loggedIn = true;
-				notifyObservers();
-			}, failure);
+				notifyLoginObservers();
+				toggleLoading();
+			}, response => {
+				failure(response);
+				toggleLoading();
+			});
 	}
 
 	this.checkLogin = function() {
+		toggleLoading();
 		$http.get("ajax/isLoggedIn").then(
 				response => {
 					loggedIn = response.data;
-					notifyObservers();
+					notifyLoginObservers();
+					toggleLoading();
 				});
 	}
 	
 	this.logout = function(success, failure) {
+		toggleLoading();
 		$http.get("logout").then(response => {
 				loggedIn = false;
-				notifyObservers();
-			}, failure);
+				notifyLoginObservers();
+				toggleLoading();
+		}, response => {
+			failure(response);
+			toggleLoading();
+		});
 	}
 	
 	this.getBoards = function(success, failure) {
-		var promise = $http.get("ajax/boards").then(success, failure);
+		toggleLoading();
+		$http.get("ajax/boards").then(response => {
+			success(response);
+			toggleLoading();
+		}, response => {
+			failure(response);
+			toggleLoading();
+		});
 	}
 	
-	this.getBoard = function(id, success, failure) {
-		$http.get("ajax/board/" + id).then(success, failure);
+	this.setBoard = function(newBoard) {
+		board = newBoard;
+		notifyBoardObserver();
 	}
+	
 	this.editBoard = function(board, success, failure){
-		$http.post("ajax/board/edit", board).then(success,failure);
+		toggleLoading();
+		$http.post("ajax/board/edit", board).then(response => {
+			success(response);
+			toggleLoading();
+		}, response => {
+			failure(response);
+			toggleLoading();
+		});
 	}
+	
 	this.register = function(newUser,success,failure){
-		$http.post("ajax/register",newUser).then(success,failure);
+		toggleLoading();
+		$http.post("ajax/register",newUser).then(response => {
+			success(response);
+			toggleLoading();
+		}, response => {
+			failure(response);
+			toggleLoading();
+		});
 	}
 	
 
 	//Swimlane functions
 	this.createSwimLane = function(sl, success, failure) {
-		$http.post("ajax/swimlane/new", sl).then(success, failure);
+		toggleLoading();
+		$http.post("ajax/swimlane/new", sl).then(response => {
+			success(response);
+			toggleLoading();
+		}, response => {
+			failure(response);
+			toggleLoading();
+		});
+	}
+	
+	this.getSwimLanes = function(callback) {
+		callback(board.swimLanes);
 	}
 	
 	this.editSwimLane = function(sl, success, failure) {
-		$http.post("ajax/swimlane/edit", sl).then(success, failure);
+		toggleLoading();
+		$http.post("ajax/swimlane/edit", sl).then(response => {
+			success(response);
+			toggleLoading();
+		}, response => {
+			failure(response);
+			toggleLoading();
+		});
+	}
+	
+	this.editSwimLanes = function(sls, success, failure) {
+		toggleLoading();
+		$http.post("ajax/swimlane/editAll", sls).then(response => {
+			success(response);
+			toggleLoading();
+		}, response => {
+			failure(response);
+			toggleLoading();
+		});
 	}
 	
 	this.deleteSwimLane = function(sl, success, failure) {
-		$http.post("ajax/swimlane/delete", sl).then(success, failure);
+		toggleLoading();
+		$http.post("ajax/swimlane/delete", sl).then(response => {
+			success(response);
+			toggleLoading();
+		}, response => {
+			failure(response);
+			toggleLoading();
+		});
 	}
 
 	
 	this.createTask = function(task, success, failure) {
-		$http.post("ajax/task/new", task).then(success, failure);
+		toggleLoading();
+		$http.post("ajax/task/new", task).then(response => {
+			success(response);
+			toggleLoading();
+		}, response => {
+			failure(response);
+			toggleLoading();
+		});
 	}
 	
 	this.editTask = function(task, success, failure) {
-		$http.post("ajax/task/edit", task).then(success, failure);
+		toggleLoading();
+		$http.post("ajax/task/edit", task).then(response => {
+			success(response);
+			toggleLoading();
+		}, response => {
+			failure(response);
+			toggleLoading();
+		});
 	}
 	
 	this.editTasks = function(tasks, success, failure) {
-		$http.post("ajax/task/editAll", tasks).then(success, failure);
+		toggleLoading();
+		$http.post("ajax/task/editAll", tasks).then(response => {
+			success(response);
+			toggleLoading();
+		}, response => {
+			failure(response);
+			toggleLoading();
+		});
 	}
 	
 	this.deleteTask = function(task, success, failure) {
-		$http.post("ajax/task/delete", task).then(success, failure);
+		toggleLoading();
+		$http.post("ajax/task/delete", task).then(response => {
+			success(response);
+			toggleLoading();
+		}, response => {
+			failure(response);
+			toggleLoading();
+		});
 	}
 	
 	
 	this.createStory = function(story, success, failure) {
-		$http.post("ajax/story/new", story).then(success, failure);
+		toggleLoading();
+		$http.post("ajax/story/new", story).then(response => {
+			success(response);
+			toggleLoading();
+		}, response => {
+			failure(response);
+			toggleLoading();
+		});
 	}
 	
 	this.editStory = function(story, success, failure) {
-		$http.post("ajax/story/edit", story).then(success, failure);
+		toggleLoading();
+		$http.post("ajax/story/edit", story).then(response => {
+			success(response);
+			toggleLoading();
+		}, response => {
+			failure(response);
+			toggleLoading();
+		});
 	}
 	
 	this.editStories = function(stories, success, failure) {
-		$http.post("ajax/story/editAll", stories).then(success, failure);
+		toggleLoading();
+		$http.post("ajax/story/editAll", stories).then(response => {
+			success(response);
+			toggleLoading();
+		}, response => {
+			failure(response);
+			toggleLoading();
+		});
 	}
 	
 	this.deleteStory = function(story, success, failure) {
-		$http.post("ajax/story/delete", story).then(success, failure);
+		toggleLoading();
+		$http.post("ajax/story/delete", story).then(response => {
+			success(response);
+			toggleLoading();
+		}, response => {
+			failure(response);
+			toggleLoading();
+		});
 	}
 	
 	this.swapOrders = function(array, idx1, idx2) {

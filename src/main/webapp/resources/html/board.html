@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!-- This file displays the current Board object selected by the user  -->
 
-<div data-ng-controller="boardCtrl" class="container">
+<div data-ng-controller="boardCtrl" class="container" data-ng-init="init()">
 	<div data-ng-hide="board">
 		<h4>Select a board from the dropdown menu to view it</h4>
 	</div>
@@ -29,11 +29,6 @@
 				</div>
 			</form>
 		</div>
-<!-- This form lets the user create swimlanes-->
-		<form>
-			<input data-ng-model="name" type="text"/><br>
-			<button data-ng-click="createSwimLane(name, board.id)">Create Swimlane</button>
-		</form>
 <!-- This table displays the current swimlanes -->		
 
 		<table><tr>

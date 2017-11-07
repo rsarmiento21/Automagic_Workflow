@@ -32,18 +32,6 @@ angular.module("scrumApp")
 		dataService.logout(response => {}, response => console.log(response.data[0]));
 	}
 	
-//	$rootScope.$on("toggleLogin", function() {
-//		$scope.loggedIn = !$scope.loggedIn;
-//    });
-//	
-//	$rootScope.$on("loadDropdown", function() {
-//		$scope.getBoards();
-//    });
-//	
-//	$rootScope.$on("setBoards", function(event, boards) {
-//		$scope.boards = boards;
-//    });
-	
 	$scope.getBoards = function() {
 		dataService.getBoards(
 			response => {
@@ -61,7 +49,8 @@ angular.module("scrumApp")
 	}
 	
 	$scope.loadBoard = function(board) {
-		$rootScope.$emit("setBoard", board);
+//		$rootScope.$emit("setBoard", board);
+		dataService.setBoard(board);
 	}
 	
 	$rootScope.$on("getBoardById", function(event, id) {
@@ -69,6 +58,7 @@ angular.module("scrumApp")
 			return board.id == id;
 		});
     });
+	
 	$scope.loadRegisterFragment = function(success,failure){
 		$rootScope.$emit("updateFragment","registerUser");
 	}

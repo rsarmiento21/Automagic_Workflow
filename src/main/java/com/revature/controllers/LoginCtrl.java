@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -55,6 +56,11 @@ public class LoginCtrl
 			return new ResponseEntity<>(Collections.singletonList("Non-existant session."), HttpStatus.CONFLICT);
 		}
 		
+	}
+	
+	@ExceptionHandler(Exception.class)
+	public ResponseEntity<Exception> handleException(Exception e){
+		return new ResponseEntity<Exception>(e,HttpStatus.CONFLICT);
 	}
 	
 }

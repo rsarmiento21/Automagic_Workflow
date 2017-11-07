@@ -133,7 +133,7 @@ angular.module("scrumApp")
 				});
 			});
 		
-			dataService.editTasks($scope.story.tasks,
+			$scope.saveTasks($scope.story.tasks,
 					response=>{}, response=>console.log("error"));
 		}
 	}

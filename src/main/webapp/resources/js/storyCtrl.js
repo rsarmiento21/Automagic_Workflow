@@ -12,13 +12,14 @@ angular.module("scrumApp")
 	};
 })
 
-.controller("storyCtrl", function($scope, $rootScope, dataService) {
+.controller("storyCtrl", function($scope, dataService) {
 	$scope.editing = false;
 	$scope.newTask = {
 				name: "",
 				taskCompleted: false,
 				story: $scope.story
 			};
+	
 	if ($scope.story.tasks) {
 		$scope.story.tasks.sort(function compare(a,b) {
 		  if (a.order < b.order)
@@ -29,12 +30,11 @@ angular.module("scrumApp")
 		})
 	}
 	
-	$rootScope.$emit("getSwimLanes", function(swimLanes) {
+	dataService.getSwimLanes(function(swimLanes) {
 		$scope.otherSwimLanes = swimLanes.filter(function(obj) {
 			return obj.id != $scope.swimLane.id;
 		})
-	})
-	
+	});
 
 	$scope.createTask = function() {
 		if ($scope.newTask.name) {
@@ -177,22 +177,69 @@ angular.module("scrumApp")
 	
 	
 	$scope.moveTo = function(otherSwimLane) {
-	    $("#modal" + $scope.story.id).removeClass("in");
-	    $(".modal-backdrop").remove();
-	    $("#modal" + $scope.story.id).hide();
-		$scope.swimLane.stories = $scope.swimLane.stories.filter(function(obj) {
-			return obj.id !== $scope.story.id;
-		});
-		if (otherSwimLane.stories) {
-			$scope.story.order = otherSwimLane.stories.length;
-			otherSwimLane.stories.push($scope.story);
-		} else {
-			$scope.story.order = 0;
-			otherSwimLane.stories = [$scope.story];
+		toSave = [];
+		
+		// Adding story to move
+		var storyDTO = {};
+		Object.assign(storyDTO, $scope.story);
+		storyDTO.swimLane = otherSwimLane;
+		toSave.push(storyDTO);
+		
+		// Grabbing all stories in current swimlane to update their orders
+		var array = $scope.swimLane.stories.find(function(obj) {
+				return obj != $scope.story;
+			});
+		if (array) {
+			array.forEach(function(story) {
+				var storyDTO = {};
+				Object.assign(storyDTO, story);
+				storyDTO.order = $scope.swimLane.stories.findIndex(function(obj) {
+					return obj == story;
+				});
+				storyDTO.swimLane = $scope.swimLane;
+				toSave.push(storyDTO);
+			})
 		}
-		$scope.resolveSwimLaneOrdering();
-		$scope.swimLane = otherSwimLane;
-		$scope.save();
+		
+		dataService.editStories(toSave, response => {
+			$scope.swimLane.stories = $scope.swimLane.stories.filter(function(obj) {
+				return obj.id !== $scope.story.id;
+			});
+			
+			if ($scope.swimLane.stories) {
+				$scope.swimLane.stories.forEach( function(story) {
+					story.order = $scope.swimLane.stories.findIndex(function(obj) {
+						return obj == story;
+					});
+				});
+			}
+			
+			if (otherSwimLane.stories) {
+				$scope.story.order = otherSwimLane.stories.length;
+				otherSwimLane.stories.push($scope.story);
+			} else {
+				$scope.story.order = 0;
+				otherSwimLane.stories = [$scope.story];
+			}
+			
+			$scope.swimLane = otherSwimLane;
+		    $(".modal-backdrop").remove();
+		}, response => console.log("oops"));
+		
+		
+//		$scope.swimLane.stories = $scope.swimLane.stories.filter(function(obj) {
+//			return obj.id !== $scope.story.id;
+//		});
+//		if (otherSwimLane.stories) {
+//			$scope.story.order = otherSwimLane.stories.length;
+//			otherSwimLane.stories.push($scope.story);
+//		} else {
+//			$scope.story.order = 0;
+//			otherSwimLane.stories = [$scope.story];
+//		}
+//		$scope.resolveStoryOrdering();
+//		$scope.swimLane = otherSwimLane;
+//		$scope.save();
 		
 	}
 	
@@ -205,8 +252,8 @@ angular.module("scrumApp")
 					return obj == story;
 				});
 			});
-		
-			dataService.editStories($scope.swimLane.stories,
+			
+			$scope.saveStories($scope.swimLane.stories,
 					response=>{}, response=>console.log("error"));
 		}
 	}
