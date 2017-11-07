@@ -72,9 +72,7 @@ angular.module("scrumApp")
 			dataService.createBoard($scope.b, response => {
 				$scope.b.name = "";
 			});
-		}
-			
-		
+		}		
 	}
 
 
