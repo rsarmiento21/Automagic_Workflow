@@ -4,17 +4,43 @@
 
 angular.module("scrumApp")
 
-.service("dataService", function($http, $q) {
+.service("dataService", function($http) {
+	// Login variable and listeners
+	var loggedIn = false;
+	var loginObservers = [];
+	
+	this.registerLoginObserver = function(callback) {
+		loginObservers.push(callback);
+	}
+	
+	var notifyObservers = function() {
+		loginObservers.forEach(function(callback) {
+			callback(loggedIn);
+		})
+	}
+	
+	var fragment = "dummy";
+	
 	this.login = function(bu, success, failure) {
-		$http.post("login", bu).then(success, failure);
+		$http.post("login", bu).then(response => {
+				loggedIn = true;
+				notifyObservers();
+			}, failure);
 	}
 
-	this.isLoggedIn = function(callback) {
-		$http.get("ajax/isLoggedIn").then(callback);
+	this.checkLogin = function() {
+		$http.get("ajax/isLoggedIn").then(
+				response => {
+					loggedIn = response.data;
+					notifyObservers();
+				});
 	}
 	
 	this.logout = function(success, failure) {
-		$http.get("logout").then(success, failure);
+		$http.get("logout").then(response => {
+				loggedIn = false;
+				notifyObservers();
+			}, failure);
 	}
 	
 	this.getBoards = function(success, failure) {
@@ -51,6 +77,10 @@ angular.module("scrumApp")
 		$http.post("ajax/task/edit", task).then(success, failure);
 	}
 	
+	this.editTasks = function(tasks, success, failure) {
+		$http.post("ajax/task/editAll", tasks).then(success, failure);
+	}
+	
 	this.deleteTask = function(task, success, failure) {
 		$http.post("ajax/task/delete", task).then(success, failure);
 	}
@@ -64,8 +94,18 @@ angular.module("scrumApp")
 		$http.post("ajax/story/edit", story).then(success, failure);
 	}
 	
+	this.editStories = function(stories, success, failure) {
+		$http.post("ajax/story/editAll", stories).then(success, failure);
+	}
+	
 	this.deleteStory = function(story, success, failure) {
 		$http.post("ajax/story/delete", story).then(success, failure);
+	}
+	
+	this.swapOrders = function(array, idx1, idx2) {
+		array[idx1].order = array[idx1].order + array[idx2].order;
+		array[idx2].order = array[idx1].order - array[idx2].order;
+		array[idx1].order = array[idx1].order - array[idx2].order;
 	}
 
 	

@@ -1,5 +1,7 @@
 package com.revature.dao;
 
+import java.util.List;
+
 import com.revature.domain.Board;
 import com.revature.domain.BoardUser;
 import com.revature.domain.Story;
@@ -21,14 +23,19 @@ public interface Dao {
 	public SwimLane getSwimLaneById(SwimLane sl);
 	public Story getStoryById(Story s);
 	public Task getTaskById(Task t);
-	public void updateBoardUser(BoardUser bu);
 	
 	
 	//UPDATE
+	public void updateBoardUser(BoardUser bu);
 	public void updateBoard(Board b);
 	public void updateSwimLane(SwimLane sl);
 	public void updateStory(Story s);
 	public void updateTask(Task t);
+	
+	//UPDATE MULTI
+	public void updateSwimLanes(List<SwimLane> swimlanes);
+	public void updateStories(List<Story> stories);
+	public void updateTasks(List<Task> tasks);
 	
 	//DELETE
 	public void deleteBoard(Board b);

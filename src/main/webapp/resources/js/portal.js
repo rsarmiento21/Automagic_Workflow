@@ -23,9 +23,8 @@ angular.module("scrumApp", [])
 	$scope.fragment = "dummy";
 	
 	$scope.init = function() {
-		dataService.isLoggedIn(response => 
-			$scope.fragment = response.data ? "board" : "login"
-		);
+		dataService.registerLoginObserver(isLoggedIn =>
+			$scope.fragment = isLoggedIn ? "board" : "login");
 	}
 	
 	$rootScope.$on("updateFragment", function(event, fragment) {

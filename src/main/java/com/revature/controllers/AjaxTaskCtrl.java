@@ -1,5 +1,7 @@
 package com.revature.controllers;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -7,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -31,8 +32,6 @@ public class AjaxTaskCtrl {
 			BoardUser bu = (BoardUser) session.getAttribute("user");
 			if (bu != null) {
 				task = bs.createTask(task);
-				bu = bs.getBoardUserById(bu);
-				session.setAttribute("user", bu);
 				return new ResponseEntity<>(task, HttpStatus.OK);
 			}
 		}
@@ -47,8 +46,20 @@ public class AjaxTaskCtrl {
 			BoardUser bu = (BoardUser) session.getAttribute("user");
 			if (bu != null) {
 				bs.updateTask(task);
-				bu = bs.getBoardUserById(bu);
-				session.setAttribute("user", bu);
+				return new ResponseEntity<>(HttpStatus.OK);
+			}
+		}
+		return new ResponseEntity<>(HttpStatus.CONFLICT);
+	}
+	
+	@RequestMapping("/ajax/task/editAll")
+	@ResponseBody
+	public ResponseEntity<Object> editTasks(@RequestBody List<Task> tasks, HttpServletRequest req) {
+		HttpSession session = req.getSession();
+		if (session != null) {
+			BoardUser bu = (BoardUser) session.getAttribute("user");
+			if (bu != null) {
+				bs.updateTasks(tasks);
 				return new ResponseEntity<>(HttpStatus.OK);
 			}
 		}
@@ -63,8 +74,6 @@ public class AjaxTaskCtrl {
 			BoardUser bu = (BoardUser) session.getAttribute("user");
 			if (bu != null) {
 				bs.deleteTask(task);
-				bu = bs.getBoardUserById(bu);
-				session.setAttribute("user", bu);
 				return new ResponseEntity<>(HttpStatus.OK);
 			}
 		}

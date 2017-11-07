@@ -29,15 +29,15 @@ public class Board {
 	private int id;
 	
 	@JsonBackReference
-	@ManyToOne(fetch=FetchType.EAGER)
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="OWNER_ID")
 	private BoardUser owner;
 	
 	@Column(name="BD_NAME")
 	private String name;
-	
+
 	@JsonManagedReference
-	@OneToMany(mappedBy="board", cascade={CascadeType.MERGE, CascadeType.REMOVE}, fetch=FetchType.EAGER)
+	@OneToMany(mappedBy="board", cascade=CascadeType.REMOVE, fetch=FetchType.EAGER)
 	private Set<SwimLane> swimLanes;
 	
 	public Board() {}

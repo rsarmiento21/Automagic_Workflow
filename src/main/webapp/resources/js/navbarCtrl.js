@@ -13,37 +13,32 @@ angular.module("scrumApp")
 .controller("navbarCtrl", function($scope, $rootScope, dataService) {
 	$scope.boards = {};
 	$scope.loggedIn = false;
-	
+
 	$scope.init = function() {
-		dataService.isLoggedIn(response => {
-			if (response.data) {
-				$rootScope.$emit("toggleLogin", {});
-				$rootScope.$emit("loadDropdown", {});
+		dataService.registerLoginObserver(isLoggedIn => {
+			$scope.loggedIn = isLoggedIn;
+			if (isLoggedIn) {
+				$scope.getBoards();
 			}
-		});
+		})
+		dataService.checkLogin();
 	}
 	
 	$scope.logout = function() {
-		dataService.logout(
-				response => {
-					$scope.loggedIn = !$scope.loggedIn;
-					$rootScope.$emit("updateFragment", "login");
-				},
-				response => console.log(response.data[0])
-		);
+		dataService.logout(response => {}, response => console.log(response.data[0]));
 	}
 	
-	$rootScope.$on("toggleLogin", function() {
-		$scope.loggedIn = !$scope.loggedIn;
-    });
-	
-	$rootScope.$on("loadDropdown", function() {
-		$scope.getBoards();
-    });
-	
-	$rootScope.$on("setBoards", function(event, boards) {
-		$scope.boards = boards;
-    });
+//	$rootScope.$on("toggleLogin", function() {
+//		$scope.loggedIn = !$scope.loggedIn;
+//    });
+//	
+//	$rootScope.$on("loadDropdown", function() {
+//		$scope.getBoards();
+//    });
+//	
+//	$rootScope.$on("setBoards", function(event, boards) {
+//		$scope.boards = boards;
+//    });
 	
 	$scope.getBoards = function() {
 		dataService.getBoards(

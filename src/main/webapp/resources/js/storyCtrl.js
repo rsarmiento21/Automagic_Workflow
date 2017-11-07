@@ -17,8 +17,7 @@ angular.module("scrumApp")
 	$scope.newTask = {
 				name: "",
 				taskCompleted: false,
-				story: $scope.story,
-				order: ($scope.story.tasks) ? $scope.story.tasks.length : 0
+				story: $scope.story
 			};
 	if ($scope.story.tasks) {
 		$scope.story.tasks.sort(function compare(a,b) {
@@ -39,6 +38,7 @@ angular.module("scrumApp")
 
 	$scope.createTask = function() {
 		if ($scope.newTask.name) {
+			$scope.newTask.order = ($scope.story.tasks) ? $scope.story.tasks.length : 0;
 			dataService.createTask($scope.newTask,
 				response => {
 					console.log("success add!");
@@ -53,20 +53,8 @@ angular.module("scrumApp")
 		}
 	}
 	
-	$rootScope.$on("resolveTaskOrdering", function(event, id) {
-		if (id == $scope.story.id) {
-			$scope.story.tasks.forEach( function(task) {
-				task.order = $scope.story.tasks.findIndex(function(obj) {
-					return obj == task;
-				});
-			});
-			$scope.save();
-		}
-	})
-	
 	$scope.resetNewTask = function() {
 		$scope.newTask.name = "";
-		$scope.newTask.order =  ($scope.story.tasks) ? $scope.story.tasks.length : 0;
 	}
 	
 	$scope.edit = function() {
@@ -122,61 +110,71 @@ angular.module("scrumApp")
 					$scope.swimLane.stories = $scope.swimLane.stories.filter(function(obj) {
 						return obj.id !== $scope.story.id;
 					});
-					$rootScope.$emit("resolveSwimLaneOrdering", $scope.swimLane.id);
+					$scope.resolveStoryOrdering();
 				},
 				response => console.log("could not delete!"));
 	}
 	
-	$rootScope.$on("moveUpTask", function (event, args) {
-		if (args[0] == $scope.story.id) {
-			var tasks = $scope.story.tasks;
-			var index = tasks.findIndex(function(obj) { return obj.order == args[1]; });
-			if (index > 0) {
-				tasks[index].order = tasks[index].order + tasks[index-1].order;
-				tasks[index-1].order = tasks[index].order - tasks[index-1].order;
-				tasks[index].order = tasks[index].order - tasks[index-1].order;
-				tasks.sort(function compare(a,b) {
-					  if (a.order < b.order)
-						     return -1;
-						  if (a.order > b.order)
-						    return 1;
-						  return 0;
-						})
-				$scope.story.tasks = tasks;
-				$scope.save();
-			}
-		}
-	})
-	
-	$rootScope.$on("moveDownTask", function (event, args) {
-		if (args[0] == $scope.story.id) {
-			var tasks = $scope.story.tasks;
-			var index = tasks.findIndex(function(obj) { return obj.order == args[1]; });
-			if (index > -1 && index < tasks.length - 1) {
-				tasks[index].order = tasks[index].order + tasks[index+1].order;
-				tasks[index+1].order = tasks[index].order - tasks[index+1].order;
-				tasks[index].order = tasks[index].order - tasks[index+1].order;
-				
-				tasks.sort(function compare(a,b) {
-					  if (a.order < b.order)
-						     return -1;
-						  if (a.order > b.order)
-						    return 1;
-						  return 0;
-						})
-				$scope.story.tasks = tasks;
-				$scope.save();
-			}
-		}
-	})
-	
 	$scope.moveUp = function() {
-		$rootScope.$emit("moveUpStory", [$scope.swimLane.id, $scope.story.order]);
+		var stories = $scope.swimLane.stories;
+		var index = stories.findIndex(function(obj) {
+			return obj.order == $scope.story.order;
+		});
+		if (index > 0) {
+			dataService.swapOrders(stories, index, index-1);
+			
+			var toSave = [stories[index], stories[index-1]];
+			$scope.saveStories(toSave, response => {
+					stories.sort(function compare(a,b) {
+					  if (a.order < b.order)
+						     return -1;
+						  if (a.order > b.order)
+						    return 1;
+						  return 0;
+						})
+				}, response => {
+					console.log("could not update stories!");
+					dataService.swapOrders(stories, index, index-1);
+			});
+		}
 	}
 	
 	$scope.moveDown = function() {
-		$rootScope.$emit("moveDownStory", [$scope.swimLane.id, $scope.story.order]);
+		var stories = $scope.swimLane.stories;
+		var index = stories.findIndex(function(obj) {
+			return obj.order == $scope.story.order;
+		});
+		if (index > -1 && index < stories.length - 1) {
+			dataService.swapOrders(stories, index, index+1);
+			
+			var toSave = [stories[index], stories[index+1]];
+			$scope.saveStories(toSave, response => {
+					stories.sort(function compare(a,b) {
+					  if (a.order < b.order)
+						     return -1;
+						  if (a.order > b.order)
+						    return 1;
+						  return 0;
+						})
+				}, response => {
+					console.log("could not update stories!");
+					dataService.swapOrders(stories, index, index+1);
+			});
+		}
 	}
+	
+	$scope.saveStories = function(stories, success, failure) {
+		var storiesDTO = [];
+		stories.forEach(function(story) {
+			var storyDTO = {};
+			Object.assign(storyDTO, story);
+			storyDTO.swimLane = $scope.swimLane;
+			storiesDTO.push(storyDTO);
+		})
+		dataService.editStories(storiesDTO, success, failure);
+	}
+	
+	
 	
 	$scope.moveTo = function(otherSwimLane) {
 	    $("#modal" + $scope.story.id).removeClass("in");
@@ -192,7 +190,24 @@ angular.module("scrumApp")
 			$scope.story.order = 0;
 			otherSwimLane.stories = [$scope.story];
 		}
-		$rootScope.$emit("resolveSwimLaneOrdering", $scope.swimLane.id);
+		$scope.resolveSwimLaneOrdering();
+		$scope.swimLane = otherSwimLane;
+		$scope.save();
 		
+	}
+	
+
+	
+	$scope.resolveStoryOrdering = function() {
+		if ($scope.swimLane.stories) {
+			$scope.swimLane.stories.forEach( function(story) {
+				story.order = $scope.swimLane.stories.findIndex(function(obj) {
+					return obj == story;
+				});
+			});
+		
+			dataService.editStories($scope.swimLane.stories,
+					response=>{}, response=>console.log("error"));
+		}
 	}
 })

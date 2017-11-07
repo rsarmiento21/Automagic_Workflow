@@ -18,8 +18,7 @@ angular.module("scrumApp")
 			title: "",
 			description: "",
 			points: 1,
-			swimLane: $scope.swimLane,
-			order: ($scope.swimLane.stories) ? $scope.swimLane.stories.length : 0
+			swimLane: $scope.swimLane
 		};
 	if ($scope.swimLane.stories) {
 		$scope.swimLane.stories.sort(function compare(a,b) {
@@ -71,6 +70,7 @@ angular.module("scrumApp")
 	
 	$scope.createStory = function() {
 		if ($scope.newStory.title) {
+			$scope.newStory.order = ($scope.swimLane.stories) ? $scope.swimLane.stories.length : 0;
 			dataService.createStory($scope.newStory,
 				response => {
 					console.log("success add!");
