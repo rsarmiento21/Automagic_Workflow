@@ -31,8 +31,15 @@ angular.module("scrumApp")
 				$scope.getBoards();
 			}
 		})
+		dataService.registerBoardsObserver(boards => {
+			$scope.boards = boards;
+		})
 		dataService.checkLogin();
 	}
+	
+	$scope.$watch(function(){ return dataService.boards; }, function(value) {
+		$scope.boards = value;
+	})
 	
 	$scope.logout = function() {
 		dataService.logout(response => {}, response => console.log(response.data[0]));
@@ -65,8 +72,6 @@ angular.module("scrumApp")
 	$scope.createBoard = function(b) {
 			dataService.createBoard(b, response => {
 				
-				$rootScope.$emit("loadDropdown", {});
-				$rootScope.$emit("updateFragment", "board");
 			});
 		
 	}

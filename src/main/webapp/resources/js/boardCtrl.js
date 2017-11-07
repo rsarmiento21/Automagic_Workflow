@@ -26,13 +26,15 @@ angular.module("scrumApp")
 	$scope.init = function() {
 		dataService.registerBoardObserver(function(board) {
 			$scope.board = board;
-			$scope.board.swimLanes.sort(function compare(a,b) {
-				  if (a.order < b.order)
-					     return -1;
-					  if (a.order > b.order)
-					    return 1;
-					  return 0;
-					});
+			if ($scope.board && $scope.board.swimLanes) {
+				$scope.board.swimLanes.sort(function compare(a,b) {
+					  if (a.order < b.order)
+						     return -1;
+						  if (a.order > b.order)
+						    return 1;
+						  return 0;
+						});
+			}
 			$scope.newSwimLane.board = $scope.board;
 		});
 	}
@@ -55,6 +57,7 @@ angular.module("scrumApp")
 		console.log("Saving Board Changes")
 		var boardDTO = {};
 		Object.assign(boardDTO, $scope.board);
+		boardDTO.owner = null;
 		dataService.editBoard(boardDTO,
 				response => {
 					console.log("success edit!");
@@ -87,15 +90,8 @@ angular.module("scrumApp")
 //	}
 	
 	$scope.deleteBoard = function(b) {
-		if (!$scope.submitted) {
-			console.log("deleting board");
-			$scope.submitted = true;
-			dataService.deleteBoard(b,  response => {
-				
-				$rootScope.$emit("loadDropdown", {});
-				$rootScope.$emit("updateFragment", "board");
-			});
-		}
+		console.log("deleting board");
+		dataService.deleteBoard(b, response => {});
 	}
 	
 	

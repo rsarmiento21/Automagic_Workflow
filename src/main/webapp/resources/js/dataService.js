@@ -19,6 +19,18 @@ angular.module("scrumApp")
 		})
 	}
 	
+	// BoardsObserver
+	var boards = {};
+	var boardsObserver = null;
+	
+	this.registerBoardsObserver = function(callback) {
+		boardsObserver = callback;
+	}
+	
+	var notifyBoardsObserver = function() {
+		boardsObserver(boards);
+	}
+	
 	// BoardObserver
 	var board = {};
 	var boardObserver = null;
@@ -83,6 +95,8 @@ angular.module("scrumApp")
 		toggleLoading();
 		$http.get("ajax/boards").then(response => {
 			success(response);
+			boards = response.data;
+			notifyBoardsObserver();
 			toggleLoading();
 		}, response => {
 			failure(response);
@@ -126,6 +140,12 @@ angular.module("scrumApp")
 		console.log("Creating stuff");
 		var promise = $http.post("createBoard", b).then(response => {
 			success(response);
+			if (boards) {
+				boards.push(response.data);
+			} else {
+				boards = [response.data];
+			}
+			notifyBoardsObserver();
 			toggleLoading();
 		});
 	}
@@ -139,6 +159,12 @@ angular.module("scrumApp")
 		console.log("Deleting stuff");
 		var promise = $http.post("deleteBoard", b).then(response => {
 			success(response);
+			board = null;
+			notifyBoardObserver();
+			boards = boards.filter(function(obj) {
+				return obj != b;
+			})
+			notifyBoardsObserver();
 			toggleLoading();
 		});
 	}

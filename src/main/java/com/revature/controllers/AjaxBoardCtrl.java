@@ -33,8 +33,6 @@ public class AjaxBoardCtrl {
 
 	private BoardService boardService;
 
-	private BoardService serve;
-
 	
 	@RequestMapping("/ajax/boards")
 	@ResponseBody
@@ -86,9 +84,8 @@ public class AjaxBoardCtrl {
 		if(session != null) {
 			BoardUser bu = (BoardUser) session.getAttribute("user");
 			if(bu != null) {
-				System.out.println("Start of edit save");
 				bd.setOwner(bu);
-				serve.updateBoard(bd);
+				boardService.updateBoard(bd);
 				return new ResponseEntity<>(HttpStatus.OK);
 			}
 		}
@@ -97,6 +94,7 @@ public class AjaxBoardCtrl {
 	
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<Exception> handleException(Exception e){
+		System.out.println(e);
 		return new ResponseEntity<Exception>(e,HttpStatus.CONFLICT);
 	}
 }
