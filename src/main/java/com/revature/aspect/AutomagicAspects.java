@@ -35,7 +35,19 @@ public class AutomagicAspects {
 	}
 	
 	//After Login
+	@AfterReturning("execution(* com.revature.service.AuthService.login(..))")
+	public void goodLogin(JoinPoint jp) {
+		String message = "Good login";
+		LOGGER.info(message);
+	}
 	
+	@AfterThrowing("execution(* com.revature.service.AuthService.login(..))")
+	public void badLogin(JoinPoint jp) {
+		String message = "Bad login";
+		LOGGER.info(message);
+	}
+	
+	//CREATES
 	@Before("execution(* com.revature.service.BoardService.create* (..))")
 	public void beforeCreate(JoinPoint jp) {
 		String message = "ATTEMPTING CREATE AT: " + jp.getSignature();
@@ -51,6 +63,45 @@ public class AutomagicAspects {
 	@AfterThrowing("execution(* com.revature.service.BoardService.create* (..))")
 	public void badCreate(JoinPoint jp) {
 		String message = "AFTER BAD CREATE AT: " + jp.getSignature();
+		LOGGER.warn(message);
+	}
+	
+	
+	//EDITS/UPDATES
+	@Before("execution(* com.revature.service.BoardService.update* (..))")
+	public void beforeUpdate(JoinPoint jp) {
+		String message = "ATTEMPTING UPDATE AT: " + jp.getSignature();
+		LOGGER.info(message);
+	}
+	
+	@AfterReturning("execution(* com.revature.service.BoardService.update* (..))")
+	public void afterUpdate(JoinPoint jp) {
+		String message = "AFTER GOOD UPDATE AT: " + jp.getSignature();
+		LOGGER.info(message);
+	}
+	
+	@AfterThrowing("execution(* com.revature.service.BoardService.update* (..))")
+	public void badUpdate(JoinPoint jp) {
+		String message = "AFTER BAD UPDATE AT: " + jp.getSignature();
+		LOGGER.warn(message);
+	}
+	
+	//DELETES
+	@Before("execution(* com.revature.service.BoardService.delete* (..))")
+	public void beforeDelete(JoinPoint jp) {
+		String message = "ATTEMPTING DELETE AT: " + jp.getSignature();
+		LOGGER.info(message);
+	}
+	
+	@AfterReturning("execution(* com.revature.service.BoardService.delete* (..))")
+	public void afterDelete(JoinPoint jp) {
+		String message = "AFTER GOOD DELETE AT: " + jp.getSignature();
+		LOGGER.info(message);
+	}
+	
+	@AfterThrowing("execution(* com.revature.service.BoardService.delete* (..))")
+	public void badDelete(JoinPoint jp) {
+		String message = "AFTER BAD DELETE AT: " + jp.getSignature();
 		LOGGER.warn(message);
 	}
 //	
