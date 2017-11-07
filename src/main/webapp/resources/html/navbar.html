@@ -43,9 +43,11 @@
           <h4 class="modal-title">Create New Boards</h4>
         </div>
         <div class="modal-body">
-          <p>Please enter a name for the new board:</p>
-          <input type ="text" placeholder = "board name here" id = "makeBoard" data-ng-model="b.name" required></input>
-          <button class = "btn btn-warning" value = "submit" data-ng-click="createBoard(b)" data-dismiss="modal">Submit</button>
+        	<form>
+		          <p>Please enter a name for the new board:</p>
+		          <input type ="text" data-ng-model="b.name" required/>
+		          <button class="btn btn-warning" data-ng-click="createBoard()" data-dismiss="modal">Submit</button>
+        	</form>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

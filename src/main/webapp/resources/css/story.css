@@ -1,7 +1,7 @@
 @charset "ISO-8859-1";
 
 scrum-swim-lane {
-    width: 300x;
+    width: 250px;
     display: inline-block;
 }
 
@@ -10,8 +10,8 @@ scrum-story .btn-group-vertical {
     padding: 0 0.25em;
 }
 
-scrum-story .btn-block {
-    width: 90%;
+scrum-story .btn-info {
+    width: 202px;
     height: 3em;
 }
 
@@ -21,10 +21,6 @@ scrum-story .glyphicon {
 
 #lanes {
     vertical-align: top;
-}
-
-scrum-swim-lane {
-	width: 250px;
 }
 
 scrum-swim-lane .navbar-left {

@@ -33,6 +33,7 @@ angular.module("scrumApp")
 	$scope.deleteSwimLane = function() {
 		dataService.deleteSwimLane($scope.swimLane, response => {
 			console.log("success delete!");
+		    $(".modal-backdrop").remove();
 			$scope.board.swimLanes = $scope.board.swimLanes.filter(function(obj) {
 				return obj.id !== $scope.swimLane.id;
 			});

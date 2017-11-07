@@ -57,6 +57,7 @@ angular.module("scrumApp")
 		console.log("Deleting task");
 		dataService.deleteTask($scope.task,
 				response => {
+				    $(".modal-backdrop").remove();
 					console.log("success delete!");
 					$scope.story.tasks = $scope.story.tasks.filter(function(obj) {
 						return obj.id !== $scope.task.id;
