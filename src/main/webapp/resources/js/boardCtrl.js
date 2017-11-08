@@ -5,7 +5,7 @@
 angular.module("scrumApp")
 
 .controller("boardCtrl", function($scope, dataService) {
-	$scope.oldBoardName = "";
+	$scope.oldBoard = null;
 	$scope.board = null;
 	
 	$scope.newSwimLane = {
@@ -32,30 +32,26 @@ angular.module("scrumApp")
 	}
 	
 	$scope.renameBoard = function(){
-		$scope.oldBoardName = jQuery.extend(true, {}, $scope.board.name);
+		$scope.oldBoard = jQuery.extend(true, {}, $scope.board);
 	}
 	
 	$scope.editBoard = function() {
-		console.log($scope.oldBoardName + " " + $scope.board.name);
-		if ($scope.board.name !== $scope.oldBoardName){
+		if ($scope.board.name !== $scope.oldBoard.name){
 			$scope.saveBoard();
 		}	
 	}
 	
 	$scope.resetEditBoard = function() {
-		$scope.board.name = jQuery.extend(true, {}, $scope.oldBoardName);
+		$scope.board = $scope.oldBoard;
 	}
 	
 	$scope.saveBoard = function(){
-		console.log("Saving Board Changes")
 		var boardDTO = {};
 		Object.assign(boardDTO, $scope.board);
 		boardDTO.owner = null;
 		dataService.editBoard(boardDTO,
-				response => {
-					console.log("success edit!");
-				},
-				response => console.log("could not edit!"));
+				response => {},
+				response => alert("Could not save board changes!"));
 	}
 	
 	
@@ -65,7 +61,6 @@ angular.module("scrumApp")
 			$scope.newSwimLane.order = ($scope.board.swimLanes) ? $scope.board.swimLanes.length : 0;
 			dataService.createSwimLane($scope.newSwimLane, 
 				response => {
-					console.log("success add!");
 					if ($scope.board.swimLanes) {
 						$scope.board.swimLanes.push(response.data);
 					} else {
@@ -73,7 +68,7 @@ angular.module("scrumApp")
 					}
 					$scope.newSwimLane.name = "";
 				},
-				response => console.log("could not add swimLane!"));
+				response => alert("Could not save new SwimLane!"));
 		}
 	}
 
@@ -83,19 +78,16 @@ angular.module("scrumApp")
 //	}
 	
 	$scope.deleteBoard = function(b) {
-		console.log("deleting board");
 		dataService.deleteBoard(b, response => {
 		    $(".modal-backdrop").remove();
-		});
+		}, response => alert("Could not delete board!"));
 	}
 	
 	
 	$scope.createChart = function(bo){
 		var holdStories = [];
-		console.log(bo.swimLanes.length);
 		for(var i = 0; i < bo.swimLanes.length;i++){
 			var sl = bo.swimLanes[i];//get individual swimlanes
-			console.log(sl);
 			for(var k = 0; k < sl.stories.length; k++){
 				holdStories.push(sl.stories[k]);
 				

@@ -41,7 +41,6 @@ angular.module("scrumApp")
 			$scope.newTask.order = ($scope.story.tasks) ? $scope.story.tasks.length : 0;
 			dataService.createTask($scope.newTask,
 				response => {
-					console.log("success add!");
 					if ($scope.story.tasks) {
 						$scope.story.tasks.push(response.data);
 					} else {
@@ -49,7 +48,7 @@ angular.module("scrumApp")
 					}
 					$scope.resetNewTask();
 				},
-				response => console.log("could not add!"));
+				response => alert("Could not save new task!"));
 		}
 	}
 	
@@ -91,29 +90,24 @@ angular.module("scrumApp")
 	}
 	
 	$scope.save = function() {
-		console.log("Saving story changes");
 		var storyDTO = {};
 		Object.assign(storyDTO, $scope.story);
 		storyDTO.swimLane = $scope.swimLane;
 		dataService.editStory(storyDTO,
-				response => {
-					console.log("success edit!");
-				},
-				response => console.log("could not edit!"));
+				response => {},
+				response => alert("Could not save task changes!"));
 	}
 	
 	$scope.delete = function() {
-		console.log("Deleting story");
 		dataService.deleteStory($scope.story,
 				response => {
 				    $(".modal-backdrop").remove();
-					console.log("success delete!");
 					$scope.swimLane.stories = $scope.swimLane.stories.filter(function(obj) {
 						return obj.id !== $scope.story.id;
 					});
 					$scope.resolveStoryOrdering();
 				},
-				response => console.log("could not delete!"));
+				response => alert("Could not delete story!"));
 	}
 	
 	
@@ -137,7 +131,7 @@ angular.module("scrumApp")
 						  return 0;
 						})
 				}, response => {
-					console.log("could not update stories!");
+					alert("Could not save story changes!");
 					dataService.swapOrders(stories, index, index-1);
 			});
 		}
@@ -161,7 +155,7 @@ angular.module("scrumApp")
 						  return 0;
 						})
 				}, response => {
-					console.log("could not update stories!");
+					alert("Could not save story changes!");
 					dataService.swapOrders(stories, index, index+1);
 			});
 		}
@@ -228,7 +222,7 @@ angular.module("scrumApp")
 			
 			$scope.swimLane = otherSwimLane;
 		    $(".modal-backdrop").remove();
-		}, response => console.log("oops"));
+		}, response => alert("Could not save story changes!"));
 		
 	}
 	
@@ -243,7 +237,7 @@ angular.module("scrumApp")
 			});
 			
 			$scope.saveStories($scope.swimLane.stories,
-					response=>{}, response=>console.log("error"));
+					response=>{}, response=>alert("Could not save new story order!"));
 		}
 	}
 	
