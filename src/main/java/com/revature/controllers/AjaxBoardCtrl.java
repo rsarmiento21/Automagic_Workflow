@@ -52,7 +52,7 @@ public class AjaxBoardCtrl {
 	public ResponseEntity<Object> getStoriesFromBoard(@PathVariable("id") String s, HttpServletRequest req) {
 	
 		int bId = Integer.parseInt(s);
-		System.out.println("grabbing stories with " + bId);
+		
 		
 		Board b = new Board();
 		b.setId(bId);
@@ -67,11 +67,6 @@ public class AjaxBoardCtrl {
 			listOfStories.addAll(sl.getStories());
 		}		
 		
-		for(Story testStory : listOfStories) {
-			System.out.println("SL ID: " + testStory.getId());
-		}
-		
-		//Story[] arrayOfStories = listOfStories.toArray(new Story[listOfStories.size()]);
 		
 		return new ResponseEntity<>(listOfStories, HttpStatus.OK);
 	}
