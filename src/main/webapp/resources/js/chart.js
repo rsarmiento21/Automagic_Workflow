@@ -40,8 +40,10 @@ dataPoints: [
 function domloaded(listOfStories, board){
 	var totalPoint = 0;
   	
-	listOfStories.sort(function(a, b){return a.dateStoryCompleted - b.dateStoryCompleted});
-  	
+	if (listOfStories) {
+		listOfStories.sort(function(a, b){return a.dateStoryCompleted - b.dateStoryCompleted});
+	}
+	
   	for(i = 0; i < listOfStories.length; i++){
   		totalPoint = totalPoint + listOfStories[i].points;			  		
   	}
