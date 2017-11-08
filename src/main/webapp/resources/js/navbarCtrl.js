@@ -42,7 +42,7 @@ angular.module("scrumApp")
 	})
 	
 	$scope.logout = function() {
-		dataService.logout(response => {}, response => console.log(response.data[0]));
+		dataService.logout(response => {}, response => alert("Error logging out!"));
 	}
 	
 	$scope.getBoards = function() {
@@ -57,7 +57,7 @@ angular.module("scrumApp")
 					  return 0;
 					})
 			},
-			response => console.log(response.data)
+			response => alert("Error fetching boards!")
 		);
 	}
 	
@@ -67,7 +67,6 @@ angular.module("scrumApp")
 
 
 	$scope.createBoard = function() {
-		console.log("in createBoard")
 		if ($scope.b.name) {
 			dataService.createBoard($scope.b, response => {
 				$scope.b.name = "";
@@ -75,8 +74,6 @@ angular.module("scrumApp")
 		}		
 	}
 
-
-	
 	$rootScope.$on("getBoardById", function(event, id) {
 		return $scope.boards.find(function(board) {
 			return board.id == id;

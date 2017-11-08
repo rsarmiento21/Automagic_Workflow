@@ -42,29 +42,24 @@ angular.module("scrumApp")
 	}
 	
 	$scope.save = function() {
-		console.log("Saving task changes");
 		var taskDTO = {};
 		Object.assign(taskDTO, $scope.task);
 		taskDTO.story = $scope.story;
 		dataService.editTask(taskDTO,
-				response => {
-					console.log("success edit!");
-				},
-				response => console.log("could not edit!"));
+				response => {},
+				response => alert("Could not save task changes!"));
 	}
 	
 	$scope.delete = function() {
-		console.log("Deleting task");
 		dataService.deleteTask($scope.task,
 				response => {
 				    $(".modal-backdrop").remove();
-					console.log("success delete!");
 					$scope.story.tasks = $scope.story.tasks.filter(function(obj) {
 						return obj.id !== $scope.task.id;
 					});
 					$scope.resolveTaskOrdering();
 				},
-				response => console.log("could not delete!"));
+				response => alert("Could not delete task!"));
 	}
 	
 	$scope.moveUp = function() {
@@ -85,7 +80,7 @@ angular.module("scrumApp")
 						  return 0;
 						})
 				}, response => {
-					console.log("could not update tasks!");
+					alert("Could not save task changes!");
 					dataService.swapOrders(tasks, index, index-1);
 			});
 		}
@@ -109,7 +104,7 @@ angular.module("scrumApp")
 						  return 0;
 						})
 				}, response => {
-					console.log("could not update tasks!");
+					alert("Could not save task changes!");
 					dataService.swapOrders(tasks, index, index+1);
 			});
 		}
@@ -135,7 +130,7 @@ angular.module("scrumApp")
 			});
 		
 			$scope.saveTasks($scope.story.tasks,
-					response=>{}, response=>console.log("error"));
+					response=>{}, response=>alert("Could not save new task order!"));
 		}
 	}
 })

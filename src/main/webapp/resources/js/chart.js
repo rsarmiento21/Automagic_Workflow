@@ -43,13 +43,11 @@ function domloaded(listOfStories, board){
 	listOfStories.sort(function(a, b){return a.dateStoryCompleted - b.dateStoryCompleted});
   	
   	for(i = 0; i < listOfStories.length; i++){
-  		console.log(listOfStories[i]);
   		totalPoint = totalPoint + listOfStories[i].points;			  		
   	}
   	
   	var boardname = "" + board.name;
 		
-			console.log("Can you hear me?");
 			  var chart = new CanvasJS.Chart("chartHere", {//name_of_id is whatever the id you want to put the chart into
 				  title:{
 						text: "Burndown Chart"  //**Change the title here
@@ -82,7 +80,6 @@ function domloaded(listOfStories, board){
 //			  while(foundFirstNotNull == false){
 //				  if(listOfStories[a].dateStoryCompleted !== null){
 //					  var starting_date = listOfStories[a].dateStoryCompleted - 100000;
-//					  console.log(starting_date);
 //					  
 //					  foundFirstNotNull = true;
 //				  }
@@ -92,14 +89,10 @@ function domloaded(listOfStories, board){
 //			  
 			  for(i = 0; i < listOfStories.length; i++){
 				  if(listOfStories[i].dateStoryCompleted !== null){
-//					  console.log("Making chart");
-//					  console.log(listOfStories[i].dateStoryCompleted);
-//					  console.log(listOfStories[i].dateStoryCompleted != null);
 					  
 			  		var t = listOfStories[i].dateStoryCompleted;
 			  		totalPoint = totalPoint - listOfStories[i].points;
 			  		
-			  		console.log(totalPoint + " points ");
 			  		var value = totalPoint;
 			  		chart.options.data[0].dataPoints.push({ x: t, y : value });	
 				  }

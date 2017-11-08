@@ -137,7 +137,6 @@ angular.module("scrumApp")
 	
 	this.createBoard = function(b, success){
 		toggleLoading();
-		console.log("Creating stuff");
 		var promise = $http.post("createBoard", b).then(response => {
 			success(response);
 			if (boards) {
@@ -156,7 +155,6 @@ angular.module("scrumApp")
 	
 	this.deleteBoard = function(b, success){
 		toggleLoading();
-		console.log("Deleting stuff");
 		var promise = $http.post("deleteBoard", b).then(response => {
 			success(response);
 			board = null;
