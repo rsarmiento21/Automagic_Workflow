@@ -5,7 +5,7 @@
 angular.module("scrumApp")
 
 .controller("boardCtrl", function($scope, dataService) {
-	$scope.oldBoardName = "";
+	$scope.oldBoard = null;
 	$scope.board = null;
 	
 	$scope.newSwimLane = {
@@ -32,17 +32,17 @@ angular.module("scrumApp")
 	}
 	
 	$scope.renameBoard = function(){
-		$scope.oldBoardName = jQuery.extend(true, {}, $scope.board.name);
+		$scope.oldBoard = jQuery.extend(true, {}, $scope.board);
 	}
 	
 	$scope.editBoard = function() {
-		if ($scope.board.name !== $scope.oldBoardName){
+		if ($scope.board.name !== $scope.oldBoard.name){
 			$scope.saveBoard();
 		}	
 	}
 	
 	$scope.resetEditBoard = function() {
-		$scope.board.name = jQuery.extend(true, {}, $scope.oldBoardName);
+		$scope.board = $scope.oldBoard;
 	}
 	
 	$scope.saveBoard = function(){
