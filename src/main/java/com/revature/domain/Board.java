@@ -1,5 +1,6 @@
 package com.revature.domain;
 
+import java.sql.Timestamp;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -29,29 +30,28 @@ public class Board {
 	private int id;
 	
 	@JsonBackReference
-	@ManyToOne(fetch=FetchType.EAGER)
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="OWNER_ID")
 	private BoardUser owner;
 	
 	@Column(name="BD_NAME")
 	private String name;
 	
+	@Column(name="BD_STARTDATE")
+	private Timestamp startDate;
+	
 	@JsonManagedReference
-	@OneToMany(mappedBy="board", cascade={CascadeType.MERGE, CascadeType.REMOVE}, fetch=FetchType.EAGER)
+	@OneToMany(mappedBy="board", cascade=CascadeType.REMOVE, fetch=FetchType.EAGER)
 	private Set<SwimLane> swimLanes;
 	
 	public Board() {}
 	
-	
-
 	public Board(int id, BoardUser owner, String name) {
 		super();
 		this.id = id;
 		this.owner = owner;
 		this.name = name;
 	}
-
-
 
 	public Board(int id, BoardUser owner, String name, Set<SwimLane> swimLanes) {
 		super();
@@ -61,7 +61,22 @@ public class Board {
 		this.swimLanes = swimLanes;
 	}
 
+	public Board(int id, BoardUser owner, String name, Timestamp startDate, Set<SwimLane> swimLanes) {
+		super();
+		this.id = id;
+		this.owner = owner;
+		this.name = name;
+		this.startDate = startDate;
+		this.swimLanes = swimLanes;
+	}
 
+	public Timestamp getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(Timestamp startDate) {
+		this.startDate = startDate;
+	}
 
 	public int getId() {
 		return id;
@@ -87,25 +102,16 @@ public class Board {
 		this.name = name;
 	}
 
-	
-	
 	public Set<SwimLane> getSwimLanes() {
 		return swimLanes;
 	}
-
-
 
 	public void setSwimLanes(Set<SwimLane> swimLanes) {
 		this.swimLanes = swimLanes;
 	}
 
-
-
 	@Override
 	public String toString() {
 		return "Board [id=" + id + ", name=" + name +"]";
 	}
-
-	
-
 }

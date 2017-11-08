@@ -36,22 +36,30 @@ dataPoints: [
 
 
 // One is to make an event listener and call it upon document  creation
-document.addEventListener('DOMContentLoaded',domloaded,false);	
-function domloaded(){
-		window.onload = function () {
-			  var chart = new CanvasJS.Chart("name_of_id", {//name_of_id is whatever the id you want to put the chart into
+//document.addEventListener('DOMContentLoaded',domloaded,false);	
+function domloaded(listOfStories, board){
+	var totalPoint = 0;
+  	
+	listOfStories.sort(function(a, b){return a.dateStoryCompleted - b.dateStoryCompleted});
+  	
+  	for(i = 0; i < listOfStories.length; i++){
+  		totalPoint = totalPoint + listOfStories[i].points;			  		
+  	}
+  	
+  	var boardname = "" + board.name;
+		
+			  var chart = new CanvasJS.Chart("chartHere", {//name_of_id is whatever the id you want to put the chart into
 				  title:{
-						text: "Hello Metru Nui"  //**Change the title here
+						text: "Burndown Chart"  //**Change the title here
 					},
 				  
 				  axisX:{
-						title: "date",
+						title: "Date",
 						interlacedColor: "#F0F8FF"
 					},
 				  
 				  axisY:{
-						title: "Points",
-						 
+						title: "Points",						 
 					},
 				  
 				  
@@ -59,25 +67,41 @@ function domloaded(){
 				  {
 					  type: "line", //type of chart to make
 					  xValueType: "dateTime", //For timestamp in the x axis
-					  dataPoints: [ //dataPoints bracket/array is required. This can be empty.
-					 /* { x: 10, y: 10 }
-					  { x: 20, y: 15 },
-					  { x: 30, y: 25 },
-					  { x: 40, y: 30 },
-					  { x: 50, y: 28 }*/
-					  { x: 1088620200000, y :71},
-					{ x: 1104517800000, y : 55 },
-					{ x: 1112293800000, y:  50 }
-					
+					  dataPoints: [ //dataPoints bracket/array is required. This can be empty.		
 					  ]
 				  }
 				  ]
 			  });
-				chart.options.data[0].dataPoints.push({ x: 1136053800000, y : 65 });//Must be before the render.
-				chart.options.data[0].dataPoints.push({ x: 1136053900000, y : 9 });
+			  
+//			  var starting_date = listOfStories[0].dateStoryCompleted - 10000000;
+//			  chart.options.data[0].dataPoints.push({ x: starting_date, y : totalPoint});
+			  var foundFirstNotNull = false;
+			  var a = 0;
+//			  while(foundFirstNotNull == false){
+//				  if(listOfStories[a].dateStoryCompleted !== null){
+//					  var starting_date = listOfStories[a].dateStoryCompleted - 100000;
+//					  
+//					  foundFirstNotNull = true;
+//				  }
+//				  a++;
+//			  }
+			  chart.options.data[0].dataPoints.push({ x: board.startDate, y : totalPoint});
+//			  
+			  for(i = 0; i < listOfStories.length; i++){
+				  if(listOfStories[i].dateStoryCompleted !== null){
+					  
+			  		var t = listOfStories[i].dateStoryCompleted;
+			  		totalPoint = totalPoint - listOfStories[i].points;
+			  		
+			  		var value = totalPoint;
+			  		chart.options.data[0].dataPoints.push({ x: t, y : value });	
+				  }
+			  	}
+				
+			
 				chart.render();
 			  
-	}
+	
 	
 	
 }
@@ -90,28 +114,3 @@ chart.options.data[0].dataPoints.push({y: 23}); // Add a new dataPoint to dataPo
 chart.options.data[0].dataPoints[3].y = 27;  // Update an existing dataPoint
 */
 
-
-//Another is to make a function and call it
-/*
-function domloaded(){
-		window.onload = function () {
-			  var chart = new CanvasJS.Chart("name_of_id", {
-				  data: [
-				  {
-					  type: "column",
-					  dataPoints: [
-					  { x: 10, y: 10 },
-					  { x: 20, y: 15 },
-					  { x: 30, y: 25 },
-					  { x: 40, y: 30 },
-					  { x: 50, y: 28 }
-					  ]
-				  }
-				  ]
-			  });
-	 
-			  chart.render();
-	}
-}
-domloaded();
-*/

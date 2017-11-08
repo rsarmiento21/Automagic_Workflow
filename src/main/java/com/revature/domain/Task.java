@@ -33,7 +33,7 @@ public class Task {
 	private int id;
 	
 	@JsonBackReference
-	@ManyToOne(fetch=FetchType.EAGER)
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="ST_ID")
 	private Story story;
 	

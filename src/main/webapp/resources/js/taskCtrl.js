@@ -12,7 +12,7 @@ angular.module("scrumApp")
 	};
 })
 
-.controller("taskCtrl", function($scope, $rootScope, dataService) {
+.controller("taskCtrl", function($scope, dataService) {
 	$scope.editing = false;
 	
 	$scope.edit = function() {
@@ -42,35 +42,95 @@ angular.module("scrumApp")
 	}
 	
 	$scope.save = function() {
-		console.log("Saving task changes");
 		var taskDTO = {};
 		Object.assign(taskDTO, $scope.task);
 		taskDTO.story = $scope.story;
 		dataService.editTask(taskDTO,
-				response => {
-					console.log("success edit!");
-				},
-				response => console.log("could not edit!"));
+				response => {},
+				response => alert("Could not save task changes!"));
 	}
 	
 	$scope.delete = function() {
-		console.log("Deleting task");
 		dataService.deleteTask($scope.task,
 				response => {
-					console.log("success delete!");
+				    $(".modal-backdrop").remove();
 					$scope.story.tasks = $scope.story.tasks.filter(function(obj) {
 						return obj.id !== $scope.task.id;
 					});
-					$rootScope.$emit("resolveTaskOrdering", $scope.story.id);
+					$scope.resolveTaskOrdering();
 				},
-				response => console.log("could not delete!"));
+				response => alert("Could not delete task!"));
 	}
 	
 	$scope.moveUp = function() {
-		$rootScope.$emit("moveUpTask", [$scope.story.id, $scope.task.order]);
+		var tasks = $scope.story.tasks;
+		var index = tasks.findIndex(function(obj) {
+			return obj.order == $scope.task.order;
+		});
+		if (index > 0) {
+			dataService.swapOrders(tasks, index, index-1);
+			
+			var toSave = [tasks[index], tasks[index-1]];
+			$scope.saveTasks(toSave, response => {
+					tasks.sort(function compare(a,b) {
+					  if (a.order < b.order)
+						     return -1;
+						  if (a.order > b.order)
+						    return 1;
+						  return 0;
+						})
+				}, response => {
+					alert("Could not save task changes!");
+					dataService.swapOrders(tasks, index, index-1);
+			});
+		}
 	}
 	
 	$scope.moveDown = function() {
-		$rootScope.$emit("moveDownTask", [$scope.story.id, $scope.task.order]);
+		var tasks = $scope.story.tasks;
+		var index = tasks.findIndex(function(obj) {
+			return obj.order == $scope.task.order;
+		});
+		if (index > -1 && index < tasks.length - 1) {
+			dataService.swapOrders(tasks, index, index+1);
+			
+			var toSave = [tasks[index], tasks[index+1]];
+			$scope.saveTasks(toSave, response => {
+					tasks.sort(function compare(a,b) {
+					  if (a.order < b.order)
+						     return -1;
+						  if (a.order > b.order)
+						    return 1;
+						  return 0;
+						})
+				}, response => {
+					alert("Could not save task changes!");
+					dataService.swapOrders(tasks, index, index+1);
+			});
+		}
+	}
+	
+	$scope.saveTasks = function(tasks, success, failure) {
+		var tasksDTO = [];
+		tasks.forEach(function(task) {
+			var taskDTO = {};
+			Object.assign(taskDTO, task);
+			taskDTO.story = $scope.story;
+			tasksDTO.push(taskDTO);
+		})
+		dataService.editTasks(tasksDTO, success, failure);
+	}
+	
+	$scope.resolveTaskOrdering = function() {
+		if ($scope.story.tasks) {
+			$scope.story.tasks.forEach( function(task) {
+				task.order = $scope.story.tasks.findIndex(function(obj) {
+					return obj == task;
+				});
+			});
+		
+			$scope.saveTasks($scope.story.tasks,
+					response=>{}, response=>alert("Could not save new task order!"));
+		}
 	}
 })
