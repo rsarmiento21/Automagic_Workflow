@@ -184,9 +184,10 @@ angular.module("scrumApp")
 		toSave.push(storyDTO);
 		
 		// Grabbing all stories in current swimlane to update their orders
-		var array = $scope.swimLane.stories.find(function(obj) {
+		var array = $scope.swimLane.stories.filter(function(obj) {
 				return obj != $scope.story;
 			});
+		console.log(array);
 		if (array) {
 			array.forEach(function(story) {
 				var storyDTO = {};
